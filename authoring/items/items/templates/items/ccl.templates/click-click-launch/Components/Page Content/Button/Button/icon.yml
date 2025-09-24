@@ -2,7 +2,7 @@
 ID: "109e09a5-7d64-472d-a62f-fa0965a723f0"
 Parent: "3f2a6c98-5582-4119-8570-659ffc758f14"
 Template: "455a3e98-a627-4b40-8035-e683a0331ac7"
-Path: "/sitecore/templates/Project/click-click-launch/Components/Page Content/Button/Button/icon"
+Path: "/sitecore/templates/Branches/Project/click-click-launch/Components/Page Content/Page Content Enumerations/$name/Button Icons/"
 SharedFields:
 - ID: "1eb8ae32-e190-44a6-968d-ed904c794ebf"
   Hint: Source

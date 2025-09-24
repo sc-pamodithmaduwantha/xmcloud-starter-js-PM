@@ -313,11 +313,6 @@ SharedFields:
             $titlePartialOverlayVariant = New-Item -Parent $promoVariant -Name "TitlePartialOverlay" -ItemType "{4D50CDAE-C2D9-4DE8-B080-8F992BFB1B55}"
             $titlePartialOverlayVariant.'__Display name' = "Title Partial Overlay"
     
-            Write-Verbose "Create enumeration items"
-            $presentationRoot = Get-Item -Path "$sitePath/Presentation" -Language $Site.Language
-            $enumerationBranchTemplate = Get-Item -Path "/sitecore/templates/Branches/Project/click-click-launch/Solterra and Co/Add Enumerations" -Language $Site.Language
-            New-Item -Parent $presentationRoot -Name "Enumerations" -ItemType $enumerationBranchTemplate.ID
-    
             Write-Verbose "Create dictionary items"
             $dictionaryRoot = Get-Item -Path "$sitePath/Dictionary" -Language $Site.Language
             $dictionaryBranchTemplate = Get-Item -Path "/sitecore/templates/Branches/Project/click-click-launch/Alaris/Add Dictionary Items" -Language $Site.Language

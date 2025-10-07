@@ -45,10 +45,8 @@ export const Default = ({ params, fields }: TitleProps): JSX.Element => {
   const { styles, RenderingIdentifier: id } = params;
   const datasource = fields?.data?.datasource || fields?.data?.contextItem;
 
-  // Use datasource field if available, otherwise fall back to context item field
-  const datasourceField: TextField = datasource?.field?.jsonValue as TextField;
-  const contextField: TextField = page.layout.sitecore.route?.fields?.Title as TextField;
-  const titleField: TextField = datasourceField || contextField;
+  // Use the route's Title field for proper editing support with chrometype="field"
+  const titleField: TextField = page.layout.sitecore.route?.fields?.Title as TextField;
 
   const link: LinkField = {
     value: {

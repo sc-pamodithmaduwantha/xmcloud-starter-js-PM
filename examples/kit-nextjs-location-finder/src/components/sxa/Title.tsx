@@ -56,11 +56,7 @@ export const Default = (props: TitleProps): JSX.Element => {
   const datasource = props.fields?.data?.datasource || props.fields?.data?.contextItem;
   const { page } = useSitecore();
   const { mode } = page;
-
-  // Use datasource field if available, otherwise fall back to context item field
-  const datasourceField: TextField = datasource?.field?.jsonValue as TextField;
-  const contextField: TextField = page.layout.sitecore.route?.fields?.pageTitle as TextField;
-  const titleField: TextField = datasourceField || contextField;
+  const titleField: TextField = page.layout.sitecore.route?.fields?.pageTitle as TextField;
 
   const link: LinkField = {
     value: {

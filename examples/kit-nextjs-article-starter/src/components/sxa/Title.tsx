@@ -37,7 +37,13 @@ type TitleProps = {
 
 export const Default = (props: TitleProps): JSX.Element => {
   const { page } = useSitecore();
-  const titleField: TextField = page.layout.sitecore.route?.fields?.pageTitle as TextField;
+  const datasource = props.fields?.data?.datasource || props.fields?.data?.contextItem;
+  
+  // Use datasource field if available, otherwise fall back to context item field
+  const datasourceField: TextField = datasource?.field?.jsonValue as TextField;
+  const contextField: TextField = page.layout.sitecore.route?.fields?.pageTitle as TextField;
+  const titleField: TextField = datasourceField || contextField;
+  
   const isPageEditing = Boolean(page.mode.isEditing);
   const modifyTitleProps = {
     ...titleField,

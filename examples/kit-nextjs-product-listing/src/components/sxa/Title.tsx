@@ -56,18 +56,26 @@ export const Default = (props: TitleProps): JSX.Element => {
   const datasource = props.fields?.data?.datasource || props.fields?.data?.contextItem;
   const { page } = useSitecore();
   const { mode } = page;
-  const titleField: TextField = page.layout.sitecore.route?.fields?.pageTitle as TextField;
+  
+  // Use datasource field instead of context item field
+  const titleField: TextField = datasource?.field?.jsonValue as TextField;
   const link: LinkField = {
     value: {
       href: datasource?.url?.path,
-      title: titleField?.value ? String(titleField.value) : datasource?.field?.jsonValue?.value,
+      title: titleField?.value ? String(titleField.value) : '',
     },
   };
+  
   if (!mode.isNormal) {
     link.value.querystring = `sc_site=${datasource?.url?.siteName}`;
     if (!titleField?.value) {
-      titleField.value = 'Title field';
-      link.value.href = '#';
+      // Create a fallback field for editing mode
+      const fallbackField: TextField = { value: 'Title field' };
+      return (
+        <ComponentContent styles={props.params.styles} id={props.params.RenderingIdentifier}>
+          <Text field={fallbackField} />
+        </ComponentContent>
+      );
     }
   }
 

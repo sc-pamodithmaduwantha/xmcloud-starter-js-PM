@@ -67,6 +67,12 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     }
     return <img {...props} />;
   },
+  RichText: ({ field, ...props }) => {
+    if (field?.value) {
+      return <div {...props} dangerouslySetInnerHTML={{ __html: field.value }} />;
+    }
+    return <div {...props} />;
+  },
 }));
 
 // Suppress console warnings during tests

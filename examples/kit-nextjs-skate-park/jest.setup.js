@@ -44,17 +44,18 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
       },
     },
   }),
-  Text: ({ field, children, ...props }) => {
+  Text: ({ field, children, tag, ...props }) => {
+    const Tag = tag || 'span';
     if (field?.value) {
-      return <span {...props}>{field.value}</span>;
+      return <Tag {...props}>{field.value}</Tag>;
     }
-    return <span {...props}>{children}</span>;
+    return <Tag {...props}>{children}</Tag>;
   },
   Link: ({ field, children, ...props }) => {
     if (field?.value?.href) {
-      return <a href={field.value.href} {...props}>{children}</a>;
+      return <a href={field.value.href} {...props}>{children || field.value.text}</a>;
     }
-    return <span {...props}>{children}</span>;
+    return <span {...props}>{children || field.value?.text}</span>;
   },
   Placeholder: ({ name, rendering, ...props }) => (
     <div data-testid={`placeholder-${name}`} {...props}>
@@ -73,6 +74,7 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     }
     return <div {...props} />;
   },
+  withDatasourceCheck: () => (Component) => Component,
 }));
 
 // Suppress console warnings during tests
@@ -81,7 +83,9 @@ beforeAll(() => {
   console.error = (...args) => {
     if (
       typeof args[0] === 'string' &&
-      args[0].includes('Warning: ReactDOM.render is no longer supported')
+      (args[0].includes('Warning: ReactDOM.render is no longer supported') ||
+        args[0].includes('for a non-boolean attribute') ||
+        args[0].includes('editable'))
     ) {
       return;
     }

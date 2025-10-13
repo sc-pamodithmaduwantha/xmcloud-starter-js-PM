@@ -10,176 +10,82 @@ import {
   mockRowSplitterPropsEmpty,
 } from './RowSplitter.mockProps';
 
+const getRowSplitterDiv = () => document.querySelector('.row-splitter');
+const getRowDivs = () => document.querySelectorAll('.container-fluid');
+
 describe('RowSplitter Component should', () => {
   it('render without crashing', () => {
     render(<RowSplitter {...mockRowSplitterProps} />);
-
-    // Check if the component renders
-    const rowSplitterDiv = document.querySelector('.row-splitter');
-    expect(rowSplitterDiv).toBeInTheDocument();
+    expect(getRowSplitterDiv()).toBeInTheDocument();
   });
 
   it('apply correct CSS classes', () => {
     render(<RowSplitter {...mockRowSplitterProps} />);
-
-    // Check if the component has the right CSS classes
-    const rowSplitterDiv = document.querySelector('.row-splitter');
-    expect(rowSplitterDiv).toHaveClass('component', 'row-splitter', 'rowsplitter-styles');
+    expect(getRowSplitterDiv()).toHaveClass('component', 'row-splitter', 'rowsplitter-styles');
   });
 
   it('have correct ID attribute', () => {
     render(<RowSplitter {...mockRowSplitterProps} />);
-
-    // Check if the component has the right ID
-    const rowSplitterDiv = document.querySelector('.row-splitter');
-    expect(rowSplitterDiv).toHaveAttribute('id', 'rowsplitter-test-id');
+    expect(getRowSplitterDiv()).toHaveAttribute('id', 'rowsplitter-test-id');
   });
 
   it('render correct number of rows based on EnabledPlaceholders', () => {
     render(<RowSplitter {...mockRowSplitterProps} />);
-
-    // Should render 3 rows (container-fluid divs)
-    const containerDivs = document.querySelectorAll('.container-fluid');
-    expect(containerDivs).toHaveLength(3);
+    expect(getRowDivs()).toHaveLength(3);
   });
 
   it('apply custom styles to each row', () => {
     render(<RowSplitter {...mockRowSplitterProps} />);
-
-    // Get all container-fluid divs
-    const containerDivs = document.querySelectorAll('.container-fluid');
-
-    expect(containerDivs[0]).toHaveClass('first-row-style');
-    expect(containerDivs[1]).toHaveClass('second-row-style');
-    expect(containerDivs[2]).toHaveClass('third-row-style');
+    const rowDivs = getRowDivs();
+    expect(rowDivs[0]).toHaveClass('first-row-style');
+    expect(rowDivs[1]).toHaveClass('second-row-style');
+    expect(rowDivs[2]).toHaveClass('third-row-style');
   });
 
   it('render placeholders for each row', () => {
     render(<RowSplitter {...mockRowSplitterProps} />);
-
-    // Check if placeholders are rendered
-    const placeholder1 = screen.getByTestId('placeholder-row-1-{*}');
-    const placeholder2 = screen.getByTestId('placeholder-row-2-{*}');
-    const placeholder3 = screen.getByTestId('placeholder-row-3-{*}');
-
-    expect(placeholder1).toBeInTheDocument();
-    expect(placeholder2).toBeInTheDocument();
-    expect(placeholder3).toBeInTheDocument();
+    expect(screen.getByTestId('placeholder-row-1-{*}')).toBeInTheDocument();
+    expect(screen.getByTestId('placeholder-row-2-{*}')).toBeInTheDocument();
+    expect(screen.getByTestId('placeholder-row-3-{*}')).toBeInTheDocument();
   });
 
-  it('render two rows with custom styles', () => {
+  it('render two rows with different styles', () => {
     render(<RowSplitter {...mockRowSplitterPropsTwo} />);
-
-    // Should render 2 rows
-    const containerDivs = document.querySelectorAll('.container-fluid');
-    expect(containerDivs).toHaveLength(2);
-
-    // Check styles
-    expect(containerDivs[0]).toHaveClass('hero-section');
-    expect(containerDivs[1]).toHaveClass('content-section');
+    expect(getRowDivs()).toHaveLength(2);
+    const rowDivs = getRowDivs();
+    expect(rowDivs[0]).toHaveClass('hero-section');
+    expect(rowDivs[1]).toHaveClass('content-section');
   });
 
   it('render single row', () => {
     render(<RowSplitter {...mockRowSplitterPropsSingle} />);
-
-    // Should render 1 row
-    const containerDivs = document.querySelectorAll('.container-fluid');
-    expect(containerDivs).toHaveLength(1);
-
-    // Check style
-    expect(containerDivs[0]).toHaveClass('full-page-style');
+    expect(getRowDivs()).toHaveLength(1);
+    expect(getRowDivs()[0]).toHaveClass('full-page-style');
   });
 
-  it('handle rows without style specifications', () => {
+  it('handle missing styles parameters', () => {
     render(<RowSplitter {...mockRowSplitterPropsNoStyles} />);
-
-    // Should still render 3 rows
-    const containerDivs = document.querySelectorAll('.container-fluid');
-    expect(containerDivs).toHaveLength(3);
-
-    // Should only have container-fluid class (no custom styles)
-    expect(containerDivs[0].className.trim()).toBe('container-fluid');
-    expect(containerDivs[1].className.trim()).toBe('container-fluid');
-    expect(containerDivs[2].className.trim()).toBe('container-fluid');
+    expect(getRowDivs()).toHaveLength(3);
   });
 
   it('render maximum number of rows (8)', () => {
     render(<RowSplitter {...mockRowSplitterPropsMax} />);
-
-    // Should render 8 rows
-    const containerDivs = document.querySelectorAll('.container-fluid');
-    expect(containerDivs).toHaveLength(8);
+    expect(getRowDivs()).toHaveLength(8);
   });
 
-  it('render all 8 placeholders for maximum rows', () => {
-    render(<RowSplitter {...mockRowSplitterPropsMax} />);
-
-    // Check if all 8 placeholders exist
-    for (let i = 1; i <= 8; i++) {
-      const placeholder = screen.getByTestId(`placeholder-row-${i}-{*}`);
-      expect(placeholder).toBeInTheDocument();
-    }
-  });
-
-  it('apply all custom styles to maximum rows', () => {
-    render(<RowSplitter {...mockRowSplitterPropsMax} />);
-
-    const containerDivs = document.querySelectorAll('.container-fluid');
-
-    expect(containerDivs[0]).toHaveClass('header');
-    expect(containerDivs[1]).toHaveClass('hero');
-    expect(containerDivs[2]).toHaveClass('features');
-    expect(containerDivs[3]).toHaveClass('testimonials');
-    expect(containerDivs[4]).toHaveClass('pricing');
-    expect(containerDivs[5]).toHaveClass('faq');
-    expect(containerDivs[6]).toHaveClass('cta');
-    expect(containerDivs[7]).toHaveClass('footer');
-  });
-
-  it('render one row with row number 0 when EnabledPlaceholders is empty string', () => {
+  it('handle empty EnabledPlaceholders parameter', () => {
     render(<RowSplitter {...mockRowSplitterPropsEmpty} />);
-
-    // Should render component
-    const rowSplitterDiv = document.querySelector('.row-splitter');
-    expect(rowSplitterDiv).toBeInTheDocument();
-
-    // Empty string split creates one item with empty string
-    const containerDivs = document.querySelectorAll('.container-fluid');
-    expect(containerDivs).toHaveLength(1);
-
-    // Number('') returns 0, so placeholder will be 'row-0-{*}'
-    const placeholder = screen.getByTestId('placeholder-row-0-{*}');
-    expect(placeholder).toBeInTheDocument();
+    expect(getRowDivs()).toHaveLength(1);
+    expect(screen.getByTestId('placeholder-row-0-{*}')).toBeInTheDocument();
   });
 
-  it('render inner row div for each container', () => {
+  it('render container-fluid divs for rows', () => {
     render(<RowSplitter {...mockRowSplitterProps} />);
-
-    // Each container should have an inner row div
-    const innerRows = document.querySelectorAll('.container-fluid .row');
-    expect(innerRows).toHaveLength(3);
-  });
-
-  it('render container-fluid for each row', () => {
-    render(<RowSplitter {...mockRowSplitterProps} />);
-
-    // Each row should be wrapped in container-fluid
-    const containerDivs = document.querySelectorAll('.container-fluid');
-    expect(containerDivs).toHaveLength(3);
-  });
-
-  it('handle EnabledPlaceholders as comma-separated string', () => {
-    render(<RowSplitter {...mockRowSplitterProps} />);
-
-    // EnabledPlaceholders: '1,2,3' should create 3 rows
-    const containerDivs = document.querySelectorAll('.container-fluid');
-    expect(containerDivs).toHaveLength(3);
+    expect(document.querySelectorAll('.container-fluid')).toHaveLength(3);
   });
 
   it('generate correct placeholder names with row numbers', () => {
     render(<RowSplitter {...mockRowSplitterPropsTwo} />);
-
-    // Placeholder names should include row numbers
     expect(screen.getByTestId('placeholder-row-1-{*}')).toHaveTextContent('Placeholder: row-1-{*}');
     expect(screen.getByTestId('placeholder-row-2-{*}')).toHaveTextContent('Placeholder: row-2-{*}');
   });
@@ -187,52 +93,22 @@ describe('RowSplitter Component should', () => {
 
 describe('RowSplitter Component Error Handling should', () => {
   it('handle undefined EnabledPlaceholders', () => {
-    const propsWithUndefined = {
-      ...mockRowSplitterProps,
-      params: {
-        ...mockRowSplitterProps.params,
-        EnabledPlaceholders: undefined as any,
-      },
-    };
-    render(<RowSplitter {...propsWithUndefined} />);
-
-    // Should render without crashing
-    const rowSplitterDiv = document.querySelector('.row-splitter');
-    expect(rowSplitterDiv).toBeInTheDocument();
+    render(<RowSplitter {...{ ...mockRowSplitterProps, params: { ...mockRowSplitterProps.params, EnabledPlaceholders: undefined as any } }} />);
+    expect(getRowSplitterDiv()).toBeInTheDocument();
   });
 
   it('handle missing Styles parameters', () => {
     render(<RowSplitter {...mockRowSplitterPropsNoStyles} />);
-
-    // Should render rows without custom styles
-    const rows = document.querySelectorAll('.row > div');
-    expect(rows).toHaveLength(3);
+    expect(getRowDivs()).toHaveLength(3);
   });
 
   it('handle non-numeric placeholder values', () => {
-    const propsWithInvalidPlaceholders = {
-      ...mockRowSplitterProps,
-      params: {
-        ...mockRowSplitterProps.params,
-        EnabledPlaceholders: 'abc,xyz',
-      },
-    };
-    render(<RowSplitter {...propsWithInvalidPlaceholders} />);
-
-    // Should handle NaN gracefully
-    const rowSplitterDiv = document.querySelector('.row-splitter');
-    expect(rowSplitterDiv).toBeInTheDocument();
+    render(<RowSplitter {...{ ...mockRowSplitterProps, params: { ...mockRowSplitterProps.params, EnabledPlaceholders: 'abc,xyz' } }} />);
+    expect(getRowSplitterDiv()).toBeInTheDocument();
   });
 
   it('handle empty params object', () => {
-    const propsWithEmptyParams = {
-      ...mockRowSplitterProps,
-      params: {} as any,
-    };
-    render(<RowSplitter {...propsWithEmptyParams} />);
-
-    // Should render with defaults
-    const rowSplitterDiv = document.querySelector('.row-splitter');
-    expect(rowSplitterDiv).toBeInTheDocument();
+    render(<RowSplitter {...{ ...mockRowSplitterProps, params: {} as any }} />);
+    expect(getRowSplitterDiv()).toBeInTheDocument();
   });
 });

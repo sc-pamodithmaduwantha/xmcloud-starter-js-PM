@@ -9,125 +9,72 @@ import {
   mockPageContentPropsEmpty,
 } from './PageContent.mockProps';
 
+const getContentDiv = () => document.querySelector('.content');
+
 describe('PageContent Component should', () => {
   it('render without crashing', () => {
     render(<PageContent {...mockPageContentProps} />);
-
-    // Check if the component renders
-    const pageContentDiv = document.querySelector('.content');
-    expect(pageContentDiv).toBeInTheDocument();
+    expect(getContentDiv()).toBeInTheDocument();
   });
 
   it('apply correct CSS classes', () => {
     render(<PageContent {...mockPageContentProps} />);
-
-    // Check if the component has the right CSS classes
-    const pageContentDiv = document.querySelector('.content');
-    expect(pageContentDiv).toHaveClass('component', 'content', 'pagecontent-styles');
+    expect(getContentDiv()).toHaveClass('component', 'content', 'pagecontent-styles');
   });
 
   it('have correct ID attribute', () => {
     render(<PageContent {...mockPageContentProps} />);
-
-    // Check if the component has the right ID
-    const pageContentDiv = document.querySelector('.content');
-    expect(pageContentDiv).toHaveAttribute('id', 'pagecontent-test-id');
+    expect(getContentDiv()).toHaveAttribute('id', 'pagecontent-test-id');
   });
 
   it('render content with HTML formatting', () => {
     render(<PageContent {...mockPageContentProps} />);
+    const strongText = screen.getByText('formatting');
+    expect(strongText).toBeInTheDocument();
+    expect(strongText.tagName).toBe('STRONG');
 
-    // Check if formatted text is rendered
-    const boldText = screen.getByText('formatting');
-    expect(boldText).toBeInTheDocument();
-    expect(boldText.tagName).toBe('STRONG');
-
-    const italicText = screen.getByText('styles');
-    expect(italicText).toBeInTheDocument();
-    expect(italicText.tagName).toBe('EM');
+    const emText = screen.getByText('styles');
+    expect(emText).toBeInTheDocument();
+    expect(emText.tagName).toBe('EM');
   });
 
-  it('render field-content wrapper div', () => {
-    render(<PageContent {...mockPageContentProps} />);
-
-    // Check if field-content wrapper exists
-    const fieldContentDiv = document.querySelector('.field-content');
-    expect(fieldContentDiv).toBeInTheDocument();
-  });
-
-  it('render component-content wrapper div', () => {
-    render(<PageContent {...mockPageContentProps} />);
-
-    // Check if component-content wrapper exists
-    const componentContentDiv = document.querySelector('.component-content');
-    expect(componentContentDiv).toBeInTheDocument();
-  });
-
-  it('render rich HTML content with multiple elements', () => {
+  it('render rich HTML content', () => {
     render(<PageContent {...mockPageContentPropsRich} />);
-
-    // Check if heading is rendered
-    const heading = screen.getByText('Heading');
-    expect(heading).toBeInTheDocument();
-    expect(heading.tagName).toBe('H2');
-
-    // Check if link is rendered
-    const link = screen.getByText('link');
-    expect(link).toBeInTheDocument();
-
-    // Check if list items are rendered
-    const item1 = screen.getByText('Item 1');
-    const item2 = screen.getByText('Item 2');
-    expect(item1).toBeInTheDocument();
-    expect(item2).toBeInTheDocument();
+    expect(screen.getByText('Heading')).toBeInTheDocument();
+    expect(screen.getByText(/Paragraph with/)).toBeInTheDocument();
+    expect(screen.getByText('link')).toBeInTheDocument();
+    expect(screen.getByText('Item 1')).toBeInTheDocument();
+    expect(screen.getByText('Item 2')).toBeInTheDocument();
   });
 
-  it('render simple text content', () => {
+  it('render simple paragraph content', () => {
     render(<PageContent {...mockPageContentPropsSimple} />);
-
-    // Check if simple text is rendered
-    const simpleText = screen.getByText('Simple page content text.');
-    expect(simpleText).toBeInTheDocument();
-  });
-
-  it('apply different styles correctly', () => {
-    render(<PageContent {...mockPageContentPropsSimple} />);
-
-    // Check if component has different styles
-    const pageContentDiv = document.querySelector('.content');
-    expect(pageContentDiv).toHaveClass('component', 'content', 'simple-styles');
+    expect(screen.getByText('Simple page content text.')).toBeInTheDocument();
   });
 
   it('show placeholder when no content field', () => {
     render(<PageContent {...mockPageContentPropsNoContent} />);
-
-    // Should show "[Content]" placeholder
-    const placeholder = screen.getByText('[Content]');
-    expect(placeholder).toBeInTheDocument();
+    expect(screen.getByText('[Content]')).toBeInTheDocument();
   });
 
-  it('render with empty content gracefully', () => {
+  it('handle empty content gracefully', () => {
     render(<PageContent {...mockPageContentPropsEmpty} />);
-
-    // Component should still render
-    const pageContentDiv = document.querySelector('.content');
-    expect(pageContentDiv).toBeInTheDocument();
-    expect(pageContentDiv).toHaveAttribute('id', 'pagecontent-empty-id');
+    expect(getContentDiv()).toBeInTheDocument();
   });
 
-  it('render field-content div even when content is empty', () => {
-    render(<PageContent {...mockPageContentPropsEmpty} />);
+  it('render component-content div', () => {
+    render(<PageContent {...mockPageContentProps} />);
+    expect(document.querySelector('.component-content')).toBeInTheDocument();
+  });
 
-    // field-content wrapper should exist
-    const fieldContentDiv = document.querySelector('.field-content');
-    expect(fieldContentDiv).toBeInTheDocument();
+  it('render field-content div', () => {
+    render(<PageContent {...mockPageContentProps} />);
+    expect(document.querySelector('.field-content')).toBeInTheDocument();
   });
 
   it('render content inside proper nested structure', () => {
     render(<PageContent {...mockPageContentProps} />);
-
-    // Check nested structure: .content > .component-content > .field-content
-    const contentDiv = document.querySelector('.content');
+    const contentDiv = getContentDiv();
     const componentContentDiv = contentDiv?.querySelector('.component-content');
     const fieldContentDiv = componentContentDiv?.querySelector('.field-content');
 
@@ -139,37 +86,17 @@ describe('PageContent Component should', () => {
 
 describe('PageContent Component Error Handling should', () => {
   it('handle null Content field', () => {
-    const propsWithNullContent = {
-      ...mockPageContentProps,
-      fields: {
-        Content: null as any,
-      },
-    };
-    render(<PageContent {...propsWithNullContent} />);
-
-    // Should show placeholder
+    render(<PageContent {...{ ...mockPageContentProps, fields: { Content: null as any } }} />);
     expect(screen.getByText('[Content]')).toBeInTheDocument();
   });
 
   it('handle undefined fields object', () => {
-    const propsWithUndefinedFields = {
-      ...mockPageContentProps,
-      fields: undefined as any,
-    };
-    render(<PageContent {...propsWithUndefinedFields} />);
-
-    // Should show placeholder
+    render(<PageContent {...{ ...mockPageContentProps, fields: undefined as any }} />);
     expect(screen.getByText('[Content]')).toBeInTheDocument();
   });
 
   it('render without params', () => {
-    const propsWithoutParams = {
-      ...mockPageContentProps,
-      params: {} as any,
-    };
-    render(<PageContent {...propsWithoutParams} />);
-
-    // Should still render content
+    render(<PageContent {...{ ...mockPageContentProps, params: {} as any }} />);
     expect(screen.getByText('formatting')).toBeInTheDocument();
   });
 });

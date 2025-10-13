@@ -194,3 +194,60 @@ describe('ColumnSplitter Component should', () => {
     expect(screen.getByTestId('placeholder-column-2-{*}')).toHaveTextContent('Placeholder: column-2-{*}');
   });
 });
+
+describe('ColumnSplitter Component Error Handling should', () => {
+  it('handle undefined EnabledPlaceholders', () => {
+    const propsWithUndefined = {
+      ...mockColumnSplitterProps,
+      params: {
+        ...mockColumnSplitterProps.params,
+        EnabledPlaceholders: undefined as any,
+      },
+    };
+    render(<ColumnSplitter {...propsWithUndefined} />);
+
+    // Should render without crashing
+    const columnSplitterDiv = document.querySelector('.column-splitter');
+    expect(columnSplitterDiv).toBeInTheDocument();
+  });
+
+  it('handle missing ColumnWidth parameters', () => {
+    render(<ColumnSplitter {...mockColumnSplitterPropsNoWidths} />);
+
+    // Should render columns without width classes
+    const rowDivs = document.querySelectorAll('.row .row');
+    expect(rowDivs).toHaveLength(2);
+  });
+
+  it('handle missing Styles parameters', () => {
+    const propsWithoutStyles = {
+      ...mockColumnSplitterProps,
+      params: {
+        ...mockColumnSplitterProps.params,
+        Styles1: undefined,
+        Styles2: undefined,
+        Styles3: undefined,
+      },
+    };
+    render(<ColumnSplitter {...propsWithoutStyles} />);
+
+    // Should still render columns
+    const rowDivs = document.querySelectorAll('.row .row');
+    expect(rowDivs).toHaveLength(3);
+  });
+
+  it('handle non-numeric placeholder values', () => {
+    const propsWithInvalidPlaceholders = {
+      ...mockColumnSplitterProps,
+      params: {
+        ...mockColumnSplitterProps.params,
+        EnabledPlaceholders: 'abc,def',
+      },
+    };
+    render(<ColumnSplitter {...propsWithInvalidPlaceholders} />);
+
+    // Should handle NaN gracefully
+    const columnSplitterDiv = document.querySelector('.column-splitter');
+    expect(columnSplitterDiv).toBeInTheDocument();
+  });
+});

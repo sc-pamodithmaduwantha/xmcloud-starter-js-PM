@@ -236,3 +236,107 @@ describe('Navigation Component should', () => {
     expect(contentDiv).toBeInTheDocument();
   });
 });
+
+describe('Navigation Component Accessibility should', () => {
+  it('use semantic nav element', () => {
+    render(<Navigation {...mockNavigationProps} />);
+
+    // Should use semantic navigation element
+    const navElement = screen.getByRole('navigation');
+    expect(navElement).toBeInTheDocument();
+  });
+
+  it('have accessible links for all navigation items', () => {
+    render(<Navigation {...mockNavigationProps} />);
+
+    // All navigation items should be accessible links
+    const homeLink = screen.getByRole('link', { name: /Home/i });
+    const aboutLink = screen.getByRole('link', { name: /About/i });
+    
+    expect(homeLink).toBeInTheDocument();
+    expect(aboutLink).toBeInTheDocument();
+  });
+
+  it('provide keyboard accessible navigation', () => {
+    render(<Navigation {...mockNavigationProps} />);
+
+    // Navigation items should be keyboard accessible (have tabIndex)
+    const navItems = document.querySelectorAll('li[tabindex="0"]');
+    expect(navItems.length).toBeGreaterThan(0);
+  });
+
+  it('maintain proper link structure for screen readers', () => {
+    render(<Navigation {...mockNavigationProps} />);
+
+    // All links should have proper href attributes
+    const links = screen.getAllByRole('link');
+    links.forEach(link => {
+      expect(link).toHaveAttribute('href');
+    });
+  });
+
+  it('have accessible nested navigation structure', () => {
+    render(<Navigation {...mockNavigationProps} />);
+
+    // Check that nested items are also accessible
+    const teamLink = screen.getByRole('link', { name: /Team/i });
+    const historyLink = screen.getByRole('link', { name: /History/i });
+    
+    expect(teamLink).toBeInTheDocument();
+    expect(historyLink).toBeInTheDocument();
+  });
+});
+
+describe('Navigation Component Error Handling should', () => {
+  it('handle missing fields gracefully', () => {
+    render(<Navigation {...mockNavigationPropsEmpty} />);
+
+    // Should render empty hint
+    const emptyHint = screen.getByText('[Navigation]');
+    expect(emptyHint).toBeInTheDocument();
+  });
+
+  it('handle undefined children in navigation items', () => {
+    const propsWithNoChildren = {
+      ...mockNavigationPropsFlat,
+    };
+    render(<Navigation {...propsWithNoChildren} />);
+
+    // Should render items without errors
+    const page1Link = screen.getByRole('link', { name: /Page 1/i });
+    expect(page1Link).toBeInTheDocument();
+  });
+
+  it('handle missing NavigationTitle field', () => {
+    render(<Navigation {...mockNavigationPropsDisplayName} />);
+
+    // Should fall back to displayName when NavigationTitle is missing
+    expect(screen.getByText('Simple Link')).toBeInTheDocument();
+  });
+
+  it('handle multiple click events on mobile toggle', () => {
+    render(<Navigation {...mockNavigationProps} />);
+
+    // Click toggle multiple times
+    const hamburger = document.querySelector('.menu-humburger');
+    
+    fireEvent.click(hamburger!);
+    fireEvent.click(hamburger!);
+    fireEvent.click(hamburger!);
+
+    // Should toggle state multiple times without errors
+    expect(hamburger).toBeInTheDocument();
+  });
+
+  it('render without params', () => {
+    const propsWithoutParams = {
+      ...mockNavigationProps,
+      params: {} as any,
+    };
+    render(<Navigation {...propsWithoutParams} />);
+
+    // Should still render navigation
+    const homeLink = screen.getByRole('link', { name: /Home/i });
+    expect(homeLink).toBeInTheDocument();
+  });
+});

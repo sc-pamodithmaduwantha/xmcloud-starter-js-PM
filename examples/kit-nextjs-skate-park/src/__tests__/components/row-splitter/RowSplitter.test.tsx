@@ -184,3 +184,55 @@ describe('RowSplitter Component should', () => {
     expect(screen.getByTestId('placeholder-row-2-{*}')).toHaveTextContent('Placeholder: row-2-{*}');
   });
 });
+
+describe('RowSplitter Component Error Handling should', () => {
+  it('handle undefined EnabledPlaceholders', () => {
+    const propsWithUndefined = {
+      ...mockRowSplitterProps,
+      params: {
+        ...mockRowSplitterProps.params,
+        EnabledPlaceholders: undefined as any,
+      },
+    };
+    render(<RowSplitter {...propsWithUndefined} />);
+
+    // Should render without crashing
+    const rowSplitterDiv = document.querySelector('.row-splitter');
+    expect(rowSplitterDiv).toBeInTheDocument();
+  });
+
+  it('handle missing Styles parameters', () => {
+    render(<RowSplitter {...mockRowSplitterPropsNoStyles} />);
+
+    // Should render rows without custom styles
+    const rows = document.querySelectorAll('.row > div');
+    expect(rows).toHaveLength(3);
+  });
+
+  it('handle non-numeric placeholder values', () => {
+    const propsWithInvalidPlaceholders = {
+      ...mockRowSplitterProps,
+      params: {
+        ...mockRowSplitterProps.params,
+        EnabledPlaceholders: 'abc,xyz',
+      },
+    };
+    render(<RowSplitter {...propsWithInvalidPlaceholders} />);
+
+    // Should handle NaN gracefully
+    const rowSplitterDiv = document.querySelector('.row-splitter');
+    expect(rowSplitterDiv).toBeInTheDocument();
+  });
+
+  it('handle empty params object', () => {
+    const propsWithEmptyParams = {
+      ...mockRowSplitterProps,
+      params: {} as any,
+    };
+    render(<RowSplitter {...propsWithEmptyParams} />);
+
+    // Should render with defaults
+    const rowSplitterDiv = document.querySelector('.row-splitter');
+    expect(rowSplitterDiv).toBeInTheDocument();
+  });
+});

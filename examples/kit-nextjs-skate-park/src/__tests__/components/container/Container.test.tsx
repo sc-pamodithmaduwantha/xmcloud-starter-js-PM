@@ -108,3 +108,65 @@ describe('Container Component should', () => {
     expect(containerDiv).toHaveClass('component', 'container-default', 'container', 'other-class');
   });
 });
+
+describe('Container Component Error Handling should', () => {
+  it('handle missing BackgroundImage parameter', () => {
+    const propsWithoutBg = {
+      ...mockContainerPropsNoBackground,
+      params: {
+        ...mockContainerPropsNoBackground.params,
+        BackgroundImage: undefined,
+      },
+    };
+    render(<Container {...propsWithoutBg} />);
+
+    // Should render without background style
+    const contentDiv = document.querySelector('.component-content');
+    expect(contentDiv).toBeInTheDocument();
+  });
+
+  it('handle invalid mediaurl format', () => {
+    const propsWithInvalidUrl = {
+      ...mockContainerPropsWithBackground,
+      params: {
+        ...mockContainerPropsWithBackground.params,
+        BackgroundImage: 'invalid-format',
+      },
+    };
+    render(<Container {...propsWithInvalidUrl} />);
+
+    // Should render without crashing
+    const containerDiv = document.querySelector('.container-default');
+    expect(containerDiv).toBeInTheDocument();
+  });
+
+  it('handle empty DynamicPlaceholderId', () => {
+    const propsWithEmptyId = {
+      ...mockContainerPropsWithBackground,
+      params: {
+        ...mockContainerPropsWithBackground.params,
+        DynamicPlaceholderId: '',
+      },
+    };
+    render(<Container {...propsWithEmptyId} />);
+
+    // Should still render placeholder with empty id
+    const placeholder = screen.getByTestId('placeholder-container-');
+    expect(placeholder).toBeInTheDocument();
+  });
+
+  it('render without styles parameter', () => {
+    const propsWithoutStyles = {
+      ...mockContainerPropsWithBackground,
+      params: {
+        ...mockContainerPropsWithBackground.params,
+        styles: undefined as any,
+      },
+    };
+    render(<Container {...propsWithoutStyles} />);
+
+    // Should render with only default classes
+    const containerDiv = document.querySelector('.container-default');
+    expect(containerDiv).toBeInTheDocument();
+  });
+});

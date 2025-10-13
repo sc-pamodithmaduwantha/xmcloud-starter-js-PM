@@ -189,3 +189,32 @@ describe('Promo Component (WithText variant) should', () => {
     expect(promoTextElements.length).toBeGreaterThan(0);
   });
 });
+
+describe('Promo Component Accessibility should', () => {
+  it('have accessible images with alt text', () => {
+    render(<Promo {...mockPromoPropsDefault} />);
+
+    // Image should have alt text
+    const image = screen.getByRole('img', { name: /Promo Icon/i });
+    expect(image).toBeInTheDocument();
+    expect(image).toHaveAttribute('alt', 'Promo Icon');
+  });
+
+  it('have accessible links in Default variant', () => {
+    render(<Promo {...mockPromoPropsDefault} />);
+
+    // Link should be accessible
+    const link = screen.getByRole('link', { name: /Learn More/i });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', '/promo-link');
+  });
+
+  it('provide meaningful image descriptions', () => {
+    render(<Promo {...mockPromoPropsWithText} />);
+
+    // Images should have descriptive alt text
+    const image = screen.getByRole('img');
+    expect(image).toHaveAttribute('alt');
+    expect(image.getAttribute('alt')).toBeTruthy();
+  });
+});

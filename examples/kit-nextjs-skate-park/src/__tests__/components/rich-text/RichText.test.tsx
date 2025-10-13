@@ -89,3 +89,41 @@ describe('RichText Component should', () => {
     expect(contentDiv).toBeInTheDocument();
   });
 });
+
+describe('RichText Component Error Handling should', () => {
+  it('handle null fields gracefully', () => {
+    const propsWithNull = {
+      ...mockRichTextPropsNoFields,
+      fields: null as any,
+    };
+    render(<RichText {...propsWithNull} />);
+
+    // Should render empty hint without crashing
+    const emptyHint = screen.getByText('Rich text');
+    expect(emptyHint).toBeInTheDocument();
+  });
+
+  it('handle undefined params gracefully', () => {
+    const propsWithUndefinedParams = {
+      ...mockRichTextProps,
+      params: {} as any,
+    };
+    render(<RichText {...propsWithUndefinedParams} />);
+
+    // Should still render content
+    expect(screen.getByText('bold')).toBeInTheDocument();
+  });
+
+  it('render without styles parameter', () => {
+    const propsWithoutStyles = {
+      ...mockRichTextProps,
+      params: {
+        RenderingIdentifier: 'test-id',
+      } as any,
+    };
+    render(<RichText {...propsWithoutStyles} />);
+
+    // Should render without crashing
+    expect(screen.getByText('bold')).toBeInTheDocument();
+  });
+});

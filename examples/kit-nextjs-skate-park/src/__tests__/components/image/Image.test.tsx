@@ -121,3 +121,39 @@ describe('Banner Component should', () => {
     expect(contentDiv).toHaveStyle({ backgroundImage: "url('/banner-background.jpg')" });
   });
 });
+
+describe('Image Component Accessibility should', () => {
+  it('have alt text for images', () => {
+    render(<Image {...mockImagePropsComplete} />);
+
+    // Images must have alt text for screen readers
+    const image = screen.getByRole('img', { name: /Test Image Alt Text/i });
+    expect(image).toBeInTheDocument();
+    expect(image).toHaveAttribute('alt', 'Test Image Alt Text');
+  });
+
+  it('provide meaningful alt text', () => {
+    render(<Image {...mockImagePropsNoLink} />);
+
+    // Alt text should be descriptive
+    const image = screen.getByRole('img');
+    expect(image).toHaveAttribute('alt', 'Image without link');
+  });
+
+  it('have accessible links when wrapping images', () => {
+    render(<Image {...mockImagePropsComplete} />);
+
+    // Link should be accessible
+    const link = screen.getByRole('link');
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', '/test-link');
+  });
+
+  it('maintain alt text even when image is a link', () => {
+    render(<Image {...mockImagePropsComplete} />);
+
+    // Image inside link should still have alt text
+    const image = screen.getByRole('img');
+    expect(image).toHaveAttribute('alt');
+  });
+});

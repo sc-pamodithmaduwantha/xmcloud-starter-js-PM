@@ -112,3 +112,39 @@ describe('ContentBlock Component should', () => {
     expect(content).toBeInTheDocument();
   });
 });
+
+describe('ContentBlock Component Accessibility should', () => {
+  it('have proper heading structure with h2', () => {
+    render(<ContentBlock {...mockContentBlockProps} />);
+
+    // Use role-based selector for accessibility
+    const heading = screen.getByRole('heading', { level: 2 });
+    expect(heading).toBeInTheDocument();
+    expect(heading).toHaveTextContent('Content Block Heading');
+  });
+
+  it('maintain semantic heading hierarchy', () => {
+    render(<ContentBlock {...mockContentBlockPropsSimple} />);
+
+    // Verify heading is semantically correct
+    const heading = screen.getByRole('heading', { level: 2 });
+    expect(heading).toBeInTheDocument();
+    expect(heading.tagName).toBe('H2');
+  });
+
+  it('have accessible heading text', () => {
+    render(<ContentBlock {...mockContentBlockProps} />);
+
+    // Heading should be accessible by role and have text
+    const heading = screen.getByRole('heading', { name: /Content Block Heading/i });
+    expect(heading).toBeInTheDocument();
+  });
+
+  it('render rich content with proper heading hierarchy', () => {
+    render(<ContentBlock {...mockContentBlockPropsLong} />);
+
+    // Main heading should be h2
+    const mainHeading = screen.getByRole('heading', { level: 2, name: /Long Content Block/i });
+    expect(mainHeading).toBeInTheDocument();
+  });
+});

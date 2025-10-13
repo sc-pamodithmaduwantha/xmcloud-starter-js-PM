@@ -59,3 +59,30 @@ describe('Title Component should', () => {
     expect(linkElement).toHaveAttribute('href', '/test-page');
   });
 });
+
+describe('Title Component Accessibility should', () => {
+  it('have accessible links with proper href', () => {
+    render(<Title {...mockTitleProps} />);
+
+    // Link should be accessible by role
+    const link = screen.getByRole('link');
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', '/test-page');
+  });
+
+  it('have descriptive link text', () => {
+    render(<Title {...mockTitleProps} />);
+
+    // Link text should be meaningful for screen readers
+    const link = screen.getByRole('link', { name: /Test Title/i });
+    expect(link).toBeInTheDocument();
+  });
+
+  it('maintain accessibility with different content', () => {
+    render(<Title {...mockTitlePropsEditing} />);
+
+    // Should still be accessible with different content
+    const link = screen.getByRole('link');
+    expect(link).toHaveAccessibleName();
+  });
+});

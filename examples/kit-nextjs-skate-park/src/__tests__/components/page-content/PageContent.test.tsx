@@ -136,3 +136,40 @@ describe('PageContent Component should', () => {
     expect(fieldContentDiv).toBeInTheDocument();
   });
 });
+
+describe('PageContent Component Error Handling should', () => {
+  it('handle null Content field', () => {
+    const propsWithNullContent = {
+      ...mockPageContentProps,
+      fields: {
+        Content: null as any,
+      },
+    };
+    render(<PageContent {...propsWithNullContent} />);
+
+    // Should show placeholder
+    expect(screen.getByText('[Content]')).toBeInTheDocument();
+  });
+
+  it('handle undefined fields object', () => {
+    const propsWithUndefinedFields = {
+      ...mockPageContentProps,
+      fields: undefined as any,
+    };
+    render(<PageContent {...propsWithUndefinedFields} />);
+
+    // Should show placeholder
+    expect(screen.getByText('[Content]')).toBeInTheDocument();
+  });
+
+  it('render without params', () => {
+    const propsWithoutParams = {
+      ...mockPageContentProps,
+      params: {} as any,
+    };
+    render(<PageContent {...propsWithoutParams} />);
+
+    // Should still render content
+    expect(screen.getByText('formatting')).toBeInTheDocument();
+  });
+});

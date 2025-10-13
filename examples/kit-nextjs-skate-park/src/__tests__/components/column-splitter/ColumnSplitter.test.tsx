@@ -8,7 +8,7 @@ import {
   mockColumnSplitterPropsNoWidths,
   mockColumnSplitterPropsMax,
   mockColumnSplitterPropsEmpty,
-} from './mockProps';
+} from './ColumnSplitter.mockProps';
 
 describe('ColumnSplitter Component should', () => {
   it('render without crashing', () => {

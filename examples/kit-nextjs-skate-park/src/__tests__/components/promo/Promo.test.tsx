@@ -6,7 +6,7 @@ import {
   mockPromoPropsWithText,
   mockPromoPropsMinimal,
   mockPromoPropsNoFields,
-} from './mockProps';
+} from './Promo.mockProps';
 
 describe('Promo Component (Default variant) should', () => {
   it('render without crashing', () => {

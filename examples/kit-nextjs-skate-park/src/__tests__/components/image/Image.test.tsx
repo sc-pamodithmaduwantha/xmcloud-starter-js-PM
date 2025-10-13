@@ -6,7 +6,7 @@ import {
   mockImagePropsNoLink,
   mockImagePropsNoFields,
   mockBannerProps,
-} from './mockProps';
+} from './Image.mockProps';
 
 describe('Image Component should', () => {
   it('render without crashing', () => {

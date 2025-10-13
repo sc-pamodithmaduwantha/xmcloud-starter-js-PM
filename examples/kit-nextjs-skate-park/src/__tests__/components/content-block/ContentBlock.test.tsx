@@ -6,7 +6,7 @@ import {
   mockContentBlockPropsSimple,
   mockContentBlockPropsLong,
   mockContentBlockPropsEmpty,
-} from './mockProps';
+} from './ContentBlock.mockProps';
 
 describe('ContentBlock Component should', () => {
   it('render without crashing', () => {

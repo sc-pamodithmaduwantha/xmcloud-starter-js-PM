@@ -6,7 +6,7 @@ import {
   mockLinkListPropsSingle,
   mockLinkListPropsEven,
   mockLinkListPropsNoData,
-} from './mockProps';
+} from './LinkList.mockProps';
 
 describe('LinkList Component should', () => {
   it('render without crashing', () => {

@@ -71,3 +71,18 @@ export const mockContainerPropsDifferentPlaceholder = {
     DynamicPlaceholderId: '99',
   },
 };
+
+// Mock props with empty fields (edge case)
+export const mockContainerPropsEmpty = {
+  rendering: {
+    componentName: 'Container',
+    dataSource: '',
+    uid: 'container-empty-uid',
+  },
+  params: {
+    styles: '',
+    RenderingIdentifier: 'container-empty-id',
+    DynamicPlaceholderId: '0',
+  },
+};
+

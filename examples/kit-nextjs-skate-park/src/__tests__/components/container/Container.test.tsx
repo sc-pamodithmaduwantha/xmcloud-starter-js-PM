@@ -7,7 +7,8 @@ import {
   mockContainerPropsWithWrapper,
   mockContainerPropsWithoutWrapper,
   mockContainerPropsDifferentPlaceholder,
-} from './mockProps';
+  mockContainerPropsEmpty,
+} from './Container.mockProps';
 
 describe('Container Component should', () => {
   it('render without crashing', () => {

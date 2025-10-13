@@ -6,7 +6,7 @@ import {
   mockRichTextPropsSimple,
   mockRichTextPropsEmpty,
   mockRichTextPropsNoFields,
-} from './mockProps';
+} from './RichText.mockProps';
 
 describe('RichText Component should', () => {
   it('render without crashing', () => {

@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { Default as Title } from '../../../components/title/Title';
-import { mockTitleProps, mockTitlePropsEditing, mockTitlePropsNoFields } from './mockProps';
+import { mockTitleProps, mockTitlePropsEditing, mockTitlePropsNoFields } from './Title.mockProps';
 
 describe('Title Component should', () => {
   it('render without crashing', () => {

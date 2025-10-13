@@ -8,7 +8,7 @@ import {
   mockRowSplitterPropsNoStyles,
   mockRowSplitterPropsMax,
   mockRowSplitterPropsEmpty,
-} from './mockProps';
+} from './RowSplitter.mockProps';
 
 describe('RowSplitter Component should', () => {
   it('render without crashing', () => {

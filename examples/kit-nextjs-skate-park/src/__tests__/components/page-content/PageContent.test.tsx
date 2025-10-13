@@ -7,7 +7,7 @@ import {
   mockPageContentPropsSimple,
   mockPageContentPropsNoContent,
   mockPageContentPropsEmpty,
-} from './mockProps';
+} from './PageContent.mockProps';
 
 describe('PageContent Component should', () => {
   it('render without crashing', () => {

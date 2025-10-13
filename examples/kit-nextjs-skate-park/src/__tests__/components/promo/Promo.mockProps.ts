@@ -114,3 +114,4 @@ export const mockPromoPropsNoFields = {
     RenderingIdentifier: 'promo-no-fields-id',
   },
 } as any;
+

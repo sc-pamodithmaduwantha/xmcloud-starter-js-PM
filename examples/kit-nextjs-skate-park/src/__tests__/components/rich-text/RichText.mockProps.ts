@@ -66,3 +66,4 @@ export const mockRichTextPropsNoFields = {
     RenderingIdentifier: 'richtext-no-fields-id',
   },
 } as any;
+

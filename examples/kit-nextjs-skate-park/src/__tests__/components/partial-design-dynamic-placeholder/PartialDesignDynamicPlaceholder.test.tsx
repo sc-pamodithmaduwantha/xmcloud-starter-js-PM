@@ -7,7 +7,7 @@ import {
   mockPartialDesignPropsComplex,
   mockPartialDesignPropsNoSig,
   mockPartialDesignPropsEmpty,
-} from './mockProps';
+} from './PartialDesignDynamicPlaceholder.mockProps';
 
 describe('PartialDesignDynamicPlaceholder Component should', () => {
   it('render without crashing', () => {

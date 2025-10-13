@@ -6,7 +6,7 @@ import {
   mockNavigationPropsFlat,
   mockNavigationPropsDisplayName,
   mockNavigationPropsEmpty,
-} from './mockProps';
+} from './Navigation.mockProps';
 
 describe('Navigation Component should', () => {
   it('render without crashing', () => {

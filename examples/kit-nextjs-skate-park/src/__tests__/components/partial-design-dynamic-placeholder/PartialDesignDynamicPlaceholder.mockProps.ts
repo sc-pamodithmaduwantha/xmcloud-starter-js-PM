@@ -77,3 +77,4 @@ export const mockPartialDesignPropsEmpty = {
     RenderingIdentifier: 'partialdesign-empty-id',
   },
 };
+

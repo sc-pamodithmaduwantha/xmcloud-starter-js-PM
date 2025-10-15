@@ -225,3 +225,62 @@ describe('Navigation Component Error Handling should', () => {
     expect(screen.getByRole('link', { name: /Home/i })).toBeInTheDocument();
   });
 });
+
+describe('Navigation Component Edge Cases should', () => {
+  it('render correct DOM structure', () => {
+    render(<Navigation {...mockNavigationProps} />);
+    const container = getNavigationDiv();
+    expect(container).toBeInTheDocument();
+    expect(container).toHaveClass('component', 'navigation');
+    
+    const contentDiv = container?.querySelector('.component-content');
+    expect(contentDiv).toBeInTheDocument();
+    
+    const navElement = contentDiv?.querySelector('nav');
+    expect(navElement).toBeInTheDocument();
+    
+    const menuList = navElement?.querySelector('ul.clearfix');
+    expect(menuList).toBeInTheDocument();
+  });
+
+  it('handle missing params gracefully', () => {
+    const propsWithoutParams = {
+      ...mockNavigationProps,
+      params: {} as any,
+    };
+    
+    render(<Navigation {...propsWithoutParams} />);
+    expect(screen.getByText('Home')).toBeInTheDocument();
+  });
+
+  it('handle empty fields object', () => {
+    const propsWithEmptyFields = {
+      ...mockNavigationProps,
+      fields: {} as any,
+    };
+    
+    render(<Navigation {...propsWithEmptyFields} />);
+    expect(screen.getByText('[Navigation]')).toBeInTheDocument();
+  });
+
+  it('handle single navigation item with proper structure', () => {
+    const propsWithSingleItem = {
+      ...mockNavigationProps,
+      fields: {
+        Home: {
+          Id: 'home-id',
+          DisplayName: 'Home',
+          NavigationTitle: { value: 'Home' },
+          Href: '/',
+          Children: [],
+          Styles: ['home-style'],
+        },
+      },
+    };
+    
+    render(<Navigation {...propsWithSingleItem} />);
+    expect(screen.getByText('Home')).toBeInTheDocument();
+    const navElement = screen.getByRole('navigation');
+    expect(navElement).toBeInTheDocument();
+  });
+});

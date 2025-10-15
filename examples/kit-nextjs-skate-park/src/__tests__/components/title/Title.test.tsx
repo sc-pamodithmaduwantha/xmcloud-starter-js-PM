@@ -62,3 +62,62 @@ describe('Title Component Accessibility should', () => {
     expect(screen.getByRole('link')).toHaveAccessibleName();
   });
 });
+
+describe('Title Component Edge Cases should', () => {
+  it('render correct DOM structure', () => {
+    render(<Title {...mockTitleProps} />);
+    const container = getTitleElement('Test Title');
+    expect(container).toBeInTheDocument();
+    expect(container).toHaveClass('component', 'title');
+    
+    const contentDiv = container?.querySelector('.component-content');
+    expect(contentDiv).toBeInTheDocument();
+    
+    const fieldTitle = contentDiv?.querySelector('.field-title');
+    expect(fieldTitle).toBeInTheDocument();
+  });
+
+  it('handle missing params gracefully', () => {
+    const propsWithoutParams = {
+      ...mockTitleProps,
+      params: {} as any,
+    };
+    
+    render(<Title {...propsWithoutParams} />);
+    expect(screen.getByText('Test Title')).toBeInTheDocument();
+  });
+
+  it('handle null fields gracefully', () => {
+    const propsWithNullFields = {
+      ...mockTitleProps,
+      fields: null as any,
+    };
+    
+    render(<Title {...propsWithNullFields} />);
+    const component = document.querySelector('.component.title');
+    expect(component).toBeInTheDocument();
+  });
+
+  it('handle undefined fields gracefully', () => {
+    const propsWithUndefinedFields = {
+      ...mockTitleProps,
+      fields: undefined as any,
+    };
+    
+    render(<Title {...propsWithUndefinedFields} />);
+    const component = document.querySelector('.component.title');
+    expect(component).toBeInTheDocument();
+  });
+
+  it('handle missing rendering identifier', () => {
+    const propsWithoutId = {
+      ...mockTitleProps,
+      params: {
+        styles: 'test-styles',
+      } as any,
+    };
+    
+    render(<Title {...propsWithoutId} />);
+    expect(screen.getByText('Test Title')).toBeInTheDocument();
+  });
+});

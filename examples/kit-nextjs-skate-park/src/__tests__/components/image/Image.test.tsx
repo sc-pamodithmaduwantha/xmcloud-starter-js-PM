@@ -114,3 +114,67 @@ describe('Image Component Accessibility should', () => {
     expect(screen.getByRole('img')).toHaveAttribute('alt');
   });
 });
+
+describe('Image Component Edge Cases should', () => {
+  it('render correct DOM structure', () => {
+    render(<Image {...mockImagePropsComplete} />);
+    const container = getImageComponent('Test Image Alt Text');
+    expect(container).toBeInTheDocument();
+    expect(container).toHaveClass('component', 'image');
+    
+    const contentDiv = container?.querySelector('.component-content');
+    expect(contentDiv).toBeInTheDocument();
+    
+    const imageElement = screen.getByAltText('Test Image Alt Text');
+    expect(imageElement).toBeInTheDocument();
+  });
+
+  it('handle missing params gracefully', () => {
+    const propsWithoutParams = {
+      ...mockImagePropsComplete,
+      params: {} as any,
+    };
+    
+    render(<Image {...propsWithoutParams} />);
+    expect(screen.getByAltText('Test Image Alt Text')).toBeInTheDocument();
+  });
+
+  it('handle null fields gracefully', () => {
+    const propsWithNullFields = {
+      ...mockImagePropsComplete,
+      fields: null as any,
+    };
+    
+    render(<Image {...propsWithNullFields} />);
+    const component = document.querySelector('.component.image');
+    expect(component).toBeInTheDocument();
+    expect(screen.getByText('Image')).toBeInTheDocument();
+  });
+
+  it('handle undefined fields gracefully', () => {
+    const propsWithUndefinedFields = {
+      ...mockImagePropsComplete,
+      fields: undefined as any,
+    };
+    
+    render(<Image {...propsWithUndefinedFields} />);
+    const component = document.querySelector('.component.image');
+    expect(component).toBeInTheDocument();
+    expect(screen.getByText('Image')).toBeInTheDocument();
+  });
+
+  it('handle missing image field', () => {
+    const propsWithoutImage = {
+      ...mockImagePropsComplete,
+      fields: {
+        ImageCaption: mockImagePropsComplete.fields.ImageCaption,
+        TargetUrl: mockImagePropsComplete.fields.TargetUrl,
+      } as any,
+    };
+    
+    render(<Image {...propsWithoutImage} />);
+    const component = document.querySelector('.component.image');
+    expect(component).toBeInTheDocument();
+    expect(screen.getByText('This is a test image caption')).toBeInTheDocument();
+  });
+});

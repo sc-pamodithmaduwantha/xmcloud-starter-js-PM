@@ -151,3 +151,67 @@ describe('Promo Component Accessibility should', () => {
     expect(image.getAttribute('alt')).toBeTruthy();
   });
 });
+
+describe('Promo Component Edge Cases should', () => {
+  it('render correct DOM structure', () => {
+    render(<Promo {...mockPromoPropsDefault} />);
+    const container = getPromoDiv();
+    expect(container).toBeInTheDocument();
+    expect(container).toHaveClass('component', 'promo');
+    
+    const contentDiv = container?.querySelector('.component-content');
+    expect(contentDiv).toBeInTheDocument();
+    
+    const iconDiv = contentDiv?.querySelector('.field-promoicon');
+    expect(iconDiv).toBeInTheDocument();
+    
+    const textDiv = contentDiv?.querySelector('.field-promotext');
+    expect(textDiv).toBeInTheDocument();
+  });
+
+  it('handle missing params gracefully', () => {
+    const propsWithoutParams = {
+      ...mockPromoPropsDefault,
+      params: {} as any,
+    };
+    
+    render(<Promo {...propsWithoutParams} />);
+    expect(screen.getByAltText('Promo Icon')).toBeInTheDocument();
+  });
+
+  it('handle null fields gracefully', () => {
+    const propsWithNullFields = {
+      ...mockPromoPropsDefault,
+      fields: null as any,
+    };
+    
+    render(<Promo {...propsWithNullFields} />);
+    expect(screen.getByText('Promo')).toBeInTheDocument();
+  });
+
+  it('handle undefined fields gracefully', () => {
+    const propsWithUndefinedFields = {
+      ...mockPromoPropsDefault,
+      fields: undefined as any,
+    };
+    
+    render(<Promo {...propsWithUndefinedFields} />);
+    expect(screen.getByText('Promo')).toBeInTheDocument();
+  });
+
+  it('handle missing PromoLink field', () => {
+    const propsWithoutLink = {
+      ...mockPromoPropsDefault,
+      fields: {
+        PromoIcon: mockPromoPropsDefault.fields.PromoIcon,
+        PromoText: mockPromoPropsDefault.fields.PromoText,
+        PromoText2: mockPromoPropsDefault.fields.PromoText2,
+      } as any,
+    };
+    
+    render(<Promo {...propsWithoutLink} />);
+    expect(screen.getByAltText('Promo Icon')).toBeInTheDocument();
+    const text = screen.getByText(/promotional text/i);
+    expect(text).toBeInTheDocument();
+  });
+});

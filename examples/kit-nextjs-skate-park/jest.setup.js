@@ -55,7 +55,10 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     if (field?.value?.href) {
       return <a href={field.value.href} {...props}>{children || field.value.text}</a>;
     }
-    return <span {...props}>{children || field.value?.text}</span>;
+    if (children) {
+      return <span {...props}>{children}</span>;
+    }
+    return <span {...props}>{field?.value?.text || ''}</span>;
   },
   Placeholder: ({ name, rendering, ...props }) => (
     <div data-testid={`placeholder-${name}`} {...props}>

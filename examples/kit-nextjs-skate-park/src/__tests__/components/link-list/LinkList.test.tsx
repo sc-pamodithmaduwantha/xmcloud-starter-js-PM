@@ -156,3 +156,72 @@ describe('LinkList Component Accessibility should', () => {
     });
   });
 });
+
+describe('LinkList Component Edge Cases should', () => {
+  it('render correct DOM structure', () => {
+    render(<LinkList {...mockLinkListProps} />);
+    const container = getLinkListDiv();
+    expect(container).toBeInTheDocument();
+    expect(container).toHaveClass('component', 'link-list');
+    
+    const contentDiv = container?.querySelector('.component-content');
+    expect(contentDiv).toBeInTheDocument();
+    
+    const title = contentDiv?.querySelector('h3');
+    expect(title).toBeInTheDocument();
+    expect(title).toHaveTextContent('Link List Title');
+    
+    const list = contentDiv?.querySelector('ul');
+    expect(list).toBeInTheDocument();
+  });
+
+  it('handle missing params gracefully', () => {
+    const propsWithoutParams = {
+      ...mockLinkListProps,
+      params: {} as any,
+    };
+    
+    render(<LinkList {...propsWithoutParams} />);
+    expect(screen.getByText('Link List Title')).toBeInTheDocument();
+  });
+
+  it('handle null fields gracefully', () => {
+    const propsWithNullFields = {
+      ...mockLinkListProps,
+      fields: null as any,
+    };
+    
+    render(<LinkList {...propsWithNullFields} />);
+    expect(screen.getByText('Link List')).toBeInTheDocument();
+  });
+
+  it('handle undefined fields gracefully', () => {
+    const propsWithUndefinedFields = {
+      ...mockLinkListProps,
+      fields: undefined as any,
+    };
+    
+    render(<LinkList {...propsWithUndefinedFields} />);
+    expect(screen.getByText('Link List')).toBeInTheDocument();
+  });
+
+  it('handle empty links array', () => {
+    const propsWithEmptyLinks = {
+      ...mockLinkListProps,
+      fields: {
+        data: {
+          datasource: {
+            field: mockLinkListProps.fields.data.datasource.field,
+            children: {
+              results: [],
+            },
+          },
+        },
+      },
+    };
+    
+    render(<LinkList {...propsWithEmptyLinks} />);
+    expect(screen.getByText('Link List Title')).toBeInTheDocument();
+    expect(document.querySelector('ul')).toBeInTheDocument();
+  });
+});

@@ -173,22 +173,30 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
   const buttonIcon: EnumValues<typeof IconName> | undefined =
     iconName || (buttonLink?.value?.linktype as EnumValues<typeof IconName>) || undefined;
 
-  // Determine if we should show an icon
-  const shouldShowIcon = !!buttonIcon;
+  // Default icon size for buttons if not provided
+  const iconClass = iconClassName || 'h-4 w-4';
 
   if (fields) {
     return (
       <Button asChild variant={variant} size={size}>
         {isEditing ? (
-          <Link field={buttonLink} editable={true} />
+          <span className="inline-flex items-center gap-2">
+            {iconPosition === IconPosition.LEADING && buttonIcon && (
+              <Icon iconName={buttonIcon} className={iconClass} isAriaHidden={ariaHidden} />
+            )}
+            <Link field={buttonLink} editable={true} />
+            {iconPosition !== IconPosition.LEADING && buttonIcon && (
+              <Icon iconName={buttonIcon} className={iconClass} isAriaHidden={ariaHidden} />
+            )}
+          </span>
         ) : (
           <Link editable={isEditing} field={buttonLink}>
-            {iconPosition === IconPosition.LEADING && (
-              <Icon iconName={buttonIcon!} className={iconClassName} isAriaHidden={ariaHidden} />
+            {iconPosition === IconPosition.LEADING && buttonIcon && (
+              <Icon iconName={buttonIcon} className={iconClass} isAriaHidden={ariaHidden} />
             )}
             {buttonLink?.value?.text}
-            {iconPosition !== IconPosition.LEADING && (
-              <Icon iconName={buttonIcon!} className={iconClassName} isAriaHidden={ariaHidden} />
+            {iconPosition !== IconPosition.LEADING && buttonIcon && (
+              <Icon iconName={buttonIcon} className={iconClass} isAriaHidden={ariaHidden} />
             )}
           </Link>
         )}

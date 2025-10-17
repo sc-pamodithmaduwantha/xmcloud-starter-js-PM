@@ -34,11 +34,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "a3e4109b-dde9-433f-8279-40f8239c4930"
+      Value: "a3e4109b-dde9-433f-8279-40f8239c4931"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\anton.kechashin@sitecore.com
+        sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20250717T134124Z
+      Value: 20251016T000000Z

@@ -6,7 +6,9 @@ Path: "/sitecore/templates/Project/click-click-launch/Components/Promos/Subscrip
 SharedFields:
 - ID: "1172f251-dad4-4efb-a329-0c63500e4f1e"
   Hint: __Masters
-  Value: "{D2C0BABB-51E4-4E13-9305-6A1107962413}"
+  Value: |
+    {D2C0BABB-51E4-4E13-9305-6A1107962413}
+    {A5A83E1E-A63E-4DA3-87D2-25182CED85B7}
 Languages:
 - Language: en
   Versions:
@@ -25,11 +27,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "9cb0063f-6160-46e1-bb9e-a71a6c622674"
+      Value: "9cb0063f-6160-46e1-bb9e-a71a6c622675"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20250326T155908Z
+      Value: 20251016T000000Z

@@ -176,9 +176,7 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
 
   // Only set a button icon if one is explicitly provided
   const buttonIcon: EnumValues<typeof IconName> | undefined =
-    iconName ||
-    (buttonLink?.value?.linktype as EnumValues<typeof IconName>) ||
-    undefined;
+    iconName || (buttonLink?.value?.linktype as EnumValues<typeof IconName>) || undefined;
 
   // Determine if we should show an icon
   const shouldShowIcon = !!buttonIcon;
@@ -197,14 +195,22 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
               {iconPosition === IconPosition.LEADING && shouldShowIcon && (
                 <>
                   {console.log('Rendering LEADING icon in editing mode')}
-                  <Icon iconName={buttonIcon!} className={iconClassName} isAriaHidden={ariaHidden} />
+                  <Icon
+                    iconName={buttonIcon!}
+                    className={iconClassName}
+                    isAriaHidden={ariaHidden}
+                  />
                 </>
               )}
               <Link field={buttonLink} editable={true} />
               {iconPosition !== IconPosition.LEADING && shouldShowIcon && (
                 <>
                   {console.log('Rendering TRAILING icon in editing mode')}
-                  <Icon iconName={buttonIcon!} className={iconClassName} isAriaHidden={ariaHidden} />
+                  <Icon
+                    iconName={buttonIcon!}
+                    className={iconClassName}
+                    isAriaHidden={ariaHidden}
+                  />
                 </>
               )}
             </span>
@@ -216,14 +222,22 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
               {iconPosition === IconPosition.LEADING && shouldShowIcon && (
                 <>
                   {console.log('Rendering LEADING icon in normal mode')}
-                  <Icon iconName={buttonIcon!} className={iconClassName} isAriaHidden={ariaHidden} />
+                  <Icon
+                    iconName={buttonIcon!}
+                    className={iconClassName}
+                    isAriaHidden={ariaHidden}
+                  />
                 </>
               )}
               {buttonLink?.value?.text}
               {iconPosition !== IconPosition.LEADING && shouldShowIcon && (
                 <>
                   {console.log('Rendering TRAILING icon in normal mode')}
-                  <Icon iconName={buttonIcon!} className={iconClassName} isAriaHidden={ariaHidden} />
+                  <Icon
+                    iconName={buttonIcon!}
+                    className={iconClassName}
+                    isAriaHidden={ariaHidden}
+                  />
                 </>
               )}
             </Link>

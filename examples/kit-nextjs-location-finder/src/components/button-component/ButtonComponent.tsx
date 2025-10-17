@@ -160,88 +160,39 @@ const EditableButton = (props: {
 };
 
 const Default = (props: ButtonComponentProps): JSX.Element | null => {
-  console.log('=== ButtonComponent Default - Start ===');
   const { fields, params, page } = props;
   const { buttonLink, icon, isAriaHidden = true } = fields || {};
   const { size, iconPosition = 'trailing', iconClassName, isPageEditing } = params || {};
   const variant = props?.variant || ButtonVariants.DEFAULT;
-  console.log('Button variant:', variant);
-  console.log('Icon from fields:', icon);
-  console.log('Icon value:', icon?.value);
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
   const isEditing = isPageEditing || page?.mode?.isEditing;
-  console.log('isEditing:', isEditing);
   if (!isEditing && !linkIsValid(buttonLink)) return null;
 
   // Only set a button icon if one is explicitly provided
-  const buttonIcon: EnumValues<typeof IconName> | undefined =
-    iconName || (buttonLink?.value?.linktype as EnumValues<typeof IconName>) || undefined;
+const buttonIcon: EnumValues<typeof IconName> | undefined =
+  iconName || 
+  (buttonLink?.value?.linktype as EnumValues<typeof IconName>) || 
+  undefined;
 
-  // Determine if we should show an icon
-  const shouldShowIcon = !!buttonIcon;
-  console.log('buttonIcon:', buttonIcon);
-  console.log('shouldShowIcon:', shouldShowIcon);
-  console.log('iconPosition:', iconPosition);
+// Determine if we should show an icon
+const shouldShowIcon = !!buttonIcon;
 
   if (fields) {
-    console.log('Rendering button with fields');
     return (
       <Button asChild variant={variant} size={size}>
         {isEditing ? (
-          <>
-            {console.log('=== EDITING MODE PATH ===')}
-            <span className="flex items-center gap-2">
-              {iconPosition === IconPosition.LEADING && shouldShowIcon && (
-                <>
-                  {console.log('Rendering LEADING icon in editing mode')}
-                  <Icon
-                    iconName={buttonIcon!}
-                    className={iconClassName}
-                    isAriaHidden={ariaHidden}
-                  />
-                </>
-              )}
-              <Link field={buttonLink} editable={true} />
-              {iconPosition !== IconPosition.LEADING && shouldShowIcon && (
-                <>
-                  {console.log('Rendering TRAILING icon in editing mode')}
-                  <Icon
-                    iconName={buttonIcon!}
-                    className={iconClassName}
-                    isAriaHidden={ariaHidden}
-                  />
-                </>
-              )}
-            </span>
-          </>
+          <Link field={buttonLink} editable={true} />
         ) : (
-          <>
-            {console.log('=== NORMAL MODE PATH ===')}
-            <Link editable={isEditing} field={buttonLink}>
-              {iconPosition === IconPosition.LEADING && shouldShowIcon && (
-                <>
-                  {console.log('Rendering LEADING icon in normal mode')}
-                  <Icon
-                    iconName={buttonIcon!}
-                    className={iconClassName}
-                    isAriaHidden={ariaHidden}
-                  />
-                </>
-              )}
-              {buttonLink?.value?.text}
-              {iconPosition !== IconPosition.LEADING && shouldShowIcon && (
-                <>
-                  {console.log('Rendering TRAILING icon in normal mode')}
-                  <Icon
-                    iconName={buttonIcon!}
-                    className={iconClassName}
-                    isAriaHidden={ariaHidden}
-                  />
-                </>
-              )}
-            </Link>
-          </>
+          <Link editable={isEditing} field={buttonLink}>
+            {iconPosition === IconPosition.LEADING && (
+              <Icon iconName={buttonIcon!} className={iconClassName} isAriaHidden={ariaHidden} />
+            )}
+            {buttonLink?.value?.text}
+            {iconPosition !== IconPosition.LEADING && (
+              <Icon iconName={buttonIcon!} className={iconClassName} isAriaHidden={ariaHidden} />
+            )}
+          </Link>
         )}
       </Button>
     );

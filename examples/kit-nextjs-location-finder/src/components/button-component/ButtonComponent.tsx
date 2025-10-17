@@ -164,6 +164,7 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
   const { buttonLink, icon, isAriaHidden = true } = fields || {};
   const { size, iconPosition = 'trailing', iconClassName, isPageEditing } = params || {};
   const { variant } = props || ButtonVariants.DEFAULT;
+  console.log('Button variant:', variant);
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
   const isEditing = isPageEditing || page?.mode?.isEditing;

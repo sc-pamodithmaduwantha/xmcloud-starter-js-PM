@@ -170,13 +170,11 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
   if (!isEditing && !linkIsValid(buttonLink)) return null;
 
   // Only set a button icon if one is explicitly provided
-const buttonIcon: EnumValues<typeof IconName> | undefined =
-  iconName || 
-  (buttonLink?.value?.linktype as EnumValues<typeof IconName>) || 
-  undefined;
+  const buttonIcon: EnumValues<typeof IconName> | undefined =
+    iconName || (buttonLink?.value?.linktype as EnumValues<typeof IconName>) || undefined;
 
-// Determine if we should show an icon
-const shouldShowIcon = !!buttonIcon;
+  // Determine if we should show an icon
+  const shouldShowIcon = !!buttonIcon;
 
   if (fields) {
     return (

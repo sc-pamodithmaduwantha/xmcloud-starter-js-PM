@@ -169,11 +169,9 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
   const isEditing = isPageEditing || page?.mode?.isEditing;
   if (!isEditing && !linkIsValid(buttonLink)) return null;
 
-  // Only set a button icon if one is explicitly provided
   const buttonIcon: EnumValues<typeof IconName> | undefined =
     iconName || (buttonLink?.value?.linktype as EnumValues<typeof IconName>) || undefined;
 
-  // Default icon size for buttons if not provided
   const iconClass = iconClassName || 'h-4 w-4';
 
   if (fields) {

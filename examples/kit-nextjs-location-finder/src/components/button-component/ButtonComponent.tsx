@@ -12,7 +12,7 @@ import { Default as ImageWrapper } from '@/components/image/ImageWrapper.dev';
 import { ImageField } from '@sitecore-content-sdk/nextjs';
 import { ButtonVariants, ButtonSize } from '@/enumerations/ButtonStyle.enum';
 /**
- * Model used for Sitecore Component integration
+ * Model used for Sitecore Component integration *
  */
 
 export type ButtonFields = {

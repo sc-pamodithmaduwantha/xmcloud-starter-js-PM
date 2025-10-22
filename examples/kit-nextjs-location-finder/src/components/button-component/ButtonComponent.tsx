@@ -13,7 +13,7 @@ import { ImageField } from '@sitecore-content-sdk/nextjs';
 import { ButtonVariants, ButtonSize } from '@/enumerations/ButtonStyle.enum';
 import { useState } from 'react'; // Unused import
 /**
- * Model used for Sitecore Component integration
+ * Model used for Sitecore Component integration *
  */
 
 export type ButtonFields = {

@@ -74,28 +74,61 @@ describe('Container Component should', () => {
 
   it('handle multiple classes in styles parameter', () => {
     render(<Container {...mockContainerPropsWithWrapper} />);
-    expect(getContainerDiv()).toHaveClass('component', 'container-default', 'container', 'other-class');
+    expect(getContainerDiv()).toHaveClass(
+      'component',
+      'container-default',
+      'container',
+      'other-class'
+    );
   });
 });
 
 describe('Container Component Error Handling should', () => {
   it('handle missing BackgroundImage parameter', () => {
-    render(<Container {...{ ...mockContainerPropsNoBackground, params: { ...mockContainerPropsNoBackground.params, BackgroundImage: undefined } }} />);
+    render(
+      <Container
+        {...{
+          ...mockContainerPropsNoBackground,
+          params: { ...mockContainerPropsNoBackground.params, BackgroundImage: undefined },
+        }}
+      />
+    );
     expect(getContentDiv()).toBeInTheDocument();
   });
 
   it('handle invalid mediaurl format', () => {
-    render(<Container {...{ ...mockContainerPropsWithBackground, params: { ...mockContainerPropsWithBackground.params, BackgroundImage: 'invalid-format' } }} />);
+    render(
+      <Container
+        {...{
+          ...mockContainerPropsWithBackground,
+          params: { ...mockContainerPropsWithBackground.params, BackgroundImage: 'invalid-format' },
+        }}
+      />
+    );
     expect(getContainerDiv()).toBeInTheDocument();
   });
 
   it('handle empty DynamicPlaceholderId', () => {
-    render(<Container {...{ ...mockContainerPropsWithBackground, params: { ...mockContainerPropsWithBackground.params, DynamicPlaceholderId: '' } }} />);
+    render(
+      <Container
+        {...{
+          ...mockContainerPropsWithBackground,
+          params: { ...mockContainerPropsWithBackground.params, DynamicPlaceholderId: '' },
+        }}
+      />
+    );
     expect(screen.getByTestId('placeholder-container-')).toBeInTheDocument();
   });
 
   it('render without styles parameter', () => {
-    render(<Container {...{ ...mockContainerPropsWithBackground, params: { ...mockContainerPropsWithBackground.params, styles: undefined as any } }} />);
+    render(
+      <Container
+        {...{
+          ...mockContainerPropsWithBackground,
+          params: { ...mockContainerPropsWithBackground.params, styles: undefined as any },
+        }}
+      />
+    );
     expect(getContainerDiv()).toBeInTheDocument();
   });
 });

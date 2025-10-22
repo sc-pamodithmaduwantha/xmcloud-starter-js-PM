@@ -151,7 +151,7 @@ describe('LinkList Component Accessibility should', () => {
 
   it('provide meaningful link text', () => {
     render(<LinkList {...mockLinkListProps} />);
-    screen.getAllByRole('link').forEach(link => {
+    screen.getAllByRole('link').forEach((link) => {
       expect(link).toHaveAccessibleName();
     });
   });
@@ -163,14 +163,14 @@ describe('LinkList Component Edge Cases should', () => {
     const container = getLinkListDiv();
     expect(container).toBeInTheDocument();
     expect(container).toHaveClass('component', 'link-list');
-    
+
     const contentDiv = container?.querySelector('.component-content');
     expect(contentDiv).toBeInTheDocument();
-    
+
     const title = contentDiv?.querySelector('h3');
     expect(title).toBeInTheDocument();
     expect(title).toHaveTextContent('Link List Title');
-    
+
     const list = contentDiv?.querySelector('ul');
     expect(list).toBeInTheDocument();
   });
@@ -180,7 +180,7 @@ describe('LinkList Component Edge Cases should', () => {
       ...mockLinkListProps,
       params: {} as any,
     };
-    
+
     render(<LinkList {...propsWithoutParams} />);
     expect(screen.getByText('Link List Title')).toBeInTheDocument();
   });
@@ -190,7 +190,7 @@ describe('LinkList Component Edge Cases should', () => {
       ...mockLinkListProps,
       fields: null as any,
     };
-    
+
     render(<LinkList {...propsWithNullFields} />);
     expect(screen.getByText('Link List')).toBeInTheDocument();
   });
@@ -200,7 +200,7 @@ describe('LinkList Component Edge Cases should', () => {
       ...mockLinkListProps,
       fields: undefined as any,
     };
-    
+
     render(<LinkList {...propsWithUndefinedFields} />);
     expect(screen.getByText('Link List')).toBeInTheDocument();
   });
@@ -219,7 +219,7 @@ describe('LinkList Component Edge Cases should', () => {
         },
       },
     };
-    
+
     render(<LinkList {...propsWithEmptyLinks} />);
     expect(screen.getByText('Link List Title')).toBeInTheDocument();
     expect(document.querySelector('ul')).toBeInTheDocument();

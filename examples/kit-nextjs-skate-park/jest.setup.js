@@ -53,7 +53,11 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
   },
   Link: ({ field, children, ...props }) => {
     if (field?.value?.href) {
-      return <a href={field.value.href} {...props}>{children || field.value.text}</a>;
+      return (
+        <a href={field.value.href} {...props}>
+          {children || field.value.text}
+        </a>
+      );
     }
     if (children) {
       return <span {...props}>{children}</span>;

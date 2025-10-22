@@ -10,7 +10,8 @@ import {
 
 const getNavigationDiv = () => document.querySelector('.navigation');
 const getNavElement = () => document.querySelector('nav');
-const getMobileCheckbox = () => document.querySelector('input[type="checkbox"].menu-mobile-navigate') as HTMLInputElement;
+const getMobileCheckbox = () =>
+  document.querySelector('input[type="checkbox"].menu-mobile-navigate') as HTMLInputElement;
 
 describe('Navigation Component should', () => {
   it('render without crashing', () => {
@@ -100,7 +101,7 @@ describe('Navigation Component should', () => {
   it('toggle menu state when checkbox is clicked', () => {
     render(<Navigation {...mockNavigationProps} />);
     const checkbox = getMobileCheckbox();
-    
+
     expect(checkbox.checked).toBe(false);
     fireEvent.click(checkbox);
     expect(checkbox.checked).toBe(true);
@@ -181,7 +182,7 @@ describe('Navigation Component Accessibility should', () => {
 
   it('maintain proper link structure for screen readers', () => {
     render(<Navigation {...mockNavigationProps} />);
-    screen.getAllByRole('link').forEach(link => {
+    screen.getAllByRole('link').forEach((link) => {
       expect(link).toHaveAttribute('href');
     });
   });
@@ -212,7 +213,7 @@ describe('Navigation Component Error Handling should', () => {
   it('handle multiple click events on mobile toggle', () => {
     render(<Navigation {...mockNavigationProps} />);
     const hamburger = document.querySelector('.menu-humburger');
-    
+
     fireEvent.click(hamburger!);
     fireEvent.click(hamburger!);
     fireEvent.click(hamburger!);
@@ -232,13 +233,13 @@ describe('Navigation Component Edge Cases should', () => {
     const container = getNavigationDiv();
     expect(container).toBeInTheDocument();
     expect(container).toHaveClass('component', 'navigation');
-    
+
     const contentDiv = container?.querySelector('.component-content');
     expect(contentDiv).toBeInTheDocument();
-    
+
     const navElement = contentDiv?.querySelector('nav');
     expect(navElement).toBeInTheDocument();
-    
+
     const menuList = navElement?.querySelector('ul.clearfix');
     expect(menuList).toBeInTheDocument();
   });
@@ -248,7 +249,7 @@ describe('Navigation Component Edge Cases should', () => {
       ...mockNavigationProps,
       params: {} as any,
     };
-    
+
     render(<Navigation {...propsWithoutParams} />);
     expect(screen.getByText('Home')).toBeInTheDocument();
   });
@@ -258,7 +259,7 @@ describe('Navigation Component Edge Cases should', () => {
       ...mockNavigationProps,
       fields: {} as any,
     };
-    
+
     render(<Navigation {...propsWithEmptyFields} />);
     expect(screen.getByText('[Navigation]')).toBeInTheDocument();
   });
@@ -277,7 +278,7 @@ describe('Navigation Component Edge Cases should', () => {
         },
       },
     };
-    
+
     render(<Navigation {...propsWithSingleItem} />);
     expect(screen.getByText('Home')).toBeInTheDocument();
     const navElement = screen.getByRole('navigation');

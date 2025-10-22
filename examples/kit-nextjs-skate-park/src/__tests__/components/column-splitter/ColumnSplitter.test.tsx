@@ -22,7 +22,12 @@ describe('ColumnSplitter Component should', () => {
 
   it('apply correct CSS classes', () => {
     render(<ColumnSplitter {...mockColumnSplitterProps} />);
-    expect(getColumnSplitterDiv()).toHaveClass('row', 'component', 'column-splitter', 'columnsplitter-styles');
+    expect(getColumnSplitterDiv()).toHaveClass(
+      'row',
+      'component',
+      'column-splitter',
+      'columnsplitter-styles'
+    );
   });
 
   it('have correct ID attribute', () => {
@@ -90,14 +95,25 @@ describe('ColumnSplitter Component should', () => {
 
   it('generate correct placeholder names with column numbers', () => {
     render(<ColumnSplitter {...mockColumnSplitterPropsTwo} />);
-    expect(screen.getByTestId('placeholder-column-1-{*}')).toHaveTextContent('Placeholder: column-1-{*}');
-    expect(screen.getByTestId('placeholder-column-2-{*}')).toHaveTextContent('Placeholder: column-2-{*}');
+    expect(screen.getByTestId('placeholder-column-1-{*}')).toHaveTextContent(
+      'Placeholder: column-1-{*}'
+    );
+    expect(screen.getByTestId('placeholder-column-2-{*}')).toHaveTextContent(
+      'Placeholder: column-2-{*}'
+    );
   });
 });
 
 describe('ColumnSplitter Component Error Handling should', () => {
   it('handle undefined EnabledPlaceholders', () => {
-    render(<ColumnSplitter {...{ ...mockColumnSplitterProps, params: { ...mockColumnSplitterProps.params, EnabledPlaceholders: undefined as any } }} />);
+    render(
+      <ColumnSplitter
+        {...{
+          ...mockColumnSplitterProps,
+          params: { ...mockColumnSplitterProps.params, EnabledPlaceholders: undefined as any },
+        }}
+      />
+    );
     expect(getColumnSplitterDiv()).toBeInTheDocument();
   });
 
@@ -107,12 +123,31 @@ describe('ColumnSplitter Component Error Handling should', () => {
   });
 
   it('handle missing Styles parameters', () => {
-    render(<ColumnSplitter {...{ ...mockColumnSplitterProps, params: { ...mockColumnSplitterProps.params, Styles1: undefined, Styles2: undefined, Styles3: undefined } }} />);
+    render(
+      <ColumnSplitter
+        {...{
+          ...mockColumnSplitterProps,
+          params: {
+            ...mockColumnSplitterProps.params,
+            Styles1: undefined,
+            Styles2: undefined,
+            Styles3: undefined,
+          },
+        }}
+      />
+    );
     expect(getRowDivs()).toHaveLength(3);
   });
 
   it('handle non-numeric placeholder values', () => {
-    render(<ColumnSplitter {...{ ...mockColumnSplitterProps, params: { ...mockColumnSplitterProps.params, EnabledPlaceholders: 'abc,def' } }} />);
+    render(
+      <ColumnSplitter
+        {...{
+          ...mockColumnSplitterProps,
+          params: { ...mockColumnSplitterProps.params, EnabledPlaceholders: 'abc,def' },
+        }}
+      />
+    );
     expect(getColumnSplitterDiv()).toBeInTheDocument();
   });
 });

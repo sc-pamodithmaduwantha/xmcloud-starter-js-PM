@@ -58,7 +58,8 @@ export const mockContentBlockPropsLong = {
       value: 'Long Content Block',
     },
     content: {
-      value: '<p>This is a longer content block with multiple sentences. It demonstrates how the component handles larger amounts of text.</p><p>It can even have multiple paragraphs.</p>',
+      value:
+        '<p>This is a longer content block with multiple sentences. It demonstrates how the component handles larger amounts of text.</p><p>It can even have multiple paragraphs.</p>',
     },
   },
 };
@@ -83,4 +84,3 @@ export const mockContentBlockPropsEmpty = {
     },
   },
 };
-

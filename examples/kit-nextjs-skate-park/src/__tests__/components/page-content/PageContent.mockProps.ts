@@ -31,7 +31,8 @@ export const mockPageContentPropsRich = {
   },
   fields: {
     Content: {
-      value: '<h2>Heading</h2><p>Paragraph with <a href="/link">link</a>.</p><ul><li>Item 1</li><li>Item 2</li></ul>',
+      value:
+        '<h2>Heading</h2><p>Paragraph with <a href="/link">link</a>.</p><ul><li>Item 1</li><li>Item 2</li></ul>',
     },
   },
 };
@@ -87,4 +88,3 @@ export const mockPageContentPropsEmpty = {
     },
   },
 };
-

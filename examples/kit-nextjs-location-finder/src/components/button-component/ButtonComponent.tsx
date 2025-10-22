@@ -11,6 +11,7 @@ import { NoDataFallback } from '@/utils/NoDataFallback';
 import { Default as ImageWrapper } from '@/components/image/ImageWrapper.dev';
 import { ImageField } from '@sitecore-content-sdk/nextjs';
 import { ButtonVariants, ButtonSize } from '@/enumerations/ButtonStyle.enum';
+import { useState } from 'react'; // Unused import
 /**
  * Model used for Sitecore Component integration
  */

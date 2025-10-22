@@ -93,6 +93,8 @@ describe('ContentBlock Component Accessibility should', () => {
 
   it('render rich content with proper heading hierarchy', () => {
     render(<ContentBlock {...mockContentBlockPropsLong} />);
-    expect(screen.getByRole('heading', { level: 2, name: /Long Content Block/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { level: 2, name: /Long Content Block/i })
+    ).toBeInTheDocument();
   });
 });

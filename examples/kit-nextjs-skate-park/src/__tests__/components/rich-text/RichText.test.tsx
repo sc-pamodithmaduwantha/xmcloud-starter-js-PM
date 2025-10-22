@@ -79,7 +79,9 @@ describe('RichText Component Error Handling should', () => {
   });
 
   it('render without styles parameter', () => {
-    render(<RichText {...{ ...mockRichTextProps, params: { RenderingIdentifier: 'test-id' } as any }} />);
+    render(
+      <RichText {...{ ...mockRichTextProps, params: { RenderingIdentifier: 'test-id' } as any }} />
+    );
     expect(screen.getByText('bold')).toBeInTheDocument();
   });
 });

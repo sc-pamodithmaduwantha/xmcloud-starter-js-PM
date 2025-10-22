@@ -13,7 +13,11 @@ describe('Title Component should', () => {
 
   it('apply correct CSS classes', () => {
     render(<Title {...mockTitleProps} />);
-    expect(getTitleElement('Test Title from Datasource')).toHaveClass('component', 'title', 'test-styles');
+    expect(getTitleElement('Test Title from Datasource')).toHaveClass(
+      'component',
+      'title',
+      'test-styles'
+    );
   });
 
   it('have correct ID attribute', () => {
@@ -23,7 +27,11 @@ describe('Title Component should', () => {
 
   it('render with different styles', () => {
     render(<Title {...mockTitlePropsEditing} />);
-    expect(getTitleElement('Editing Mode Title')).toHaveClass('component', 'title', 'editing-styles');
+    expect(getTitleElement('Editing Mode Title')).toHaveClass(
+      'component',
+      'title',
+      'editing-styles'
+    );
   });
 
   it('render with different ID', () => {
@@ -70,10 +78,10 @@ describe('Title Component Edge Cases should', () => {
     const container = getTitleElement('Test Title from Datasource');
     expect(container).toBeInTheDocument();
     expect(container).toHaveClass('component', 'title');
-    
+
     const contentDiv = container?.querySelector('.component-content');
     expect(contentDiv).toBeInTheDocument();
-    
+
     const fieldTitle = contentDiv?.querySelector('.field-title');
     expect(fieldTitle).toBeInTheDocument();
   });
@@ -83,7 +91,7 @@ describe('Title Component Edge Cases should', () => {
       ...mockTitleProps,
       params: {} as any,
     };
-    
+
     render(<Title {...propsWithoutParams} />);
     expect(screen.getByText('Test Title from Datasource')).toBeInTheDocument();
   });
@@ -93,7 +101,7 @@ describe('Title Component Edge Cases should', () => {
       ...mockTitleProps,
       fields: null as any,
     };
-    
+
     render(<Title {...propsWithNullFields} />);
     const component = document.querySelector('.component.title');
     expect(component).toBeInTheDocument();
@@ -104,7 +112,7 @@ describe('Title Component Edge Cases should', () => {
       ...mockTitleProps,
       fields: undefined as any,
     };
-    
+
     render(<Title {...propsWithUndefinedFields} />);
     const component = document.querySelector('.component.title');
     expect(component).toBeInTheDocument();
@@ -117,7 +125,7 @@ describe('Title Component Edge Cases should', () => {
         styles: 'test-styles',
       } as any,
     };
-    
+
     render(<Title {...propsWithoutId} />);
     expect(screen.getByText('Test Title from Datasource')).toBeInTheDocument();
   });

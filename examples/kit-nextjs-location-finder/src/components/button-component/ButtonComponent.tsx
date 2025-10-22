@@ -57,6 +57,8 @@ const ButtonBase = (
       className?: string;
     }
 ): JSX.Element | null => {
+  debugger; // Testing debugger statement linting error
+
   const {
     buttonLink,
     icon,

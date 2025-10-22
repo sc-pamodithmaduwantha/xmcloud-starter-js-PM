@@ -165,4 +165,3 @@ export const mockNavigationPropsEmpty = {
   },
   fields: {} as any,
 };
-

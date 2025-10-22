@@ -93,7 +93,14 @@ describe('RowSplitter Component should', () => {
 
 describe('RowSplitter Component Error Handling should', () => {
   it('handle undefined EnabledPlaceholders', () => {
-    render(<RowSplitter {...{ ...mockRowSplitterProps, params: { ...mockRowSplitterProps.params, EnabledPlaceholders: undefined as any } }} />);
+    render(
+      <RowSplitter
+        {...{
+          ...mockRowSplitterProps,
+          params: { ...mockRowSplitterProps.params, EnabledPlaceholders: undefined as any },
+        }}
+      />
+    );
     expect(getRowSplitterDiv()).toBeInTheDocument();
   });
 
@@ -103,7 +110,14 @@ describe('RowSplitter Component Error Handling should', () => {
   });
 
   it('handle non-numeric placeholder values', () => {
-    render(<RowSplitter {...{ ...mockRowSplitterProps, params: { ...mockRowSplitterProps.params, EnabledPlaceholders: 'abc,xyz' } }} />);
+    render(
+      <RowSplitter
+        {...{
+          ...mockRowSplitterProps,
+          params: { ...mockRowSplitterProps.params, EnabledPlaceholders: 'abc,xyz' },
+        }}
+      />
+    );
     expect(getRowSplitterDiv()).toBeInTheDocument();
   });
 

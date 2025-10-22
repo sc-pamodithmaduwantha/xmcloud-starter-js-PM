@@ -18,7 +18,11 @@ describe('Image Component should', () => {
 
   it('apply correct CSS classes', () => {
     render(<Image {...mockImagePropsComplete} />);
-    expect(getImageComponent('Test Image Alt Text')).toHaveClass('component', 'image', 'image-styles');
+    expect(getImageComponent('Test Image Alt Text')).toHaveClass(
+      'component',
+      'image',
+      'image-styles'
+    );
   });
 
   it('have correct ID attribute', () => {
@@ -61,7 +65,11 @@ describe('Image Component should', () => {
 
   it('render with different styles when no fields provided', () => {
     render(<Image {...mockImagePropsNoFields} />);
-    expect(screen.getByText('Image').closest('.component')).toHaveClass('component', 'image', 'image-empty-styles');
+    expect(screen.getByText('Image').closest('.component')).toHaveClass(
+      'component',
+      'image',
+      'image-empty-styles'
+    );
   });
 });
 
@@ -85,7 +93,9 @@ describe('Banner Component should', () => {
 
   it('apply background image style', () => {
     render(<Banner {...mockBannerProps} />);
-    expect(document.querySelector('.sc-sxa-image-hero-banner')).toHaveStyle({ backgroundImage: "url('/banner-background.jpg')" });
+    expect(document.querySelector('.sc-sxa-image-hero-banner')).toHaveStyle({
+      backgroundImage: "url('/banner-background.jpg')",
+    });
   });
 });
 
@@ -121,10 +131,10 @@ describe('Image Component Edge Cases should', () => {
     const container = getImageComponent('Test Image Alt Text');
     expect(container).toBeInTheDocument();
     expect(container).toHaveClass('component', 'image');
-    
+
     const contentDiv = container?.querySelector('.component-content');
     expect(contentDiv).toBeInTheDocument();
-    
+
     const imageElement = screen.getByAltText('Test Image Alt Text');
     expect(imageElement).toBeInTheDocument();
   });
@@ -134,7 +144,7 @@ describe('Image Component Edge Cases should', () => {
       ...mockImagePropsComplete,
       params: {} as any,
     };
-    
+
     render(<Image {...propsWithoutParams} />);
     expect(screen.getByAltText('Test Image Alt Text')).toBeInTheDocument();
   });
@@ -144,7 +154,7 @@ describe('Image Component Edge Cases should', () => {
       ...mockImagePropsComplete,
       fields: null as any,
     };
-    
+
     render(<Image {...propsWithNullFields} />);
     const component = document.querySelector('.component.image');
     expect(component).toBeInTheDocument();
@@ -156,7 +166,7 @@ describe('Image Component Edge Cases should', () => {
       ...mockImagePropsComplete,
       fields: undefined as any,
     };
-    
+
     render(<Image {...propsWithUndefinedFields} />);
     const component = document.querySelector('.component.image');
     expect(component).toBeInTheDocument();
@@ -171,7 +181,7 @@ describe('Image Component Edge Cases should', () => {
         TargetUrl: mockImagePropsComplete.fields.TargetUrl,
       } as any,
     };
-    
+
     render(<Image {...propsWithoutImage} />);
     const component = document.querySelector('.component.image');
     expect(component).toBeInTheDocument();

@@ -11,7 +11,6 @@ import { NoDataFallback } from '@/utils/NoDataFallback';
 import { Default as ImageWrapper } from '@/components/image/ImageWrapper.dev';
 import { ImageField } from '@sitecore-content-sdk/nextjs';
 import { ButtonVariants, ButtonSize } from '@/enumerations/ButtonStyle.enum';
-import { useState } from 'react'; // Unused import
 /**
  * Model used for Sitecore Component integration *
  */
@@ -170,7 +169,6 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
   const { variant } = props || ButtonVariants.DEFAULT;
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
-  const iconNameee = icon?.value as EnumValues<typeof IconName>;
   const isEditing = isPageEditing || page?.mode?.isEditing;
   if (!isEditing && !linkIsValid(buttonLink)) return null;
 

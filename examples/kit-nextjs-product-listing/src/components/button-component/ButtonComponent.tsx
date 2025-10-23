@@ -47,7 +47,7 @@ const isValidEditableLink = (link: LinkField, icon?: ImageField) => {
       link?.value?.href !== 'http://')
   );
 };
-
+debugger;
 export type ButtonComponentProps = ComponentProps & ButtonFields;
 const ButtonBase = (
   props: ButtonFields['params'] &

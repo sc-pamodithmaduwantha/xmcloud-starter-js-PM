@@ -69,7 +69,11 @@ const ButtonBase = (
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
   if (!isPageEditing && !linkIsValid(buttonLink)) return null;
-
+  console.log(
+    '%cexamples\kit-nextjs-product-listing\src\components\button-component\ButtonComponent.tsx:72 objectobject',
+    'color: #007acc;',
+    iconName
+  );
   return (
     <Button asChild variant={variant} size={size} className={className}>
       {isPageEditing ? (

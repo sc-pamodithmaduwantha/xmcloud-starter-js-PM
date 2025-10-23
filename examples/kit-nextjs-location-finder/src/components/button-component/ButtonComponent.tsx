@@ -19,7 +19,7 @@ export type ButtonFields = {
   fields: {
     buttonLink: LinkField;
     icon?: { value: EnumValues<typeof IconName> };
-    iconClassName?: string; 
+    iconClassName?: string;
     isAriaHidden?: boolean;
   };
   variant?: EnumValues<typeof ButtonVariants>;

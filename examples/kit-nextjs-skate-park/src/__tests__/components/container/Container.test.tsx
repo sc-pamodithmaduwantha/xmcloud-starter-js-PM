@@ -85,15 +85,7 @@ describe('Container Component should', () => {
 
 describe('Container Component Error Handling should', () => {
   it('handle missing BackgroundImage parameter', () => {
-    const { BackgroundImage, ...restParams } = mockContainerPropsNoBackground.params;
-    render(
-      <Container
-        {...{
-          ...mockContainerPropsNoBackground,
-          params: restParams as typeof mockContainerPropsNoBackground.params,
-        }}
-      />
-    );
+    render(<Container {...mockContainerPropsNoBackground} />);
     expect(getContentDiv()).toBeInTheDocument();
   });
 

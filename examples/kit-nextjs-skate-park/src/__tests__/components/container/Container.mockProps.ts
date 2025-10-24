@@ -85,4 +85,3 @@ export const mockContainerPropsEmpty = {
     DynamicPlaceholderId: '0',
   },
 };
-

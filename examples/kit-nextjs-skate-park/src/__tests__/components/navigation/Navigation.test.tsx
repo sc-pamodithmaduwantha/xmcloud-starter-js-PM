@@ -276,7 +276,7 @@ describe('Navigation Component Edge Cases should', () => {
           Children: [],
           Styles: ['home-style'],
         },
-      },
+      } as any,
     };
 
     render(<Navigation {...propsWithSingleItem} />);

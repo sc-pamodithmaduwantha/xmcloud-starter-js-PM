@@ -123,16 +123,12 @@ describe('ColumnSplitter Component Error Handling should', () => {
   });
 
   it('handle missing Styles parameters', () => {
+    const { Styles1, Styles2, Styles3, ...restParams } = mockColumnSplitterProps.params;
     render(
       <ColumnSplitter
         {...{
           ...mockColumnSplitterProps,
-          params: {
-            ...mockColumnSplitterProps.params,
-            Styles1: undefined,
-            Styles2: undefined,
-            Styles3: undefined,
-          },
+          params: restParams,
         }}
       />
     );

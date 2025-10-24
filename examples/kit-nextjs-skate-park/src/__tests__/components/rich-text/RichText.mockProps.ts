@@ -65,4 +65,4 @@ export const mockRichTextPropsNoFields = {
     styles: 'no-fields-styles',
     RenderingIdentifier: 'richtext-no-fields-id',
   },
-} as any;
+};

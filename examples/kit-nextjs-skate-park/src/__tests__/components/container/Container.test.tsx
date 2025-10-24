@@ -114,11 +114,12 @@ describe('Container Component Error Handling should', () => {
   });
 
   it('render without styles parameter', () => {
+    const { styles, ...restParams } = mockContainerPropsWithBackground.params;
     render(
       <Container
         {...{
           ...mockContainerPropsWithBackground,
-          params: { ...mockContainerPropsWithBackground.params, styles: undefined as any },
+          params: restParams,
         }}
       />
     );

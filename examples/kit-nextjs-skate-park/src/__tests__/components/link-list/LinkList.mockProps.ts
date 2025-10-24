@@ -178,4 +178,4 @@ export const mockLinkListPropsNoData = {
   fields: {
     data: {},
   },
-} as any;
+};

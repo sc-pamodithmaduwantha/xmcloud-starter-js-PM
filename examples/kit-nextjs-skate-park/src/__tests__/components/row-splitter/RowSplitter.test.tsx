@@ -93,11 +93,12 @@ describe('RowSplitter Component should', () => {
 
 describe('RowSplitter Component Error Handling should', () => {
   it('handle undefined EnabledPlaceholders', () => {
+    const { EnabledPlaceholders, ...restParams } = mockRowSplitterProps.params;
     render(
       <RowSplitter
         {...{
           ...mockRowSplitterProps,
-          params: { ...mockRowSplitterProps.params, EnabledPlaceholders: undefined as any },
+          params: restParams,
         }}
       />
     );
@@ -122,7 +123,7 @@ describe('RowSplitter Component Error Handling should', () => {
   });
 
   it('handle empty params object', () => {
-    render(<RowSplitter {...{ ...mockRowSplitterProps, params: {} as any }} />);
+    render(<RowSplitter {...{ ...mockRowSplitterProps, params: {} }} />);
     expect(getRowSplitterDiv()).toBeInTheDocument();
   });
 });

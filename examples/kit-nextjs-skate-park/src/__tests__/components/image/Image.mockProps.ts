@@ -72,7 +72,7 @@ export const mockImagePropsNoFields = {
     styles: 'image-empty-styles',
     RenderingIdentifier: 'image-empty-id',
   },
-} as any;
+};
 
 // Mock props for Banner variant
 export const mockBannerProps = {

@@ -89,7 +89,7 @@ describe('Title Component Edge Cases should', () => {
   it('handle missing params gracefully', () => {
     const propsWithoutParams = {
       ...mockTitleProps,
-      params: {} as any,
+      params: {},
     };
 
     render(<Title {...propsWithoutParams} />);
@@ -99,7 +99,7 @@ describe('Title Component Edge Cases should', () => {
   it('handle null fields gracefully', () => {
     const propsWithNullFields = {
       ...mockTitleProps,
-      fields: null as any,
+      fields: null,
     };
 
     render(<Title {...propsWithNullFields} />);
@@ -110,7 +110,7 @@ describe('Title Component Edge Cases should', () => {
   it('handle undefined fields gracefully', () => {
     const propsWithUndefinedFields = {
       ...mockTitleProps,
-      fields: undefined as any,
+      fields: undefined,
     };
 
     render(<Title {...propsWithUndefinedFields} />);
@@ -123,7 +123,7 @@ describe('Title Component Edge Cases should', () => {
       ...mockTitleProps,
       params: {
         styles: 'test-styles',
-      } as any,
+      },
     };
 
     render(<Title {...propsWithoutId} />);

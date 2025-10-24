@@ -67,7 +67,7 @@ export const mockPageContentPropsNoContent = {
     RenderingIdentifier: 'pagecontent-nocontent-id',
   },
   fields: {
-    Content: null as any,
+    Content: null,
   },
 };
 

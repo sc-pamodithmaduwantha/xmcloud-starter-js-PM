@@ -106,11 +106,12 @@ describe('ColumnSplitter Component should', () => {
 
 describe('ColumnSplitter Component Error Handling should', () => {
   it('handle undefined EnabledPlaceholders', () => {
+    const { EnabledPlaceholders, ...restParams } = mockColumnSplitterProps.params;
     render(
       <ColumnSplitter
         {...{
           ...mockColumnSplitterProps,
-          params: { ...mockColumnSplitterProps.params, EnabledPlaceholders: undefined as any },
+          params: restParams,
         }}
       />
     );
@@ -123,6 +124,7 @@ describe('ColumnSplitter Component Error Handling should', () => {
   });
 
   it('handle missing Styles parameters', () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { Styles1, Styles2, Styles3, ...restParams } = mockColumnSplitterProps.params;
     render(
       <ColumnSplitter

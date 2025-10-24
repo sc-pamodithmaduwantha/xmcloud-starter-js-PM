@@ -142,7 +142,7 @@ describe('Image Component Edge Cases should', () => {
   it('handle missing params gracefully', () => {
     const propsWithoutParams = {
       ...mockImagePropsComplete,
-      params: {} as any,
+      params: {},
     };
 
     render(<Image {...propsWithoutParams} />);
@@ -152,7 +152,7 @@ describe('Image Component Edge Cases should', () => {
   it('handle null fields gracefully', () => {
     const propsWithNullFields = {
       ...mockImagePropsComplete,
-      fields: null as any,
+      fields: null,
     };
 
     render(<Image {...propsWithNullFields} />);
@@ -164,7 +164,7 @@ describe('Image Component Edge Cases should', () => {
   it('handle undefined fields gracefully', () => {
     const propsWithUndefinedFields = {
       ...mockImagePropsComplete,
-      fields: undefined as any,
+      fields: undefined,
     };
 
     render(<Image {...propsWithUndefinedFields} />);
@@ -179,7 +179,7 @@ describe('Image Component Edge Cases should', () => {
       fields: {
         ImageCaption: mockImagePropsComplete.fields.ImageCaption,
         TargetUrl: mockImagePropsComplete.fields.TargetUrl,
-      } as any,
+      },
     };
 
     render(<Image {...propsWithoutImage} />);

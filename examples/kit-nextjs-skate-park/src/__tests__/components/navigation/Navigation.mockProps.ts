@@ -75,13 +75,13 @@ export const mockNavigationProps = {
       Title: {
         value: 'Contact Us',
       },
-      NavigationTitle: null as any,
+      NavigationTitle: null,
       Href: '/contact',
       Querystring: '?from=nav',
       Children: [],
       Styles: ['contact-style'],
     },
-  } as any,
+  },
 };
 
 // Mock props with simple flat navigation (no children)
@@ -124,7 +124,7 @@ export const mockNavigationPropsFlat = {
       Children: [],
       Styles: [],
     },
-  } as any,
+  },
 };
 
 // Mock props with DisplayName only (no Title or NavigationTitle)
@@ -142,14 +142,14 @@ export const mockNavigationPropsDisplayName = {
     SimpleLink: {
       Id: 'simple-id',
       DisplayName: 'Simple Link',
-      Title: null as any,
-      NavigationTitle: null as any,
+      Title: null,
+      NavigationTitle: null,
       Href: '/simple',
       Querystring: '',
       Children: [],
       Styles: [],
     },
-  } as any,
+  },
 };
 
 // Mock props with no fields (empty state)
@@ -163,5 +163,5 @@ export const mockNavigationPropsEmpty = {
     styles: 'empty-styles',
     RenderingIdentifier: 'navigation-empty-id',
   },
-  fields: {} as any,
+  fields: {},
 };

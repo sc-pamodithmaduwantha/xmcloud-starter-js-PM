@@ -113,4 +113,4 @@ export const mockPromoPropsNoFields = {
     styles: 'no-fields-styles',
     RenderingIdentifier: 'promo-no-fields-id',
   },
-} as any;
+};

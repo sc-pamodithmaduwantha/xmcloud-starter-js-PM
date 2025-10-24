@@ -47,7 +47,7 @@ const isValidEditableLink = (link: LinkField, icon?: ImageField) => {
       link?.value?.href !== 'http://')
   );
 };
-
+debugger;
 export type ButtonComponentProps = ComponentProps & ButtonFields;
 const ButtonBase = (
   props: ButtonFields['params'] &
@@ -74,7 +74,7 @@ const ButtonBase = (
     'color: #007acc;',
     iconName
   );
-  debugger;
+
   return (
     <Button asChild variant={variant} size={size} className={className}>
       {isPageEditing ? (

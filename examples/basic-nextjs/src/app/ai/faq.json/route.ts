@@ -50,8 +50,8 @@ interface FaqResponse {
  * {
  *   "items": [
  *     {
- *       "question": "What is Skate Park?",
- *       "answer": "A simple demo site showcasing component examples..."
+ *       "question": "What is the Sitecore XM Cloud Starter Kit?",
+ *       "answer": "A production-ready starter kit..."
  *     }
  *   ],
  *   "lastModified": "2026-02-09T10:00:00.000Z"

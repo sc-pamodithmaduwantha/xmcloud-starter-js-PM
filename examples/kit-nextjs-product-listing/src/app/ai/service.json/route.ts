@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 
 /**
- * Revalidation period for the service.json endpoint (1 hour)
+ * Revalidation period for the service.json endpoint (24 hours)
  * Uses Incremental Static Regeneration for optimal caching
  */
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 /**
  * Represents a service or capability offered by the site
@@ -132,7 +132,7 @@ export async function GET(): Promise<NextResponse<ServiceResponse>> {
 
   return NextResponse.json(response, {
     headers: {
-      'Cache-Control': 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400',
+      'Cache-Control': 'public, max-age=86400',
     },
   });
 }

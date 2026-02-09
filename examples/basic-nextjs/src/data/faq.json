@@ -1,0 +1,33 @@
+{
+  "items": [
+    {
+      "question": "What is the Sitecore XM Cloud Starter Kit?",
+      "answer": "It is a Next.js-based reference implementation designed to accelerate development on Sitecore XM Cloud using modern tooling and best practices."
+    },
+    {
+      "question": "Does the starter kit support AEO and GEO?",
+      "answer": "Yes. It includes semantic HTML, JSON-LD structured data, an LLM sitemap, and AI-specific endpoints required by the GEO contract."
+    },
+    {
+      "question": "Which frameworks are supported?",
+      "answer": "The starter kit is optimized for Next.js App Router and Sitecore Content SDK, with full support for SSR, SSG, and server components."
+    },
+    {
+      "question": "How do I get started with the starter kit?",
+      "answer": "Clone the repository, copy .env.remote.example to .env.local, configure your XM Cloud credentials, run npm install, and then npm run dev to start development."
+    },
+    {
+      "question": "What locales are supported out of the box?",
+      "answer": "The starter kit supports English (en) and Canadian English (en-CA) with automatic locale detection and dictionary-based translations."
+    },
+    {
+      "question": "Can I customize the components?",
+      "answer": "Yes. All components are built with Tailwind CSS and Shadcn/ui, making them highly customizable through utility classes and design tokens."
+    },
+    {
+      "question": "How do I deploy the starter kit?",
+      "answer": "The starter kit can be deployed to XM Cloud using the xmcloud.build.json configuration, or to any hosting platform that supports Next.js applications."
+    }
+  ],
+  "lastModified": "2025-02-09T00:00:00.000Z"
+}

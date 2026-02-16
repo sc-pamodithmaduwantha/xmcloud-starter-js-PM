@@ -1,0 +1,41 @@
+---
+ID: "e2f3a4b5-c6d7-8901-a567-890123456782"
+Parent: "a9b0c1d2-e3f4-5678-c234-567890123458"
+Template: "b2c3d4e5-f6a7-8901-bcde-f12345678901"
+Path: "/sitecore/templates/Branches/Project/click-click-launch/SYNC/Add AI Data/AI/FAQ/FAQ 4"
+SharedFields:
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 400
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "d4e5f6a7-b8c9-0123-def0-123456789013"
+      Hint: question
+      Value: What is SYNC's warranty policy?
+    - ID: "e5f6a7b8-c9d0-1234-ef01-234567890124"
+      Hint: answer
+      Value: SYNC offers warranty coverage on our speakers, headphones, and amps. Exact terms depend on the product. Check the product page or the Warranty section under Support on our website for details, or contact us for specific coverage.
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20250213T000000Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\Admin
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "00000000-0000-0000-0000-000000000031"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20250213T000000Z

@@ -1,0 +1,31 @@
+---
+ID: "e5f6a7b8-c9d0-4e1f-2a3b-4c5d6e7f8a9b"
+Parent: "d4e5f6a7-b8c9-4d0e-1f2a-3b4c5d6e7f8a"
+Template: "b2c3d4e5-f6a7-4b5c-9d0e-1f2a3b4c5d6e"
+Path: "/sitecore/templates/Branches/Project/click-click-launch/Skate Park/Add AI Config/AI Config/Summary"
+SharedFields:
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 100
+Languages:
+- Language: en
+  Fields:
+  - ID: "d4e5f6a7-b8c9-4d5e-1f2a-3b4c5d6e7f8a"
+    Hint: title
+    Value: Skate Park
+  - ID: "e5f6a7b8-c9d0-4e5f-2a3b-4c5d6e7f8a9b"
+    Hint: description
+    Value: Skate Park is a simple demo site showcasing component examples for Sitecore XM Cloud. It demonstrates modular UI patterns, layouts, and content-driven experiences built with Next.js App Router and the Content SDK. Ideal for exploring component variants and development best practices.
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20250625T120000Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "e5f6a7b8-c9d0-4e1f-2a3b-4c5d6e7f8a9c"

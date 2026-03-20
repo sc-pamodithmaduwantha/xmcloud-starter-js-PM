@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
   // Disable the X-Powered-By header. Follows security best practices.
   poweredByHeader: false,
 
+  // Enable compression
+  compress: true,
+
   // Enable source maps for production (helps with debugging and PageSpeed Insights)
   // Set to 'hidden-source-map' to generate source maps but not expose them publicly
   // This satisfies PageSpeed Insights while maintaining security
@@ -20,13 +23,6 @@ const nextConfig: NextConfig = {
   // can be served from the Next.js Image Optimization API
   // see https://nextjs.org/docs/app/api-reference/components/image#remotepatterns
   images: {
-    // Enable modern image formats (WebP, AVIF) for better compression
-    formats: ['image/avif', 'image/webp'],
-    // Optimize image sizes for responsive loading
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    // Cache optimized images for 1 year
-    minimumCacheTTL: 31536000,
     remotePatterns: [
       {
         protocol: 'https',
@@ -38,17 +34,12 @@ const nextConfig: NextConfig = {
         hostname: 'xmc-*.**',
         port: '',
       },
-      {
-        protocol: 'https',
-        hostname: '*.sitecore-staging.cloud',
-        port: '',
-      },
-      {
-        protocol: 'https',
-        hostname: '*.sitecorecloud.io',
-        port: '',
-      },
     ],
+    // Optimize image sizes for responsive loading
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    // Enable modern image formats (WebP, AVIF) for better compression
+    formats: ['image/avif', 'image/webp'],
     // Disable image optimization in development to avoid upstream timeouts
     unoptimized: process.env.NODE_ENV === 'development',
   },

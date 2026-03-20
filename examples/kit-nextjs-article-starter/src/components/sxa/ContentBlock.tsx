@@ -1,11 +1,12 @@
-import { Text, RichText, Field, withDatasourceCheck } from '@sitecore-content-sdk/nextjs';
+import { Text, RichText, Field } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from 'lib/component-props';
+import { NoDataFallback } from '@/utils/NoDataFallback';
 import { JSX } from 'react';
 
 type ContentBlockProps = ComponentProps & {
-  fields: {
-    heading: Field<string>;
-    content: Field<string>;
+  fields?: {
+    heading?: Field<string>;
+    content?: Field<string>;
   };
 };
 
@@ -14,12 +15,17 @@ type ContentBlockProps = ComponentProps & {
  * This is the most basic building block of a content site, and the most basic
  * Content SDK component that's useful.
  */
-const ContentBlock = ({ fields }: ContentBlockProps): JSX.Element => (
-  <div className="contentBlock">
-    <Text tag="h2" className="contentTitle" field={fields.heading} />
+const ContentBlock = ({ fields, rendering }: ContentBlockProps): JSX.Element => {
+  if (!fields?.heading || !fields?.content) {
+    return <NoDataFallback componentName={rendering?.componentName || 'ContentBlock'} />;
+  }
 
-    <RichText className="contentDescription" field={fields.content} />
-  </div>
-);
+  return (
+    <div className="contentBlock">
+      <Text tag="h2" className="contentTitle" field={fields.heading} />
+      <RichText className="contentDescription" field={fields.content} />
+    </div>
+  );
+};
 
-export default withDatasourceCheck()<ContentBlockProps>(ContentBlock);
+export default ContentBlock;

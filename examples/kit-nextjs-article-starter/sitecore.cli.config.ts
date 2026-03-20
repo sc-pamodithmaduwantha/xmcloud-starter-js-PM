@@ -21,6 +21,13 @@ export default defineCliConfig({
   },
   componentMap: {
     paths: ['src/components'],
-    exclude: ['src/components/content-sdk/*', 'src/components/ui/*'],
+    exclude: [
+      'src/components/content-sdk/*',
+      'src/components/ui/*',
+      'src/components/lib/*',
+      'src/components/video/*',
+      'src/components/multi-promo/*',
+      'src/components/accordion-block/*',
+    ],
   },
 });

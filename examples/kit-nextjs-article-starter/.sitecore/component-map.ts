@@ -4,10 +4,6 @@ import { BYOCServerWrapper, NextjsContentSdkComponent, FEaaSServerWrapper } from
 import { Form } from '@sitecore-content-sdk/nextjs';
 
 // end of built-in components
-import * as VideoPlayerdev from 'src/components/video/VideoPlayer.dev';
-import * as VideoModaldev from 'src/components/video/VideoModal.dev';
-import * as Video from 'src/components/video/Video';
-import * as videoprops from 'src/components/video/video-props';
 import * as VerticalImageAccordion from 'src/components/vertical-image-accordion/VerticalImageAccordion';
 import * as verticalimageaccordionprops from 'src/components/vertical-image-accordion/vertical-image-accordion.props';
 import * as TopicListing from 'src/components/topic-listing/TopicListing';
@@ -59,9 +55,6 @@ import * as pageheaderprops from 'src/components/page-header/page-header.props';
 import * as MultiPromoTabs from 'src/components/multi-promo-tabs/MultiPromoTabs';
 import * as MultiPromoTabdev from 'src/components/multi-promo-tabs/MultiPromoTab.dev';
 import * as multipromotabsprops from 'src/components/multi-promo-tabs/multi-promo-tabs.props';
-import * as MultiPromoItemdev from 'src/components/multi-promo/MultiPromoItem.dev';
-import * as MultiPromo from 'src/components/multi-promo/MultiPromo';
-import * as multipromoprops from 'src/components/multi-promo/multi-promo.props';
 import * as modetoggledev from 'src/components/mode-toggle/mode-toggle.dev';
 import * as MediaSectiondev from 'src/components/media-section/MediaSection.dev';
 import * as mediasectionprops from 'src/components/media-section/media-section.props';
@@ -127,19 +120,11 @@ import * as ArticleHeader from 'src/components/article-header/ArticleHeader';
 import * as articleheaderdictionary from 'src/components/article-header/article-header.dictionary';
 import * as AnimatedSectiondev from 'src/components/animated-section/AnimatedSection.dev';
 import * as AlertBannerdev from 'src/components/alert-banner/AlertBanner.dev';
-import * as AccordionBlockItemdev from 'src/components/accordion-block/AccordionBlockItem.dev';
-import * as AccordionBlockDefaultdev from 'src/components/accordion-block/AccordionBlockDefault.dev';
-import * as AccordionBlock from 'src/components/accordion-block/AccordionBlock';
-import * as accordionblockprops from 'src/components/accordion-block/accordion-block.props';
 
 export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['BYOCWrapper', BYOCServerWrapper],
   ['FEaaSWrapper', FEaaSServerWrapper],
   ['Form', { ...Form, componentType: 'client' }],
-  ['VideoPlayer', { ...VideoPlayerdev }],
-  ['VideoModal', { ...VideoModaldev }],
-  ['Video', { ...Video, componentType: 'client' }],
-  ['video-props', { ...videoprops }],
   ['VerticalImageAccordion', { ...VerticalImageAccordion, componentType: 'client' }],
   ['vertical-image-accordion', { ...verticalimageaccordionprops }],
   ['TopicListing', { ...TopicListing }],
@@ -189,9 +174,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['MultiPromoTabs', { ...MultiPromoTabs, componentType: 'client' }],
   ['MultiPromoTab', { ...MultiPromoTabdev }],
   ['multi-promo-tabs', { ...multipromotabsprops }],
-  ['MultiPromoItem', { ...MultiPromoItemdev }],
-  ['MultiPromo', { ...MultiPromo, componentType: 'client' }],
-  ['multi-promo', { ...multipromoprops }],
   ['mode-toggle', { ...modetoggledev }],
   ['MediaSection', { ...MediaSectiondev }],
   ['media-section', { ...mediasectionprops }],
@@ -256,10 +238,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['article-header', { ...articleheaderdictionary }],
   ['AnimatedSection', { ...AnimatedSectiondev }],
   ['AlertBanner', { ...AlertBannerdev }],
-  ['AccordionBlockItem', { ...AccordionBlockItemdev }],
-  ['AccordionBlockDefault', { ...AccordionBlockDefaultdev }],
-  ['AccordionBlock', { ...AccordionBlock, componentType: 'client' }],
-  ['accordion-block', { ...accordionblockprops }],
 ]);
 
 export default componentMap;

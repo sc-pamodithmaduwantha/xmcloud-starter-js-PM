@@ -3,9 +3,6 @@
 import { BYOCClientWrapper, NextjsContentSdkComponent, FEaaSClientWrapper } from '@sitecore-content-sdk/nextjs';
 import { Form } from '@sitecore-content-sdk/nextjs';
 
-import * as VideoPlayerdev from 'src/components/video/VideoPlayer.dev';
-import * as VideoModaldev from 'src/components/video/VideoModal.dev';
-import * as Video from 'src/components/video/Video';
 import * as VerticalImageAccordion from 'src/components/vertical-image-accordion/VerticalImageAccordion';
 import * as themeproviderdev from 'src/components/theme-provider/theme-provider.dev';
 import * as TestimonialCarousel from 'src/components/testimonial-carousel/TestimonialCarousel';
@@ -21,7 +18,6 @@ import * as PromoAnimated from 'src/components/promo-animated/PromoAnimated';
 import * as portaldev from 'src/components/portal/portal.dev';
 import * as PageHeader from 'src/components/page-header/PageHeader';
 import * as MultiPromoTabs from 'src/components/multi-promo-tabs/MultiPromoTabs';
-import * as MultiPromo from 'src/components/multi-promo/MultiPromo';
 import * as modetoggledev from 'src/components/mode-toggle/mode-toggle.dev';
 import * as MediaSectiondev from 'src/components/media-section/MediaSection.dev';
 import * as meteors from 'src/components/magicui/meteors';
@@ -38,15 +34,11 @@ import * as ArticleListing from 'src/components/article-listing/ArticleListing';
 import * as ArticleHeader from 'src/components/article-header/ArticleHeader';
 import * as AnimatedSectiondev from 'src/components/animated-section/AnimatedSection.dev';
 import * as AlertBannerdev from 'src/components/alert-banner/AlertBanner.dev';
-import * as AccordionBlock from 'src/components/accordion-block/AccordionBlock';
 
 export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['BYOCWrapper', BYOCClientWrapper],
   ['FEaaSWrapper', FEaaSClientWrapper],
   ['Form', Form],
-  ['VideoPlayer', { ...VideoPlayerdev }],
-  ['VideoModal', { ...VideoModaldev }],
-  ['Video', { ...Video }],
   ['VerticalImageAccordion', { ...VerticalImageAccordion }],
   ['theme-provider', { ...themeproviderdev }],
   ['TestimonialCarousel', { ...TestimonialCarousel }],
@@ -62,7 +54,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['portal', { ...portaldev }],
   ['PageHeader', { ...PageHeader }],
   ['MultiPromoTabs', { ...MultiPromoTabs }],
-  ['MultiPromo', { ...MultiPromo }],
   ['mode-toggle', { ...modetoggledev }],
   ['MediaSection', { ...MediaSectiondev }],
   ['meteors', { ...meteors }],
@@ -79,7 +70,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['ArticleHeader', { ...ArticleHeader }],
   ['AnimatedSection', { ...AnimatedSectiondev }],
   ['AlertBanner', { ...AlertBannerdev }],
-  ['AccordionBlock', { ...AccordionBlock }],
 ]);
 
 export default componentMap;

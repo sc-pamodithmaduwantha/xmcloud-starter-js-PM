@@ -86,7 +86,7 @@
     "lucide-react": "^0.475.0",
     "motion": "^12.23.0",
     "next": "^16.1.1",
-    "next-intl": "^4.3.5",
+    "next-intl": "^4.9.1",
     "next-themes": "^0.4.6",
     "postcss": "^8.5.6",
     "radash": "^12.1.1",
@@ -151,6 +151,7 @@
       "picomatch": "2.3.2"
     },
     "brace-expansion@^5.0.0": "5.0.5",
+    "lodash": "4.18.1",
     "lodash-es": "4.18.1",
     "flatted": "3.4.2",
     "minimatch@<3.1.3": "3.1.5"

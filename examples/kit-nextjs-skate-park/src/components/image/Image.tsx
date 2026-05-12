@@ -75,6 +75,10 @@ export const Default: React.FC<ImageProps> = (props) => {
   const { fields, params, page } = props;
   const { styles, RenderingIdentifier: id } = params;
 
+  // INTENTIONAL CRASH: orange box testing - remove to fix
+  const forcedError = null as any;
+  const _broken = forcedError.nonExistent.property;
+
   if (!fields) {
     return <ImageDefault {...props} />;
   }

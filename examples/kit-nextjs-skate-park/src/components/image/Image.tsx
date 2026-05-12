@@ -71,44 +71,29 @@ export const Banner: React.FC<ImageProps> = ({ params, fields }) => {
   );
 };
 
-export const Default: React.FC<ImageProps> = (props) => {
-  const { fields, params, page } = props;
+// INTENTIONAL ERROR STATE: for Playwright testing - restore original to fix
+export const Default: React.FC<ImageProps> = ({ params }) => {
   const { styles, RenderingIdentifier: id } = params;
 
-  // INTENTIONAL CRASH: orange box testing - remove to fix
-  const forcedError = null as any;
-  const _broken = forcedError.nonExistent.property;
-
-  if (!fields) {
-    return <ImageDefault {...props} />;
-  }
-
-  const Image = () => (
-    <ContentSdkImage
-      field={fields.Image}
-      sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 90vw, 1200px"
-      alt={
-        typeof fields?.Image?.value?.alt === "string"
-          ? fields.Image.value.alt
-          : ""
-      }
-    />
-  );
-  const shouldWrapWithLink =
-    !page?.mode?.isEditing && fields.TargetUrl?.value?.href;
-
   return (
-    <ImageWrapper className={`component image ${styles}`} id={typeof id === "string" ? id : undefined}>
-      {shouldWrapWithLink ? (
-        <CompatibleLink field={fields.TargetUrl}>
-          <Image />
-        </CompatibleLink>
-      ) : (
-        <Image />
-      )}
-      <figcaption className="image-caption field-imagecaption">
-        <Text tag="span" field={fields.ImageCaption} />
-      </figcaption>
-    </ImageWrapper>
+    <figure className={`component image ${styles}`.trim()} id={typeof id === "string" ? id : undefined}>
+      <div className="component-content">
+        <div style={{
+          padding: '24px',
+          backgroundColor: '#FEF2F2',
+          border: '1px solid #FCA5A5',
+          borderRadius: '8px',
+          color: '#991B1B',
+          fontFamily: 'monospace',
+          fontSize: '14px',
+        }}>
+          <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>⚠ Error loading component</p>
+          <p>Image component failed to render. There was a problem loading page content.</p>
+          <p style={{ marginTop: '8px', fontSize: '12px', color: '#B91C1C' }}>
+            TypeError: Cannot read properties of undefined (reading &apos;Image&apos;)
+          </p>
+        </div>
+      </div>
+    </figure>
   );
 };

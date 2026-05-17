@@ -16,12 +16,24 @@ interface ImageProps extends ComponentProps {
   fields: ImageFields;
 }
 
-export const Banner: React.FC<ImageProps> = ({ fields }) => {
-  const broken = (null as any).src;
-  return <div>{broken}</div>;
+/** Intentionally broken: banner shell only (no hero image / background). */
+export const Banner: React.FC<ImageProps> = ({ params }) => {
+  const { styles, RenderingIdentifier: id } = params;
+
+  return (
+    <div className={`component hero-banner ${styles || ""}`} id={id}>
+      <div className="component-content" />
+    </div>
+  );
 };
 
-export const Default: React.FC<ImageProps> = ({ fields }) => {
-  const broken = (null as any).value;
-  return <div>{broken}</div>;
+/** Intentionally broken: container shell only (no image, caption, or link). */
+export const Default: React.FC<ImageProps> = ({ params }) => {
+  const { styles, RenderingIdentifier: id } = params;
+
+  return (
+    <div className={`component image ${styles || ""}`} id={id}>
+      <div className="component-content" />
+    </div>
+  );
 };

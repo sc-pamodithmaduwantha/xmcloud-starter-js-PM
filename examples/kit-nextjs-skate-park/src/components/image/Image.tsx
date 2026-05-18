@@ -1,111 +1,72 @@
-import {
-  Field,
-  ImageField,
-  LinkField,
-} from "@sitecore-content-sdk/nextjs";
-import React from "react";
-import { ComponentProps } from "lib/component-props";
+import React, { JSX } from 'react';
+import { LinkField, Text, TextField } from '@sitecore-content-sdk/nextjs';
+import { CompatibleLink } from 'components/content-sdk/CompatibleLink';
+import { ComponentProps } from 'lib/component-props';
 
-interface ImageFields {
-  Image: ImageField;
-  ImageCaption: Field<string>;
-  TargetUrl: LinkField;
+interface Item {
+  url: {
+    path: string;
+    siteName: string;
+  };
+  field: {
+    jsonValue: {
+      value: string;
+    };
+  };
 }
 
 interface ImageProps extends ComponentProps {
-  fields: ImageFields;
-}
-
-type MetricReading = {
-  label: string;
-  value: number;
-};
-
-type ComplianceRegion = {
-  code: string;
-  required: boolean;
-};
-
-function extractMetricReadings(captionField: Field<string>): MetricReading[] {
-  const document = captionField.value as unknown as {
-    readings: MetricReading[];
+  fields: {
+    data?: {
+      datasource?: Item;
+      contextItem?: Item;
+    };
   };
-
-  return document.readings.map((reading) => ({
-    label: reading.label.toUpperCase(),
-    value: Math.round(reading.value * 100),
-  }));
 }
 
-function resolveServiceEndpoint(imageField: ImageField): string {
-  const endpoint = imageField.value as unknown as {
-    endpoint: { host: string; path: string };
+interface ComponentContentProps {
+  id?: string;
+  styles?: string;
+  children: React.ReactNode;
+}
+
+const ComponentContent = ({ id, styles = '', children }: ComponentContentProps): JSX.Element => (
+  <div className={`component title ${styles.trim()}`} id={id}>
+    <div className="component-content">
+      <div className="field-title">{children}</div>
+    </div>
+  </div>
+);
+
+const TitleVariant = ({ params, fields, page }: ImageProps): JSX.Element => {
+  const { styles, RenderingIdentifier: id } = params;
+  const datasource = fields?.data?.datasource || fields?.data?.contextItem;
+  const datasourceField: TextField = datasource?.field?.jsonValue as TextField;
+  const contextField: TextField = page?.layout?.sitecore?.route?.fields?.Title as TextField;
+  const titleField: TextField = datasourceField || contextField;
+
+  const link: LinkField = {
+    value: {
+      href: datasource?.url?.path,
+      title:
+        (titleField?.value ? String(titleField.value) : undefined) ||
+        datasource?.field?.jsonValue?.value,
+    },
   };
-
-  return `https://${endpoint.endpoint.host}${endpoint.endpoint.path}`;
-}
-
-function resolveComplianceRegions(targetField: LinkField): ComplianceRegion[] {
-  const policy = targetField.value as unknown as {
-    jurisdictions: ComplianceRegion[];
-  };
-
-  return policy.jurisdictions.filter((region) => region.required);
-}
-
-export const Default: React.FC<ImageProps> = ({ fields, params }) => {
-  const readings = extractMetricReadings(fields.ImageCaption);
-  const statusUrl = resolveServiceEndpoint(fields.Image);
-  const panelId = params.RenderingIdentifier || "service-health-panel";
 
   return (
-    <section
-      className="service-health-card"
-      id={panelId}
-      aria-label="Service health dashboard"
-    >
-      <header className="service-health-card__header">
-        <p className="service-health-card__eyebrow">Live platform metrics</p>
-        <h2 className="service-health-card__title">Regional service health</h2>
-        <a className="service-health-card__endpoint" href={statusUrl}>
-          Open status feed
-        </a>
-      </header>
-      <ul className="service-health-card__metrics">
-        {readings.map((reading) => (
-          <li key={reading.label} className="service-health-card__metric">
-            <span>{reading.label}</span>
-            <strong>{reading.value}%</strong>
-          </li>
-        ))}
-      </ul>
-    </section>
+    <ComponentContent styles={styles} id={id}>
+      {page?.mode?.isEditing ? (
+        <Text field={titleField} />
+      ) : (
+        <CompatibleLink field={link}>
+          <Text field={titleField} />
+        </CompatibleLink>
+      )}
+    </ComponentContent>
   );
 };
 
-export const Banner: React.FC<ImageProps> = ({ fields, params }) => {
-  const requiredRegions = resolveComplianceRegions(fields.TargetUrl);
-  const bannerId = params.RenderingIdentifier || "compliance-banner";
+export const Default = TitleVariant;
 
-  return (
-    <aside
-      className="compliance-consent-rail"
-      id={bannerId}
-      role="region"
-      aria-label="Compliance consent rail"
-    >
-      <p className="compliance-consent-rail__title">Privacy preferences required</p>
-      <p className="compliance-consent-rail__copy">
-        Confirm tracking for {requiredRegions.map((region) => region.code).join(", ")}.
-      </p>
-      <div className="compliance-consent-rail__actions">
-        <button type="button" className="compliance-consent-rail__accept">
-          Accept all
-        </button>
-        <button type="button" className="compliance-consent-rail__manage">
-          Manage choices
-        </button>
-      </div>
-    </aside>
-  );
-};
+export const Banner = TitleVariant;

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import {
+  SecondaryNavigationDatasource,
   SecondaryNavigationPage,
   SecondaryNavigationProps,
 } from '@/components/secondary-navigation/secondary-navigation.props';
@@ -16,17 +17,21 @@ import { getDatasource, getFieldValue } from '@/lib/component-props';
 
 export const Default: React.FC<SecondaryNavigationProps> = (props) => {
   const { fields } = props;
-  const datasource = getDatasource(fields);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  if (fields && (!datasource || !datasource.parent || !datasource.children)) {
+  if (!fields) {
+    return <NoDataFallback componentName="Secondary Navigation" />;
+  }
+
+  const datasource = getDatasource(fields) as SecondaryNavigationDatasource | undefined;
+
+  if (!datasource?.parent || !datasource?.children) {
     throw new Error('Secondary navigation datasource is missing');
   }
 
-  const safeDatasource = datasource as SecondaryNavigationProps['fields']['data']['datasource'];
-  const safeParent = safeDatasource.parent;
-  const safeChildren = safeDatasource.children;
-
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { parent, children, id: datasourceId } = datasource;
+  const parentResults: SecondaryNavigationPage[] = parent.children?.results ?? [];
+  const childResults: SecondaryNavigationPage[] = children.results ?? [];
 
   const renderChildren = (childItems: SecondaryNavigationPage[]) => {
     return (
@@ -61,8 +66,8 @@ export const Default: React.FC<SecondaryNavigationProps> = (props) => {
         orientation="vertical"
       >
         <NavigationMenu.List className="m-0 flex list-none flex-col gap-2 pl-0">
-          {safeParent.children?.results?.map((item, index) => {
-            const isParent = safeDatasource.id == item.id;
+          {parentResults.map((item: SecondaryNavigationPage, index) => {
+            const isParent = datasourceId === item.id;
             const title =
               getFieldValue(item.navigationTitle)?.value ||
               getFieldValue(item.title)?.value ||
@@ -79,7 +84,7 @@ export const Default: React.FC<SecondaryNavigationProps> = (props) => {
                     {title}
                   </NextLink>
                 </Button>
-                {isParent && renderChildren(safeChildren.results)}
+                {isParent && renderChildren(childResults)}
               </NavigationMenu.Item>
             );
           })}
@@ -88,31 +93,28 @@ export const Default: React.FC<SecondaryNavigationProps> = (props) => {
     );
   };
 
-  if (fields) {
-    return (
-      <>
-        <Content className="hidden sm:block" />
+  return (
+    <>
+      <Content className="hidden sm:block" />
 
-        {/* Mobile Dropdown */}
-        <div className="relative block sm:hidden">
-          <button
-            className={cn(
-              'border-accent-6 flex w-full items-center justify-between rounded-md border bg-[color:var(--color-background)] p-2 px-4',
-              { ['rounded-bl-none rounded-br-none']: isOpen }
-            )}
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {/* <RxText></RxText> */}
-            <ChevronDownIcon className={cn('transition-all', { ['rotate-180']: isOpen })} />
-          </button>
-          {isOpen && (
-            <div className="border-accent-6 absolute top-full flex w-full flex-col rounded-bl-md rounded-br-md border border-t-0 bg-[color:var(--color-background)]">
-              <Content />
-            </div>
+      {/* Mobile Dropdown */}
+      <div className="relative block sm:hidden">
+        <button
+          className={cn(
+            'border-accent-6 flex w-full items-center justify-between rounded-md border bg-[color:var(--color-background)] p-2 px-4',
+            { ['rounded-bl-none rounded-br-none']: isOpen }
           )}
-        </div>
-      </>
-    );
-  }
-  return <NoDataFallback componentName="Secondary Navigation" />;
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {/* <RxText></RxText> */}
+          <ChevronDownIcon className={cn('transition-all', { ['rotate-180']: isOpen })} />
+        </button>
+        {isOpen && (
+          <div className="border-accent-6 absolute top-full flex w-full flex-col rounded-bl-md rounded-br-md border border-t-0 bg-[color:var(--color-background)]">
+            <Content />
+          </div>
+        )}
+      </div>
+    </>
+  );
 };

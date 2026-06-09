@@ -40,14 +40,15 @@ export const Default = (props: LinkListProps): JSX.Element => {
   const styles = `component link-list ${props.params.styles}`.trimEnd();
   const id = props.params.RenderingIdentifier;
 
-  if (datasource && datasource.children?.results) {
-    const list = datasource.children.results
+  if (datasource) {
+    const childResults = datasource.children?.results ?? [];
+    const list = childResults
       .filter((element: ResultsFieldLink) => element?.field?.link)
       .map((element: ResultsFieldLink, key: number) => (
         <LinkListItem
           index={key}
           key={`${key}${element.field.link}`}
-          total={datasource.children?.results?.length ?? 0}
+          total={childResults.length}
           field={element.field.link}
         />
       ));

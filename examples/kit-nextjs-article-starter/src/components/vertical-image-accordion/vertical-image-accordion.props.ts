@@ -13,14 +13,16 @@ export interface AccordionItem {
   link?: { jsonValue?: LinkField };
 }
 
-interface VerticalImageAccordionFields {
+export interface VerticalImageAccordionDatasource {
+  title?: { jsonValue?: Field<string> };
+  items?: {
+    results?: AccordionItem[];
+  };
+}
+
+export interface VerticalImageAccordionFields {
   data?: {
-    datasource?: {
-      title?: { jsonValue?: Field<string> };
-      items?: {
-        results?: AccordionItem[];
-      };
-    };
+    datasource?: VerticalImageAccordionDatasource;
   };
 }
 

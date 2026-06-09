@@ -6,7 +6,11 @@ import { Text, Link } from '@sitecore-content-sdk/nextjs';
 import { getDatasource, getFieldValue } from '@/lib/component-props';
 import { Default as ImageWrapper } from '@/components/image/ImageWrapper.dev';
 import { NoDataFallback } from '@/utils/NoDataFallback';
-import { VerticalImageAccordionProps } from './vertical-image-accordion.props';
+import {
+  VerticalImageAccordionProps,
+  AccordionItem,
+  VerticalImageAccordionDatasource,
+} from './vertical-image-accordion.props';
 import { EditableButton } from '@/components/button-component/ButtonComponent';
 
 export const Default: React.FC<VerticalImageAccordionProps> = ({ fields, isPageEditing, page }) => {
@@ -34,9 +38,9 @@ export const Default: React.FC<VerticalImageAccordionProps> = ({ fields, isPageE
     }
   };
 
-  const datasource = getDatasource(fields);
-  const { title, items } = datasource ?? {};
-  const titleField = getFieldValue(title);
+  const datasource = getDatasource(fields) as VerticalImageAccordionDatasource | undefined;
+  const titleField = getFieldValue(datasource?.title);
+  const accordionItems: AccordionItem[] = datasource?.items?.results ?? [];
 
   // When in editor mode, render all items stacked
   if (fields) {
@@ -56,7 +60,7 @@ export const Default: React.FC<VerticalImageAccordionProps> = ({ fields, isPageE
           )}
 
           <div className="flex flex-col gap-14">
-            {items?.results.map((item, index) => {
+            {accordionItems.map((item: AccordionItem, index) => {
               const itemImage = getFieldValue(item?.image);
               const itemTitle = getFieldValue(item?.title);
               const itemDescription = getFieldValue(item?.description);
@@ -170,7 +174,7 @@ export const Default: React.FC<VerticalImageAccordionProps> = ({ fields, isPageE
           role="tablist"
           aria-orientation="vertical"
         >
-          {items?.results.map((item, index) => {
+          {accordionItems.map((item: AccordionItem, index) => {
             const isActive = activeIndex === index;
             const itemImage = getFieldValue(item?.image);
             const itemTitle = getFieldValue(item?.title);

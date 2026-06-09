@@ -255,8 +255,8 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
               style={parallaxStyle}
             >
               <ImageWrapper
-                image={imageField}
-                alt={pageHeaderTitleField?.value}
+                image={imageRequired?.jsonValue}
+                alt={pageHeaderTitle?.jsonValue?.value}
                 className="h-full w-full object-cover"
                 wrapperClass="h-full w-full"
                 priority

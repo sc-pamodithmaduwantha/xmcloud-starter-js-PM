@@ -32,6 +32,7 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
   const isMobile = useMatchMedia('(max-width: 767px)');
 
   if (fields) {
+    const { items, header } = fields.data?.datasource ?? {};
     return (
       <nav>
         {isMobile ? (
@@ -42,21 +43,17 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
               </AccordionTrigger>
               <AccordionContent>
                 <ul className="space-y-2 py-2">
-                  {items?.results?.map((item: FooterNavigationLink, index) => {
-                    const linkField = getFieldValue(item.link);
-
-                    return linkField ? (
-                      <li key={`footerlinks-${index}-accordion-item`}>
-                        <Button
-                          variant="link"
-                          asChild
-                          className="h-auto text-pretty p-0 text-base font-normal text-white"
-                        >
-                          <Link field={linkField} />
-                        </Button>
-                      </li>
-                    ) : null;
-                  })}
+                  {items?.results?.map((item: FooterNavigationLink, index) => (
+                    <li key={`footerlinks-${index}-accordion-item`}>
+                      <Button
+                        variant="link"
+                        asChild
+                        className="h-auto text-pretty p-0 text-base font-normal text-white"
+                      >
+                        {item.link?.jsonValue && <Link field={item.link.jsonValue} />}
+                      </Button>
+                    </li>
+                  ))}
                 </ul>
               </AccordionContent>
             </AccordionItem>
@@ -68,21 +65,17 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
                 <Text field={headerField} />
               </li>
             )}
-            {items?.results?.map((item: FooterNavigationLink, index) => {
-              const linkField = getFieldValue(item.link);
-
-              return linkField ? (
-                <li key={`footerlinks-${index}`}>
-                  <Button
-                    variant="link"
-                    asChild
-                    className="h-auto text-pretty p-0 text-base font-normal text-white"
-                  >
-                    <Link field={linkField} />
-                  </Button>
-                </li>
-              ) : null;
-            })}
+            {items?.results?.map((item: FooterNavigationLink, index) => (
+              <li key={`footerlinks-${index}`}>
+                <Button
+                  variant="link"
+                  asChild
+                  className="h-auto text-pretty p-0 text-base font-normal text-white"
+                >
+                  {item.link?.jsonValue && <Link field={item.link.jsonValue} />}
+                </Button>
+              </li>
+            ))}
           </ul>
         )}
       </nav>

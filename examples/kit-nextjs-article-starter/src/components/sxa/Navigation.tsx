@@ -55,7 +55,7 @@ export const Default = (props: NavigationProps): JSX.Element => {
       : '';
   const id = props.params != null ? props.params.RenderingIdentifier : null;
 
-  if (!Object.values(props.fields).length) {
+  if (!props.fields || !Object.values(props.fields).length) {
     return (
       <div className={`component navigation ${styles}`} id={id ? id : undefined}>
         <div className="component-content">[Navigation]</div>
@@ -68,7 +68,7 @@ export const Default = (props: NavigationProps): JSX.Element => {
     props.handleClick(event);
   };
 
-  const list = Object.values(props.fields)
+  const list = Object.values(props.fields ?? {})
     .filter((element) => element)
     .map((element: NavigationFields, key: number) => (
       <NavigationList

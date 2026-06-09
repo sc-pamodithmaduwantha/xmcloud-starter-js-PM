@@ -47,7 +47,7 @@ export const Default = (props: LinkListProps): JSX.Element => {
         <LinkListItem
           index={key}
           key={`${key}${element.field.link}`}
-          total={datasource.children.results.length}
+          total={datasource.children?.results?.length ?? 0}
           field={element.field.link}
         />
       ));

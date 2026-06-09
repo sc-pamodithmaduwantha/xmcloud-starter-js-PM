@@ -7,7 +7,6 @@ import { Facebook, Linkedin, Twitter, Link, Check, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Text, DateField } from '@sitecore-content-sdk/nextjs';
 import { ArticleHeaderProps } from './article-header.props';
-
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { Badge } from '@/components/ui/badge';
 import { Default as ImageWrapper } from '@/components/image/ImageWrapper.dev';
@@ -25,7 +24,6 @@ import {
   generatePersonSchema,
 } from '@/lib/structured-data/schema';
 import { getDatasource, getFieldValue } from '@/lib/component-props';
-
 
 export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
   const datasource = getDatasource(fields);

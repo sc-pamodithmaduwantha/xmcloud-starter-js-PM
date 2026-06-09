@@ -10,8 +10,7 @@ import { SXAImageProps } from './sxa-image.props';
 
 export const Banner = (props: SXAImageProps): JSX.Element => {
   const { page } = useSitecore();
-  const { Image } = props.fields;
-  const { TargetUrl } = props.fields;
+  const { Image, TargetUrl } = props.fields ?? {};
   const sxaStyles = props.params?.Styles ?? '';
   const classNameList = `component image ${sxaStyles}`.trimEnd();
 
@@ -19,7 +18,7 @@ export const Banner = (props: SXAImageProps): JSX.Element => {
     return (
       <div className={classNameList}>
         <div className="component-content">
-          {page.mode.isEditing || !props.fields.TargetUrl?.value?.href ? (
+          {page.mode.isEditing || !TargetUrl?.value?.href ? (
             <ContentSdkImage field={Image} />
           ) : (
             <ContentSdkLink field={TargetUrl}>
@@ -40,7 +39,7 @@ export const Default = (props: SXAImageProps): JSX.Element => {
   const classNameList = `component image ${sxaStyles}`.trimEnd();
 
   if (fields) {
-    const { Image } = props.fields;
+    const { Image } = fields;
 
     const modifyImageProps = {
       ...Image,

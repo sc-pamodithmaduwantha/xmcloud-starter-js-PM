@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Field, ImageField } from '@sitecore-content-sdk/nextjs';
-import { ComponentProps } from '@/lib/component-props';
+import { ComponentProps, GraphQLField } from '@/lib/component-props';
 import { AuthorReferenceField } from '@/types/AuthorTaxonomy.props';
 
 export interface ArticleHeaderParams {
@@ -8,23 +8,23 @@ export interface ArticleHeaderParams {
 }
 
 export interface ArticleHeaderFields {
-  imageRequired?: { jsonValue: ImageField };
-  eyebrowOptional?: { jsonValue: Field<string> };
+  imageRequired?: GraphQLField<ImageField>;
+  eyebrowOptional?: GraphQLField<Field<string>>;
 }
 
 export interface ArticleHeaderExternalFields {
-  pageHeaderTitle: { jsonValue: Field<string> };
-  pageReadTime?: { jsonValue: Field<string> };
-  pageDisplayDate?: { jsonValue: Field<string> };
-  pageAuthor?: { jsonValue: AuthorReferenceField };
+  pageHeaderTitle?: GraphQLField<Field<string>>;
+  pageReadTime?: GraphQLField<Field<string>>;
+  pageDisplayDate?: GraphQLField<Field<string>>;
+  pageAuthor?: GraphQLField<AuthorReferenceField>;
 }
 
 export interface ArticleHeaderProps extends ComponentProps {
   params: ArticleHeaderParams;
-  fields: {
-    data: {
-      datasource: ArticleHeaderFields;
-      externalFields: ArticleHeaderExternalFields;
+  fields?: {
+    data?: {
+      datasource?: ArticleHeaderFields;
+      externalFields?: ArticleHeaderExternalFields;
     };
   };
 }

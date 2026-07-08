@@ -6,6 +6,7 @@ import Layout from 'src/Layout';
 import Providers from 'src/Providers';
 import { NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
+import { NotFoundAutoRedirect } from 'src/utils/NotFoundAutoRedirect';
 
 export default async function NotFound() {
   const { site, locale } = getCachedPageParams();
@@ -24,6 +25,7 @@ export default async function NotFound() {
         <NextIntlClientProvider>
           <Providers page={page}>
             <Layout page={page} />
+            <NotFoundAutoRedirect />
           </Providers>
         </NextIntlClientProvider>
       );
@@ -36,6 +38,7 @@ export default async function NotFound() {
     <div style={{ padding: 10 }}>
       <h1>Page not found</h1>
       <p>This page does not exist.</p>
+      <NotFoundAutoRedirect />
       <Link href="/">Go to the Home page</Link>
     </div>
   );

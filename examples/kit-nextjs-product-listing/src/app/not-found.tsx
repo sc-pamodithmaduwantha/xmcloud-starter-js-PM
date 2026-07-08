@@ -5,6 +5,7 @@ import client from 'lib/sitecore-client';
 import scConfig from 'sitecore.config';
 import Layout from 'src/Layout';
 import Providers from 'src/Providers';
+import { NotFoundAutoRedirect } from 'src/utils/NotFoundAutoRedirect';
 
 
 // Metadata for 404 Not Found page
@@ -31,6 +32,7 @@ export default async function NotFound() {
       return (
         <Providers page={page}>
           <Layout page={page} />
+          <NotFoundAutoRedirect />
         </Providers>
       );
     }
@@ -40,6 +42,7 @@ export default async function NotFound() {
     <div style={{ padding: 10 }}>
       <h1>Page not found</h1>
       <p>This page does not exist.</p>
+      <NotFoundAutoRedirect />
       <Link href="/">Go to the Home page</Link>
     </div>
   );

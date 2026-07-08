@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { isDesignLibraryPreviewData } from '@sitecore-content-sdk/nextjs/editing';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { draftMode, headers as nextHeaders } from 'next/headers';
 import { SiteInfo } from '@sitecore-content-sdk/nextjs';
 import sites from '.sitecore/sites.json';
@@ -12,7 +12,7 @@ import components from '.sitecore/component-map';
 import Providers from 'src/Providers';
 import { NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
-import { getBaseUrl } from 'lib/utils';
+import { getBaseUrl, getSectionFallbackRedirect } from 'lib/utils';
 
 type PageProps = {
   params: Promise<{
@@ -45,8 +45,14 @@ export default async function Page({ params }: PageProps) {
     page = await client.getPage(path ?? [], { site, locale });
   }
 
-  // If the page is not found, return a 404
+  // If the page is not found, redirect to the section landing page when the
+  // requested path is a missing descendant of a configured section (e.g.
+  // /customer-stories/removed-article -> /customer-stories). Otherwise 404.
   if (!page) {
+    const fallbackRedirect = getSectionFallbackRedirect(path);
+    if (fallbackRedirect) {
+      redirect(fallbackRedirect);
+    }
     notFound();
   }
 

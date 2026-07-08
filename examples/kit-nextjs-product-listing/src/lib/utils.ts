@@ -1,8 +1,37 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { SECTION_FALLBACK_REDIRECTS } from '@/lib/constants';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+/**
+ * Given the requested route path (as a tokenized segment array), returns the
+ * section landing page to redirect to when the requested page does not exist.
+ *
+ * This is intended to be called only for missing pages (404 case). It returns a
+ * target only when the path is a descendant of a configured section (i.e. the
+ * section segment is present and there is at least one segment after it), so the
+ * section landing page itself is never redirected.
+ *
+ * @param path Route segments, e.g. ['customer-stories', 'removed-article'].
+ * @returns Redirect target like '/customer-stories', or null when not applicable.
+ */
+export function getSectionFallbackRedirect(path?: string[]): string | null {
+  if (!path || path.length === 0) {
+    return null;
+  }
+
+  for (const section of SECTION_FALLBACK_REDIRECTS) {
+    const index = path.indexOf(section);
+    // Section is present and there is at least one deeper segment after it.
+    if (index !== -1 && index < path.length - 1) {
+      return `/${section}`;
+    }
+  }
+
+  return null;
 }
 
 export function getYouTubeThumbnail(videoId: string, width: number, height?: number): string {

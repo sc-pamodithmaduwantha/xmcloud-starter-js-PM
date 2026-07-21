@@ -8,6 +8,9 @@
       "lib/*": [
         "src/lib/*"
       ],
+      "utils/*": [
+        "src/utils/*"
+      ],
       "temp/*": [
         "src/temp/*"
       ],

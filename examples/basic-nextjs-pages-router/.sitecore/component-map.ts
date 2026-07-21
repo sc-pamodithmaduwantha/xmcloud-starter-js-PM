@@ -5,12 +5,14 @@ import { Form } from '@sitecore-content-sdk/nextjs';
 
 // end of built-in components
 import * as PartialDesignDynamicPlaceholder from 'src/components/partial-design-dynamic-placeholder/PartialDesignDynamicPlaceholder';
+import * as Breadcrumbs from 'src/components/breadcrumbs/Breadcrumbs';
 
 export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['BYOCWrapper', BYOCWrapper],
   ['FEaaSWrapper', FEaaSWrapper],
   ['Form', Form],
   ['PartialDesignDynamicPlaceholder', { ...PartialDesignDynamicPlaceholder }],
+  ['Breadcrumbs', { ...Breadcrumbs }],
 ]);
 
 export default componentMap;

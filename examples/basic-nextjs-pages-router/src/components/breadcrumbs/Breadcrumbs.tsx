@@ -20,7 +20,7 @@ export const Default: React.FC<BreadcrumbsProps> = (props) => {
   const { ancestors, name } = datasource ?? {};
 
   if (datasource) {
-    if (ancestors) {
+    if (ancestors?.length) {
       return (
         <Breadcrumb>
           <BreadcrumbList>

@@ -4,11 +4,15 @@
 import { JSX } from 'react';
 import Head from 'next/head';
 import { Placeholder, Field, DesignLibrary, Page } from '@sitecore-content-sdk/nextjs';
+import { Default as Breadcrumbs } from 'components/breadcrumbs/Breadcrumbs';
+import type { BreadcrumbsProps } from 'components/breadcrumbs/breadcrumbs.props';
+import { routeHasBreadcrumbsRendering } from 'lib/breadcrumb-utils';
 import Scripts from 'src/Scripts';
 import SitecoreStyles from 'src/components/content-sdk/SitecoreStyles';
 
 interface LayoutProps {
   page: Page;
+  breadcrumbProps?: BreadcrumbsProps;
 }
 
 interface RouteFields {
@@ -16,10 +20,11 @@ interface RouteFields {
   Title?: Field;
 }
 
-const Layout = ({ page }: LayoutProps): JSX.Element => {
+const Layout = ({ page, breadcrumbProps }: LayoutProps): JSX.Element => {
   const { layout, mode } = page;
   const { route } = layout.sitecore;
   const fields = route?.fields as RouteFields;
+  const showDefaultBreadcrumbs = Boolean(breadcrumbProps) && !routeHasBreadcrumbsRendering(route);
   const mainClassPageEditing = mode.isEditing
     ? 'editing-mode flex min-h-screen flex-col'
     : 'prod-mode flex min-h-screen flex-col';
@@ -45,6 +50,11 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
               </div>
             </header>
             <main className="flex flex-1 flex-col">
+              {showDefaultBreadcrumbs && breadcrumbProps && (
+                <div className="mx-auto w-full max-w-7xl px-4 py-4">
+                  <Breadcrumbs {...breadcrumbProps} />
+                </div>
+              )}
               <div id="content" className="flex flex-1 flex-col">
                 {route && <Placeholder name="headless-main" rendering={route} />}
               </div>

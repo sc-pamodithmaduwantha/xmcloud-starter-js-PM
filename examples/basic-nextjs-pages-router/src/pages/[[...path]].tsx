@@ -13,10 +13,21 @@ import {
 import { extractPath, handleEditorFastRefresh } from '@sitecore-content-sdk/nextjs/utils';
 import { isDesignLibraryPreviewData } from '@sitecore-content-sdk/nextjs/editing';
 import client from 'lib/sitecore-client';
+import { resolveDefaultBreadcrumbProps, routeHasBreadcrumbsRendering } from 'lib/breadcrumb-utils';
+import type { BreadcrumbsProps } from 'components/breadcrumbs/breadcrumbs.props';
 import components from '.sitecore/component-map';
 import scConfig from 'sitecore.config';
 
-const SitecorePage = ({ page, notFound, componentProps }: SitecorePageProps): JSX.Element => {
+type SitecorePageWithBreadcrumbsProps = SitecorePageProps & {
+  breadcrumbProps?: BreadcrumbsProps;
+};
+
+const SitecorePage = ({
+  page,
+  notFound,
+  componentProps,
+  breadcrumbProps,
+}: SitecorePageWithBreadcrumbsProps): JSX.Element => {
   useEffect(() => {
     // Since Sitecore Editor does not support Fast Refresh, need to refresh editor chromes after Fast Refresh finished
     handleEditorFastRefresh();
@@ -35,7 +46,7 @@ const SitecorePage = ({ page, notFound, componentProps }: SitecorePageProps): JS
         page={page}
         loadImportMap={() => import('.sitecore/import-map')}
       >
-        <Layout page={page} />
+        <Layout page={page} breadcrumbProps={breadcrumbProps} />
       </SitecoreProvider>
     </ComponentPropsContext>
   );
@@ -91,8 +102,15 @@ export const getStaticProps: GetStaticProps = async (context) => {
       : await client.getPage(path, { locale: context.locale });
   }
   if (page) {
+    const route = page.layout.sitecore.route;
+    const breadcrumbProps =
+      route && !routeHasBreadcrumbsRendering(route)
+        ? await resolveDefaultBreadcrumbProps(page, context.locale)
+        : undefined;
+
     props = {
       page,
+      breadcrumbProps,
       dictionary: await client.getDictionary({
         site: page.siteName,
         locale: page.locale,

@@ -59,3 +59,8 @@ export const Default: React.FC<BreadcrumbsProps> = (props) => {
 
   return <NoDataFallback componentName="Breadcrumbs" />;
 };
+
+export const Banner: React.FC<BreadcrumbsProps> = (props) => {
+
+  return <h1>Banner</h1>;
+};

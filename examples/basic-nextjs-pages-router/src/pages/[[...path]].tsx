@@ -19,7 +19,7 @@ import components from '.sitecore/component-map';
 import scConfig from 'sitecore.config';
 
 type SitecorePageWithBreadcrumbsProps = SitecorePageProps & {
-  breadcrumbProps?: BreadcrumbsProps;
+  breadcrumbProps?: BreadcrumbsProps | null;
 };
 
 const SitecorePage = ({
@@ -103,10 +103,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
   if (page) {
     const route = page.layout.sitecore.route;
+    // Use null (not undefined) — getStaticProps cannot serialize undefined props.
     const breadcrumbProps =
       route && !routeHasBreadcrumbsRendering(route)
         ? await resolveDefaultBreadcrumbProps(page, context.locale)
-        : undefined;
+        : null;
 
     props = {
       page,

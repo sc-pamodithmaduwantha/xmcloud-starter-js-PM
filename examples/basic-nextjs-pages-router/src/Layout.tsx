@@ -12,7 +12,7 @@ import SitecoreStyles from 'src/components/content-sdk/SitecoreStyles';
 
 interface LayoutProps {
   page: Page;
-  breadcrumbProps?: BreadcrumbsProps;
+  breadcrumbProps?: BreadcrumbsProps | null;
 }
 
 interface RouteFields {

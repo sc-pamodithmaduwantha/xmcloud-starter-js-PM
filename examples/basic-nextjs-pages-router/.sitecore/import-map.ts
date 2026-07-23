@@ -7,16 +7,21 @@ import {
 } from '@sitecore-content-sdk/nextjs/codegen';
 // end of built-in imports
 
-import { jsx, Fragment } from 'react/jsx-runtime';
+import { jsx, Fragment, jsxs } from 'react/jsx-runtime';
+import { useEffect, Fragment as Fragment_9e46adc109100050462083db825547fcdce28feb } from 'react';
+import * as React from 'react';
+import { cn } from 'lib/utils';
 import { Placeholder, CdpHelper, useSitecore } from '@sitecore-content-sdk/nextjs';
 import Head from 'next/head';
 import client from 'lib/sitecore-client';
 import Image from 'next/image';
 import * as FEAAS from '@sitecore-feaas/clientside/react';
 import nextConfig from 'next.config';
-import { useEffect } from 'react';
 import { pageView } from '@sitecore-content-sdk/events';
 import config from 'sitecore.config';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from 'components/ui/breadcrumb';
+import { getDatasource, getFieldValue } from 'lib/component-props';
+import { NoDataFallback } from 'utils/NoDataFallback';
 
 const importMap = [
   {
@@ -24,6 +29,21 @@ const importMap = [
     exports: [
       { name: 'jsx', value: jsx },
       { name: 'Fragment', value: Fragment },
+      { name: 'jsxs', value: jsxs },
+    ]
+  },
+  {
+    module: 'react',
+    exports: [
+      { name: 'useEffect', value: useEffect },
+      { name: 'Fragment', value: Fragment_9e46adc109100050462083db825547fcdce28feb },
+      { name: '*', value: React },
+    ]
+  },
+  {
+    module: 'lib/utils',
+    exports: [
+      { name: 'cn', value: cn },
     ]
   },
   {
@@ -65,12 +85,6 @@ const importMap = [
     ]
   },
   {
-    module: 'react',
-    exports: [
-      { name: 'useEffect', value: useEffect },
-    ]
-  },
-  {
     module: '@sitecore-content-sdk/events',
     exports: [
       { name: 'pageView', value: pageView },
@@ -80,6 +94,30 @@ const importMap = [
     module: 'sitecore.config',
     exports: [
       { name: 'default', value: config },
+    ]
+  },
+  {
+    module: 'components/ui/breadcrumb',
+    exports: [
+      { name: 'Breadcrumb', value: Breadcrumb },
+      { name: 'BreadcrumbItem', value: BreadcrumbItem },
+      { name: 'BreadcrumbLink', value: BreadcrumbLink },
+      { name: 'BreadcrumbList', value: BreadcrumbList },
+      { name: 'BreadcrumbPage', value: BreadcrumbPage },
+      { name: 'BreadcrumbSeparator', value: BreadcrumbSeparator },
+    ]
+  },
+  {
+    module: 'lib/component-props',
+    exports: [
+      { name: 'getDatasource', value: getDatasource },
+      { name: 'getFieldValue', value: getFieldValue },
+    ]
+  },
+  {
+    module: 'utils/NoDataFallback',
+    exports: [
+      { name: 'NoDataFallback', value: NoDataFallback },
     ]
   }
 ] as ImportEntry[];

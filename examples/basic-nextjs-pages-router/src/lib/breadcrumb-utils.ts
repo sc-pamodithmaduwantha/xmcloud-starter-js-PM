@@ -79,10 +79,12 @@ export const createDefaultBreadcrumbProps = (page: Page): BreadcrumbsProps => {
 
   return {
     rendering: { componentName: BREADCRUMBS_COMPONENT, params: {} },
+    params: {},
     fields: {
       data: {
         datasource: {
           name: pageName,
+          ancestors: [],
         },
       },
     },
@@ -93,6 +95,7 @@ export const createBreadcrumbPropsFromFields = (
   fields: BreadcrumbsProps['fields']
 ): BreadcrumbsProps => ({
   rendering: { componentName: BREADCRUMBS_COMPONENT, params: {} },
+  params: {},
   fields,
 });
 
@@ -118,7 +121,10 @@ export const fetchBreadcrumbFields = async (
 
   return {
     data: {
-      datasource: response.datasource,
+      datasource: {
+        ...response.datasource,
+        ancestors: response.datasource.ancestors ?? [],
+      },
     },
   };
 };

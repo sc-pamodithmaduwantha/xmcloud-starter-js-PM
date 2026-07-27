@@ -8,11 +8,14 @@ export type BreadcrumbsPage = {
   url?: LinkFieldValue;
 };
 
+export type BreadcrumbsDatasource = {
+  ancestors: BreadcrumbsPage[];
+  name: string;
+  url?: LinkFieldValue;
+};
+
 export type BreadcrumbsData = {
-  fields?: CompatibleDatasource<{
-    ancestors: BreadcrumbsPage[];
-    name: string;
-  }>;
+  fields?: CompatibleDatasource<BreadcrumbsDatasource>;
 };
 
 export type BreadcrumbsProps = ComponentProps & BreadcrumbsData;

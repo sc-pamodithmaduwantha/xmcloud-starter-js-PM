@@ -1,6 +1,10 @@
 import type React from 'react';
 import { Fragment } from 'react';
-import { BreadcrumbsPage, BreadcrumbsProps } from 'components/breadcrumbs/breadcrumbs.props';
+import {
+  BreadcrumbsDatasource,
+  BreadcrumbsPage,
+  BreadcrumbsProps,
+} from 'components/breadcrumbs/breadcrumbs.props';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -15,37 +19,19 @@ import { NoDataFallback } from 'utils/NoDataFallback';
 const truncate = (str: string): string =>
   str?.length > 25 ? str.replace(/(.{24})..+/, '$1').trim().concat('...') : str;
 
-export const Default: React.FC<BreadcrumbsProps> = (props) => {
-  const datasource = getDatasource(props.fields);
-  const { ancestors, name } = datasource ?? {};
+const getPageTitle = (page: BreadcrumbsPage): string =>
+  getFieldValue(page.navigationTitle)?.value || getFieldValue(page.title)?.value || page.name || '';
 
-  if (datasource) {
-    if (ancestors?.length) {
-      return (
-        <Breadcrumb>
-          <BreadcrumbList>
-            {ancestors.map((ancestor: BreadcrumbsPage, index) => {
-              const title =
-                getFieldValue(ancestor.navigationTitle)?.value ||
-                getFieldValue(ancestor.title)?.value;
+interface BreadcrumbsTrailProps {
+  datasource: BreadcrumbsDatasource;
+  /** Renders the current page as a link instead of static text. */
+  currentPageAsLink?: boolean;
+}
 
-              return (
-                <Fragment key={index}>
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href={ancestor.url?.href || ''}>{title}</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                </Fragment>
-              );
-            })}
-            <BreadcrumbItem>
-              <BreadcrumbPage>{truncate(name || '')}</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-      );
-    }
+const BreadcrumbsTrail: React.FC<BreadcrumbsTrailProps> = ({ datasource, currentPageAsLink }) => {
+  const { ancestors, name, url } = datasource;
 
+  if (!ancestors?.length) {
     return (
       <Breadcrumb>
         <BreadcrumbList>
@@ -57,10 +43,53 @@ export const Default: React.FC<BreadcrumbsProps> = (props) => {
     );
   }
 
-  return <NoDataFallback componentName="Breadcrumbs" />;
+  const currentTitle = truncate(name || '');
+
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        {ancestors.map((ancestor, index) => (
+          <Fragment key={`${ancestor.name}-${index}`}>
+            <BreadcrumbItem>
+              <BreadcrumbLink href={ancestor.url?.href || ''}>
+                {getPageTitle(ancestor)}
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+          </Fragment>
+        ))}
+        <BreadcrumbItem>
+          {currentPageAsLink && url?.href ? (
+            <BreadcrumbLink aria-current="page" href={url.href}>
+              {currentTitle}
+            </BreadcrumbLink>
+          ) : (
+            <BreadcrumbPage>{currentTitle}</BreadcrumbPage>
+          )}
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
 };
 
-export const Banner = () => {
+export const Default: React.FC<BreadcrumbsProps> = (props) => {
+  const datasource = getDatasource(props.fields);
 
-  return <h1>Banner</h1>;
+  if (!datasource) {
+    return <NoDataFallback componentName="Breadcrumbs" />;
+  }
+
+  return <BreadcrumbsTrail datasource={datasource} />;
 };
+
+export const Link: React.FC<BreadcrumbsProps> = (props) => {
+  const datasource = getDatasource(props.fields);
+
+  if (!datasource) {
+    return <NoDataFallback componentName="Breadcrumbs" />;
+  }
+
+  return <BreadcrumbsTrail datasource={datasource} currentPageAsLink />;
+};
+
+export const Banner: React.FC<BreadcrumbsProps> = () => <h1>Banner</h1>;

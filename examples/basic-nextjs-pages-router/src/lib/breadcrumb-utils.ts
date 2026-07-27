@@ -1,4 +1,10 @@
-import type { ComponentRendering, Field, Page, RouteData } from '@sitecore-content-sdk/nextjs';
+import type {
+  ComponentRendering,
+  Field,
+  LinkFieldValue,
+  Page,
+  RouteData,
+} from '@sitecore-content-sdk/nextjs';
 import type { BreadcrumbsPage, BreadcrumbsProps } from 'components/breadcrumbs/breadcrumbs.props';
 import { getGraphQlClient } from 'lib/graphQlClient';
 
@@ -13,6 +19,9 @@ const BREADCRUMB_QUERY = `
       }
       title: field(name: "title") {
         jsonValue
+      }
+      url {
+        href: path
       }
       ancestors(hasLayout: true) {
         title: field(name: "title") {
@@ -33,6 +42,7 @@ const BREADCRUMB_QUERY = `
 type BreadcrumbDatasource = {
   name: string;
   ancestors?: BreadcrumbsPage[];
+  url?: LinkFieldValue;
 };
 
 type BreadcrumbQueryResponse = {

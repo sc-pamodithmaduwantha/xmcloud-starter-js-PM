@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import {catalog,registry} from "@/atoms";
 import {
   ComponentPropsCollection,
   ComponentPropsContext,
@@ -24,6 +25,7 @@ export default function Providers({
       componentMap={components}
       page={page}
       loadImportMap={() => import(".sitecore/import-map.client")}
+      atomsConfig={{catalog,registry}}
     >
       <ComponentPropsContext value={componentProps}>
         {children}

@@ -24,7 +24,8 @@ export default defineCliConfig({
     paths: ['src/components'],
     exclude: [
       'src/components/content-sdk/*',
-      'src/components/ui/*',
+      'src/components/atoms/**',
+      'src/components/ui/**',
       'src/components/lib/*',
       'src/components/component-library/*',
       'src/components/magicui/*',
@@ -34,6 +35,7 @@ export default defineCliConfig({
       // Exclude non-component files (props, utils, dictionaries, contexts)
       '**/*.props.ts',
       '**/*.props.tsx',
+      '**/*.schema.ts',
       '**/*-props.tsx',
       '**/*.mock.props.ts',
       '**/__tests__/**',

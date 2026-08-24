@@ -37,7 +37,8 @@ export default defineCliConfig({
     // Exclude content-sdk auxillary components
     exclude: [
       'src/components/content-sdk/*',
-      'src/components/ui/*',
+      'src/components/atoms/**',
+      'src/components/ui/**',
       'src/components/lib/*',
       'src/components/video/*',
       'src/components/multi-promo/*',
@@ -47,6 +48,7 @@ export default defineCliConfig({
       // Exclude non-component sidecars from component map generation
       '**/*.props.ts',
       '**/*.props.tsx',
+      '**/*.schema.ts',
       '**/*.util.ts',
       '**/*.util.tsx',
       '**/*.dictionary.ts',

@@ -36,10 +36,12 @@ export default defineCliConfig({
     paths: ['src/components'],
     exclude: [
       'src/components/content-sdk/*',
-      'src/components/ui/*',
+      'src/components/atoms/**',
+      'src/components/ui/**',
       // Exclude non-component sidecars from component map generation
       '**/*.props.ts',
       '**/*.props.tsx',
+      '**/*.schema.ts',
       '**/*.util.ts',
       '**/*.util.tsx',
       '**/*.dictionary.ts',

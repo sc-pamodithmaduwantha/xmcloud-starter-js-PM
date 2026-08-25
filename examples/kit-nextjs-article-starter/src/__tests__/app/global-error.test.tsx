@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import type { Page } from '@sitecore-content-sdk/nextjs';
 import GlobalError from '@/app/global-error';
-import client from 'lib/sitecore-client';
+import client from '@/lib/sitecore-client';
 import {
   ErrorPageType,
   FALLBACK_500_MESSAGE,

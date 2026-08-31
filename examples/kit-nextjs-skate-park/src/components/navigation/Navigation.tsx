@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, JSX } from 'react';
-import { LinkField, Text, TextField, useSitecore } from '@sitecore-content-sdk/nextjs';
+import { LinkField, Text, TextField, useSitecore, FieldMetadata } from '@sitecore-content-sdk/nextjs';
 import { CompatibleLink } from 'components/content-sdk/CompatibleLink';
 import { getFieldValue } from 'lib/component-props';
 import { NavigationFields as Fields, NavigationListItemProps, NavigationProps } from './navigation.props';
@@ -18,7 +18,7 @@ const getTextContent = (fields?: Fields): JSX.Element | string => {
   return fields.DisplayName;
 };
 
-const getLinkField = (fields?: Fields): LinkField => ({
+const getLinkField = (fields?: Fields): LinkField & FieldMetadata => ({
   value: {
     href: fields?.Href ?? '',
     title:
@@ -27,6 +27,7 @@ const getLinkField = (fields?: Fields): LinkField => ({
       fields?.DisplayName,
     querystring: fields?.Querystring ?? '',
   },
+  metadata: getFieldValue(fields?.NavigationTitle)?.metadata,
 });
 
 const NavigationListItem: React.FC<NavigationListItemProps> = ({

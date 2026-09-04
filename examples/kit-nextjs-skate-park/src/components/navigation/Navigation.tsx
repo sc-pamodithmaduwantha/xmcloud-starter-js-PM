@@ -27,7 +27,9 @@ const getLinkField = (fields?: Fields): LinkField & FieldMetadata => ({
       fields?.DisplayName,
     querystring: fields?.Querystring ?? '',
   },
-  metadata: getFieldValue(fields?.NavigationTitle)?.metadata,
+  metadata:
+    getFieldValue(fields?.NavigationTitle)?.metadata ??
+    getFieldValue(fields?.Title)?.metadata,
 });
 
 const NavigationListItem: React.FC<NavigationListItemProps> = ({

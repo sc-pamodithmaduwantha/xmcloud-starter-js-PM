@@ -23,13 +23,15 @@ Local containers default to **Windows Server LTSC 2022** base images. Pass `-bas
 
 | Host OS | Use `-baseOs` |
 | --- | --- |
-| Windows 11 21H2/22H2 or Windows Server 2022 | `ltsc2022` (default) |
+| Windows 11 21H2/22H2/23H2 or Windows Server 2022 | `ltsc2022` (default) |
 | Windows 11 24H2 or Windows Server 2025 (`10.0.26100`) | `ltsc2025` |
 | Windows 10 | `ltsc2019` |
 
 Windows containers require a compatible host OS (process isolation typically needs a matching kernel). See [Microsoft Learn — Version compatibility](https://learn.microsoft.com/en-us/virtualization/windowscontainers/deploy-containers/version-compatibility?tabs=windows-server-2022%2Cwindows-11).
 
 If you change `-baseOs` after a previous init, re-run `init.ps1 -InitEnv` so `SITECORE_VERSION`, `EXTERNAL_IMAGE_TAG_SUFFIX`, `TRAEFIK_IMAGE`, and `NODEJS_PARENT_IMAGE` in `./local-containers/.env` are updated together. You can also amend those values in `.env` directly.
+
+`init.ps1` pins Traefik to a published Windows tag for each OS: `v3.6.4` (ltsc2022), `v3.6.23` (ltsc2025), and `v3.4.1` on `windowsservercore-1809` (ltsc2019). Traefik no longer publishes 1809 images after v3.4.1.
 
 ## Running the Containers
 

@@ -19,7 +19,17 @@ Below are the instructions for how to mock a small subset of the XM Cloud Applic
 
 ## Base Image Versions
 
-The containers configured here are setup to use the latest LTSC base container version released by Microsoft. If you are running a BaseOS that isn't compatible, you will need to ammend the `./local-containers/.env` file and use the `baseOs` parameter when running the `./local-containers/scripts/init.ps1` script. You can read more about the different base container versions on the [Microsoft Learn — Version compatibility](https://learn.microsoft.com/en-us/virtualization/windowscontainers/deploy-containers/version-compatibility?tabs=windows-server-2022%2Cwindows-11).
+Local containers default to **Windows Server LTSC 2022** base images. Pass `-baseOs` when you initialize so Sitecore, Traefik, and Node image tags stay on the same OS. Use `-baseOs ltsc2025` on Windows 11 24H2 or Windows Server 2025 if you want the current Microsoft LTSC.
+
+| Host OS | Use `-baseOs` |
+| --- | --- |
+| Windows 11 21H2/22H2 or Windows Server 2022 | `ltsc2022` (default) |
+| Windows 11 24H2 or Windows Server 2025 (`10.0.26100`) | `ltsc2025` |
+| Windows 10 | `ltsc2019` |
+
+Windows containers require a compatible host OS (process isolation typically needs a matching kernel). See [Microsoft Learn — Version compatibility](https://learn.microsoft.com/en-us/virtualization/windowscontainers/deploy-containers/version-compatibility?tabs=windows-server-2022%2Cwindows-11).
+
+If you change `-baseOs` after a previous init, re-run `init.ps1 -InitEnv` so `SITECORE_VERSION`, `EXTERNAL_IMAGE_TAG_SUFFIX`, `TRAEFIK_IMAGE`, and `NODEJS_PARENT_IMAGE` in `./local-containers/.env` are updated together. You can also amend those values in `.env` directly.
 
 ## Running the Containers
 
@@ -30,6 +40,12 @@ You first need to initialize the repository, which will configure how the differ
 
 ```ps1
 ./local-containers/scripts/init.ps1 -InitEnv -LicenseXmlPath "C:\path\to\license.xml" -AdminPassword "DesiredAdminPassword"
+```
+
+On Windows 11 24H2 or Windows Server 2025, you can opt into LTSC 2025:
+
+```ps1
+./local-containers/scripts/init.ps1 -InitEnv -LicenseXmlPath "C:\path\to\license.xml" -AdminPassword "DesiredAdminPassword" -baseOs ltsc2025
 ```
 
 ### Starting the Containers

@@ -28,17 +28,19 @@ function Get-LocalContainerOsImageSettings {
         [string]$BaseOs
     )
 
-    # Traefik Windows Server Core tags use 1809 for Server 2019, not ltsc2019.
-    $windowsServerCoreTag = if ($BaseOs -eq "ltsc2019") { "1809" } else { $BaseOs }
-
-    # Default LTSC 2022 keeps the existing Traefik pin. LTSC 2025 images are published on the v3.6 channel (>= 3.6.1).
-    $traefikRelease = if ($BaseOs -eq "ltsc2025") { "v3.6" } else { "v3.6.4" }
+    # Pin Traefik to tags that exist on Docker Hub for each Windows base.
+    # Traefik dropped windowsservercore-1809 after v3.4.1; v3.6.4 is not published for ltsc2025.
+    $traefikImageByOs = @{
+        ltsc2019 = "traefik:v3.4.1-windowsservercore-1809"
+        ltsc2022 = "traefik:v3.6.4-windowsservercore-ltsc2022"
+        ltsc2025 = "traefik:v3.6.23-windowsservercore-ltsc2025"
+    }
 
     return [pscustomobject]@{
         SitecoreVersion          = "1-$BaseOs"
         ExternalImageTagSuffix   = $BaseOs
         NodeJsParentImage        = "mcr.microsoft.com/windows/nanoserver:$BaseOs"
-        TraefikImage             = "traefik:${traefikRelease}-windowsservercore-$windowsServerCoreTag"
+        TraefikImage             = $traefikImageByOs[$BaseOs]
     }
 }
 

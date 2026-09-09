@@ -36,9 +36,14 @@ function Get-LocalContainerOsImageSettings {
         ltsc2025 = "traefik:v3.6.23-windowsservercore-ltsc2025"
     }
 
+    # Sitecore XM Cloud CM/init images exist for ltsc2025, but nonproduction SQL/Solr
+    # (and tools assets) are still published only for ltsc2022. Keep that suffix on 2022
+    # when opting into ltsc2025 so compose can pull supporting images.
+    $externalImageTagSuffix = if ($BaseOs -eq "ltsc2025") { "ltsc2022" } else { $BaseOs }
+
     return [pscustomobject]@{
         SitecoreVersion          = "1-$BaseOs"
-        ExternalImageTagSuffix   = $BaseOs
+        ExternalImageTagSuffix   = $externalImageTagSuffix
         NodeJsParentImage        = "mcr.microsoft.com/windows/nanoserver:$BaseOs"
         TraefikImage             = $traefikImageByOs[$BaseOs]
     }

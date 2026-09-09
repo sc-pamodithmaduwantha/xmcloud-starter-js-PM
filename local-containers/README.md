@@ -33,6 +33,13 @@ If you change `-baseOs` after a previous init, re-run `init.ps1 -InitEnv` so `SI
 
 `init.ps1` pins Traefik to a published Windows tag for each OS: `v3.6.4` (ltsc2022), `v3.6.23` (ltsc2025), and `v3.4.1` on `windowsservercore-1809` (ltsc2019). Traefik no longer publishes 1809 images after v3.4.1.
 
+When you choose `-baseOs ltsc2025`, Sitecore CM / mssql-init / solr-init use `1-ltsc2025`, but `EXTERNAL_IMAGE_TAG_SUFFIX` stays `ltsc2022` because Sitecore has not published `nonproduction/mssql-developer` or `nonproduction/solr` for LTSC 2025 yet. The CM build also needs `sitecore-xmcloud-docker-tools-assets:1-ltsc2025`; until Sitecore publishes that tag, create a local alias from the 2022 image:
+
+```ps1
+docker pull scr.sitecore.com/tools/sitecore-xmcloud-docker-tools-assets:1-ltsc2022
+docker tag scr.sitecore.com/tools/sitecore-xmcloud-docker-tools-assets:1-ltsc2022 scr.sitecore.com/tools/sitecore-xmcloud-docker-tools-assets:1-ltsc2025
+```
+
 ## Running the Containers
 
 A number of PowerShell scripts have been provided to help you configure the repository and interact with the containers. These scripts are located in the `./local-containers/scripts` folder.

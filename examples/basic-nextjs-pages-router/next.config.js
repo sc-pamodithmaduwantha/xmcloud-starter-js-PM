@@ -93,6 +93,28 @@ const nextConfig = {
         test: /src\\components\\.*\.tsx$/,
         use: ['@sitecore-content-sdk\\nextjs\\component-props-loader'],
       });
+
+      // `.sitecore/import-map.ts` pulls in Content SDK codegen helpers, which reach Node-only
+      // tooling (glob) that imports builtins with the `node:` scheme. Webpack cannot resolve that
+      // scheme for the browser, so strip the prefix and let the fallbacks below take over.
+      config.plugins.push(
+        new options.webpack.NormalModuleReplacementPlugin(/^node:/, (resource) => {
+          resource.request = resource.request.replace(/^node:/, '');
+        })
+      );
+
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        'fs/promises': false,
+        module: false,
+        child_process: false,
+        worker_threads: false,
+        perf_hooks: false,
+        net: false,
+        tls: false,
+        dns: false,
+      };
     } else {
       // Force use of CommonJS on the server for FEAAS SDK since Content SDK also uses CommonJS entrypoint to FEAAS SDK.
       // This prevents issues arising due to FEAAS SDK's dual CommonJS/ES module support on the server (via conditional exports).

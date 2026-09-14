@@ -1,3 +1,12 @@
+const path = require('path');
+
+/**
+ * Client-only stand-in for `@sitecore-content-sdk/content/tools`.
+ * That barrel re-exports Node-only templating; the generated import map only
+ * needs `combineImportEntries`.
+ */
+const contentToolsClientStub = path.resolve(__dirname, 'src/lib/content-sdk-tools.client.ts');
+
 /**
  * @type {import('next').NextConfig}
  * Next.js 16 defaults to Turbopack; this app relies on custom webpack (Content SDK
@@ -94,27 +103,25 @@ const nextConfig = {
         use: ['@sitecore-content-sdk\\nextjs\\component-props-loader'],
       });
 
-      // `.sitecore/import-map.ts` pulls in Content SDK codegen helpers, which reach Node-only
-      // tooling (glob) that imports builtins with the `node:` scheme. Webpack cannot resolve that
-      // scheme for the browser, so strip the prefix and let the fallbacks below take over.
-      config.plugins.push(
-        new options.webpack.NormalModuleReplacementPlugin(/^node:/, (resource) => {
-          resource.request = resource.request.replace(/^node:/, '');
-        })
-      );
-
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-        'fs/promises': false,
-        module: false,
-        child_process: false,
-        worker_threads: false,
-        perf_hooks: false,
-        net: false,
-        tls: false,
-        dns: false,
+      // Keep the Node-only `/tools` barrel out of the browser graph. The generated
+      // import map imports `@sitecore-content-sdk/nextjs/codegen`, which re-exports
+      // `combineImportEntries` from `@sitecore-content-sdk/content/tools`.
+      const contentToolsAliases = {
+        '@sitecore-content-sdk/content/tools$': contentToolsClientStub,
+        '@sitecore-content-sdk/content/dist/esm/tools$': contentToolsClientStub,
+        '@sitecore-content-sdk/content/dist/esm/tools/index.js': contentToolsClientStub,
       };
+
+      if (Array.isArray(config.resolve.alias)) {
+        Object.entries(contentToolsAliases).forEach(([name, alias]) => {
+          config.resolve.alias.unshift({ name, alias });
+        });
+      } else {
+        config.resolve.alias = {
+          ...config.resolve.alias,
+          ...contentToolsAliases,
+        };
+      }
     } else {
       // Force use of CommonJS on the server for FEAAS SDK since Content SDK also uses CommonJS entrypoint to FEAAS SDK.
       // This prevents issues arising due to FEAAS SDK's dual CommonJS/ES module support on the server (via conditional exports).

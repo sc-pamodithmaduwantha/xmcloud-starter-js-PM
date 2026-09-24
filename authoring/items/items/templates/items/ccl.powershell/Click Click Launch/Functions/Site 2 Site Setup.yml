@@ -36,7 +36,7 @@ SharedFields:
             $service = [Sitecore.DependencyInjection.ServiceLocator]::ServiceProvider.GetService([Sitecore.XA.Foundation.Variants.Abstractions.Services.IAvailableRenderingVariantService])
             $item = Get-Item -Path "$sitePath/Home" -Language $Site.Language
             Write-Verbose "My site: $sitePath"
-
+            
             # Default llms.txt. The rendering host resolves relative links against the request host.
             $nl = [char]10
             $colon = [char]58

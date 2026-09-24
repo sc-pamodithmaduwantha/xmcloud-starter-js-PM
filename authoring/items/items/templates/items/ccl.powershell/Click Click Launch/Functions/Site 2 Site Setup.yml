@@ -38,7 +38,27 @@ SharedFields:
             Write-Verbose "My site: $sitePath"
 
             # Default llms.txt. The rendering host resolves relative links against the request host.
-            $llmsTxt = "# Alaris`n`n> Alaris is a car brand template with a location finder, showcasing vehicle lineups and helping visitors find dealers and test drive options.`n`nThe site highlights product models (Aero, Terra, Nexa), supports test drive discovery, and provides dealer locator functionality. Built with Next.js and Sitecore XM Cloud.`n`n## Key pages`n`n- [Home](/): Brand overview and featured vehicles`n- [Products - Aero](/Products/Aero): Aero model information`n- [Products - Terra](/Products/Terra): Terra model information`n- [Products - Nexa](/Products/Nexa): Nexa model information`n- [Test Drive](/Test-Drive): Test drive and dealer locator`n`n## Optional`n`n- [Sitemap](/sitemap.xml): Full XML sitemap for search engines`n- [LLM Sitemap](/sitemap-llm.xml): LLM-optimized sitemap for AI crawlers`n- [Robots](/robots.txt): Crawler and bot access rules`n- [AI metadata](/.well-known/ai.txt): AI crawler and LLM metadata (ai.txt)`n- [FAQ (JSON)](/ai/faq.json): Frequently asked questions`n- [Summary (JSON)](/ai/summary.json): Site summary for AI consumption`n- [Service (JSON)](/ai/service.json): Service information for AI consumption"
+            $nl = [char]10
+            $colon = [char]58
+            $hash = [char]35
+            $gt = [char]62
+            $llmsTxt = $hash.ToString() + ' Alaris' + $nl + $nl
+            $llmsTxt += $gt.ToString() + ' Alaris is a car brand template with a location finder, showcasing vehicle lineups and helping visitors find dealers and test drive options.' + $nl + $nl
+            $llmsTxt += 'The site highlights product models (Aero, Terra, Nexa), supports test drive discovery, and provides dealer locator functionality. Built with Next.js and Sitecore XM Cloud.' + $nl + $nl
+            $llmsTxt += $hash.ToString() + $hash.ToString() + ' Key pages' + $nl + $nl
+            $llmsTxt += '- [Home](/)' + $colon + ' Brand overview and featured vehicles' + $nl
+            $llmsTxt += '- [Products - Aero](/Products/Aero)' + $colon + ' Aero model information' + $nl
+            $llmsTxt += '- [Products - Terra](/Products/Terra)' + $colon + ' Terra model information' + $nl
+            $llmsTxt += '- [Products - Nexa](/Products/Nexa)' + $colon + ' Nexa model information' + $nl
+            $llmsTxt += '- [Test Drive](/Test-Drive)' + $colon + ' Test drive and dealer locator' + $nl + $nl
+            $llmsTxt += $hash.ToString() + $hash.ToString() + ' Optional' + $nl + $nl
+            $llmsTxt += '- [Sitemap](/sitemap.xml)' + $colon + ' Full XML sitemap for search engines' + $nl
+            $llmsTxt += '- [LLM Sitemap](/sitemap-llm.xml)' + $colon + ' LLM-optimized sitemap for AI crawlers' + $nl
+            $llmsTxt += '- [Robots](/robots.txt)' + $colon + ' Crawler and bot access rules' + $nl
+            $llmsTxt += '- [AI metadata](/.well-known/ai.txt)' + $colon + ' AI crawler and LLM metadata (ai.txt)' + $nl
+            $llmsTxt += '- [FAQ (JSON)](/ai/faq.json)' + $colon + ' Frequently asked questions' + $nl
+            $llmsTxt += '- [Summary (JSON)](/ai/summary.json)' + $colon + ' Site summary for AI consumption' + $nl
+            $llmsTxt += '- [Service (JSON)](/ai/service.json)' + $colon + ' Service information for AI consumption'
             $settingsItem = Get-Item -Path "$sitePath/Settings" -Language $Site.Language
             $settingsItem.Editing.BeginEdit()
             $settingsItem["LLMs.txt"] = $llmsTxt

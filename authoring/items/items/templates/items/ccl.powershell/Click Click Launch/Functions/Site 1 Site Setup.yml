@@ -38,7 +38,27 @@ SharedFields:
             Write-Verbose "My site: $sitePath"
 
             # Default llms.txt. The rendering host resolves relative links against the request host.
-            $llmsTxt = "# Solterra & Co.`n`n> Solterra & Co. is an editorial-style lifestyle brand site built with Next.js and Sitecore XM Cloud, featuring articles, storytelling, and content-driven experiences.`n`nThe site offers a curated reading experience with hero sections, article listings, and full article pages. Content is managed in Sitecore and delivered headlessly. Supports English and Canadian English.`n`n## Key pages`n`n- [Home](/): Brand landing and featured content`n- [Articles](/Articles): Article listing and editorial index`n- [Article page](/Article-Page): Full article layout and reading experience`n- [Landing page](/Landing-Page): Full landing page layout and experience`n`n## Optional`n`n- [Sitemap](/sitemap.xml): Full XML sitemap for search engines`n- [LLM Sitemap](/sitemap-llm.xml): LLM-optimized sitemap for AI crawlers`n- [Robots](/robots.txt): Crawler and bot access rules`n- [AI metadata](/.well-known/ai.txt): AI crawler and LLM metadata (ai.txt)`n- [FAQ (JSON)](/ai/faq.json): Frequently asked questions`n- [Summary (JSON)](/ai/summary.json): Site summary for AI consumption`n- [Service (JSON)](/ai/service.json): Service information for AI consumption"
+            $nl = [char]10
+            $colon = [char]58
+            $amp = [char]38
+            $hash = [char]35
+            $gt = [char]62
+            $llmsTxt = $hash.ToString() + ' Solterra ' + $amp + ' Co.' + $nl + $nl
+            $llmsTxt += $gt.ToString() + ' Solterra ' + $amp + ' Co. is an editorial-style lifestyle brand site built with Next.js and Sitecore XM Cloud, featuring articles, storytelling, and content-driven experiences.' + $nl + $nl
+            $llmsTxt += 'The site offers a curated reading experience with hero sections, article listings, and full article pages. Content is managed in Sitecore and delivered headlessly. Supports English and Canadian English.' + $nl + $nl
+            $llmsTxt += $hash.ToString() + $hash.ToString() + ' Key pages' + $nl + $nl
+            $llmsTxt += '- [Home](/)' + $colon + ' Brand landing and featured content' + $nl
+            $llmsTxt += '- [Articles](/Articles)' + $colon + ' Article listing and editorial index' + $nl
+            $llmsTxt += '- [Article page](/Article-Page)' + $colon + ' Full article layout and reading experience' + $nl
+            $llmsTxt += '- [Landing page](/Landing-Page)' + $colon + ' Full landing page layout and experience' + $nl + $nl
+            $llmsTxt += $hash.ToString() + $hash.ToString() + ' Optional' + $nl + $nl
+            $llmsTxt += '- [Sitemap](/sitemap.xml)' + $colon + ' Full XML sitemap for search engines' + $nl
+            $llmsTxt += '- [LLM Sitemap](/sitemap-llm.xml)' + $colon + ' LLM-optimized sitemap for AI crawlers' + $nl
+            $llmsTxt += '- [Robots](/robots.txt)' + $colon + ' Crawler and bot access rules' + $nl
+            $llmsTxt += '- [AI metadata](/.well-known/ai.txt)' + $colon + ' AI crawler and LLM metadata (ai.txt)' + $nl
+            $llmsTxt += '- [FAQ (JSON)](/ai/faq.json)' + $colon + ' Frequently asked questions' + $nl
+            $llmsTxt += '- [Summary (JSON)](/ai/summary.json)' + $colon + ' Site summary for AI consumption' + $nl
+            $llmsTxt += '- [Service (JSON)](/ai/service.json)' + $colon + ' Service information for AI consumption'
             $settingsItem = Get-Item -Path "$sitePath/Settings" -Language $Site.Language
             $settingsItem.Editing.BeginEdit()
             $settingsItem["LLMs.txt"] = $llmsTxt

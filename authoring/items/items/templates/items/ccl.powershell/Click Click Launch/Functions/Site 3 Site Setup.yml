@@ -38,7 +38,28 @@ SharedFields:
             Write-Verbose "My site: $sitePath"
 
             # Default llms.txt. The rendering host resolves relative links against the request host.
-            $llmsTxt = "# SYNC`n`n> SYNC is a product-focused template for audio gear companies, featuring speaker and product listings plus video content, built with Next.js and Sitecore XM Cloud.`n`nThe site highlights the speaker lineup (Heritage-10, Heritage-30, Heritage-50) and video demos. Built with Next.js and Sitecore XM Cloud.`n`n## Key pages`n`n- [Home](/): Brand landing and featured products`n- [Speakers](/Speakers): Speaker product listing and catalog`n- [Video](/Video): Video content and product demos`n- [Heritage-10](/Speakers/Heritage-10): Heritage-10 product and details`n- [Heritage-30](/Speakers/Heritage-30): Heritage-30 product and details`n- [Heritage-50](/Speakers/Heritage-50): Heritage-50 product and details`n`n## Optional`n`n- [Sitemap](/sitemap.xml): Full XML sitemap for search engines`n- [LLM Sitemap](/sitemap-llm.xml): LLM-optimized sitemap for AI crawlers`n- [Robots](/robots.txt): Crawler and bot access rules`n- [AI metadata](/.well-known/ai.txt): AI crawler and LLM metadata (ai.txt)`n- [FAQ (JSON)](/ai/faq.json): Frequently asked questions`n- [Summary (JSON)](/ai/summary.json): Site summary for AI consumption`n- [Service (JSON)](/ai/service.json): Service information for AI consumption"
+            $nl = [char]10
+            $colon = [char]58
+            $hash = [char]35
+            $gt = [char]62
+            $llmsTxt = $hash.ToString() + ' SYNC' + $nl + $nl
+            $llmsTxt += $gt.ToString() + ' SYNC is a product-focused template for audio gear companies, featuring speaker and product listings plus video content, built with Next.js and Sitecore XM Cloud.' + $nl + $nl
+            $llmsTxt += 'The site highlights the speaker lineup (Heritage-10, Heritage-30, Heritage-50) and video demos. Built with Next.js and Sitecore XM Cloud.' + $nl + $nl
+            $llmsTxt += $hash.ToString() + $hash.ToString() + ' Key pages' + $nl + $nl
+            $llmsTxt += '- [Home](/)' + $colon + ' Brand landing and featured products' + $nl
+            $llmsTxt += '- [Speakers](/Speakers)' + $colon + ' Speaker product listing and catalog' + $nl
+            $llmsTxt += '- [Video](/Video)' + $colon + ' Video content and product demos' + $nl
+            $llmsTxt += '- [Heritage-10](/Speakers/Heritage-10)' + $colon + ' Heritage-10 product and details' + $nl
+            $llmsTxt += '- [Heritage-30](/Speakers/Heritage-30)' + $colon + ' Heritage-30 product and details' + $nl
+            $llmsTxt += '- [Heritage-50](/Speakers/Heritage-50)' + $colon + ' Heritage-50 product and details' + $nl + $nl
+            $llmsTxt += $hash.ToString() + $hash.ToString() + ' Optional' + $nl + $nl
+            $llmsTxt += '- [Sitemap](/sitemap.xml)' + $colon + ' Full XML sitemap for search engines' + $nl
+            $llmsTxt += '- [LLM Sitemap](/sitemap-llm.xml)' + $colon + ' LLM-optimized sitemap for AI crawlers' + $nl
+            $llmsTxt += '- [Robots](/robots.txt)' + $colon + ' Crawler and bot access rules' + $nl
+            $llmsTxt += '- [AI metadata](/.well-known/ai.txt)' + $colon + ' AI crawler and LLM metadata (ai.txt)' + $nl
+            $llmsTxt += '- [FAQ (JSON)](/ai/faq.json)' + $colon + ' Frequently asked questions' + $nl
+            $llmsTxt += '- [Summary (JSON)](/ai/summary.json)' + $colon + ' Site summary for AI consumption' + $nl
+            $llmsTxt += '- [Service (JSON)](/ai/service.json)' + $colon + ' Service information for AI consumption'
             $settingsItem = Get-Item -Path "$sitePath/Settings" -Language $Site.Language
             $settingsItem.Editing.BeginEdit()
             $settingsItem["LLMs.txt"] = $llmsTxt

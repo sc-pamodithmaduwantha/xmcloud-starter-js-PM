@@ -38,31 +38,7 @@ SharedFields:
             Write-Verbose "My site: $sitePath"
 
             # Default llms.txt. The rendering host resolves relative links against the request host.
-            $llmsTxt = @(
-                '# Alaris'
-                ''
-                '> Alaris is a car brand template with a location finder, showcasing vehicle lineups and helping visitors find dealers and test drive options.'
-                ''
-                'The site highlights product models (Aero, Terra, Nexa), supports test drive discovery, and provides dealer locator functionality. Built with Next.js and Sitecore XM Cloud.'
-                ''
-                '## Key pages'
-                ''
-                '- [Home](/): Brand overview and featured vehicles'
-                '- [Products - Aero](/Products/Aero): Aero model information'
-                '- [Products - Terra](/Products/Terra): Terra model information'
-                '- [Products - Nexa](/Products/Nexa): Nexa model information'
-                '- [Test Drive](/Test-Drive): Test drive and dealer locator'
-                ''
-                '## Optional'
-                ''
-                '- [Sitemap](/sitemap.xml): Full XML sitemap for search engines'
-                '- [LLM Sitemap](/sitemap-llm.xml): LLM-optimized sitemap for AI crawlers'
-                '- [Robots](/robots.txt): Crawler and bot access rules'
-                '- [AI metadata](/.well-known/ai.txt): AI crawler and LLM metadata (ai.txt)'
-                '- [FAQ (JSON)](/ai/faq.json): Frequently asked questions'
-                '- [Summary (JSON)](/ai/summary.json): Site summary for AI consumption'
-                '- [Service (JSON)](/ai/service.json): Service information for AI consumption'
-            ) -join "`n"
+            $llmsTxt = "# Alaris`n`n> Alaris is a car brand template with a location finder, showcasing vehicle lineups and helping visitors find dealers and test drive options.`n`nThe site highlights product models (Aero, Terra, Nexa), supports test drive discovery, and provides dealer locator functionality. Built with Next.js and Sitecore XM Cloud.`n`n## Key pages`n`n- [Home](/): Brand overview and featured vehicles`n- [Products - Aero](/Products/Aero): Aero model information`n- [Products - Terra](/Products/Terra): Terra model information`n- [Products - Nexa](/Products/Nexa): Nexa model information`n- [Test Drive](/Test-Drive): Test drive and dealer locator`n`n## Optional`n`n- [Sitemap](/sitemap.xml): Full XML sitemap for search engines`n- [LLM Sitemap](/sitemap-llm.xml): LLM-optimized sitemap for AI crawlers`n- [Robots](/robots.txt): Crawler and bot access rules`n- [AI metadata](/.well-known/ai.txt): AI crawler and LLM metadata (ai.txt)`n- [FAQ (JSON)](/ai/faq.json): Frequently asked questions`n- [Summary (JSON)](/ai/summary.json): Site summary for AI consumption`n- [Service (JSON)](/ai/service.json): Service information for AI consumption"
             $settingsItem = Get-Item -Path "$sitePath/Settings" -Language $Site.Language
             $settingsItem.Editing.BeginEdit()
             $settingsItem["LLMs.txt"] = $llmsTxt

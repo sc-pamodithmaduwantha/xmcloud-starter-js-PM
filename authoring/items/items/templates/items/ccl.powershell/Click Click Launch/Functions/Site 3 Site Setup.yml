@@ -36,6 +36,38 @@ SharedFields:
             $service = [Sitecore.DependencyInjection.ServiceLocator]::ServiceProvider.GetService([Sitecore.XA.Foundation.Variants.Abstractions.Services.IAvailableRenderingVariantService])
             $item = Get-Item -Path "$sitePath/Home" -Language $Site.Language
             Write-Verbose "My site: $sitePath"
+
+            # Default llms.txt. The rendering host resolves relative links against the request host.
+            $llmsTxt = @(
+                '# SYNC'
+                ''
+                '> SYNC is a product-focused template for audio gear companies, featuring speaker and product listings plus video content, built with Next.js and Sitecore XM Cloud.'
+                ''
+                'The site highlights the speaker lineup (Heritage-10, Heritage-30, Heritage-50) and video demos. Built with Next.js and Sitecore XM Cloud.'
+                ''
+                '## Key pages'
+                ''
+                '- [Home](/): Brand landing and featured products'
+                '- [Speakers](/Speakers): Speaker product listing and catalog'
+                '- [Video](/Video): Video content and product demos'
+                '- [Heritage-10](/Speakers/Heritage-10): Heritage-10 product and details'
+                '- [Heritage-30](/Speakers/Heritage-30): Heritage-30 product and details'
+                '- [Heritage-50](/Speakers/Heritage-50): Heritage-50 product and details'
+                ''
+                '## Optional'
+                ''
+                '- [Sitemap](/sitemap.xml): Full XML sitemap for search engines'
+                '- [LLM Sitemap](/sitemap-llm.xml): LLM-optimized sitemap for AI crawlers'
+                '- [Robots](/robots.txt): Crawler and bot access rules'
+                '- [AI metadata](/.well-known/ai.txt): AI crawler and LLM metadata (ai.txt)'
+                '- [FAQ (JSON)](/ai/faq.json): Frequently asked questions'
+                '- [Summary (JSON)](/ai/summary.json): Site summary for AI consumption'
+                '- [Service (JSON)](/ai/service.json): Service information for AI consumption'
+            ) -join "`n"
+            $settingsItem = Get-Item -Path "$sitePath/Settings" -Language $Site.Language
+            $settingsItem.Editing.BeginEdit()
+            $settingsItem["LLMs.txt"] = $llmsTxt
+            $settingsItem.Editing.EndEdit() | Out-Null
     
             # Add sample media
             Add-SampleImages -Site $Site -TemplatePath "/sitecore/templates/Branches/Project/click-click-launch/SYNC/Add Default Images" -SiteCollection $siteCollection

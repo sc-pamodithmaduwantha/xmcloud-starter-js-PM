@@ -36,6 +36,36 @@ SharedFields:
             $service = [Sitecore.DependencyInjection.ServiceLocator]::ServiceProvider.GetService([Sitecore.XA.Foundation.Variants.Abstractions.Services.IAvailableRenderingVariantService])
             $item = Get-Item -Path "$sitePath/Home" -Language $Site.Language
             Write-Verbose "My site: $sitePath"
+
+            # Default llms.txt. The rendering host resolves relative links against the request host.
+            $llmsTxt = @(
+                '# Solterra & Co.'
+                ''
+                '> Solterra & Co. is an editorial-style lifestyle brand site built with Next.js and Sitecore XM Cloud, featuring articles, storytelling, and content-driven experiences.'
+                ''
+                'The site offers a curated reading experience with hero sections, article listings, and full article pages. Content is managed in Sitecore and delivered headlessly. Supports English and Canadian English.'
+                ''
+                '## Key pages'
+                ''
+                '- [Home](/): Brand landing and featured content'
+                '- [Articles](/Articles): Article listing and editorial index'
+                '- [Article page](/Article-Page): Full article layout and reading experience'
+                '- [Landing page](/Landing-Page): Full landing page layout and experience'
+                ''
+                '## Optional'
+                ''
+                '- [Sitemap](/sitemap.xml): Full XML sitemap for search engines'
+                '- [LLM Sitemap](/sitemap-llm.xml): LLM-optimized sitemap for AI crawlers'
+                '- [Robots](/robots.txt): Crawler and bot access rules'
+                '- [AI metadata](/.well-known/ai.txt): AI crawler and LLM metadata (ai.txt)'
+                '- [FAQ (JSON)](/ai/faq.json): Frequently asked questions'
+                '- [Summary (JSON)](/ai/summary.json): Site summary for AI consumption'
+                '- [Service (JSON)](/ai/service.json): Service information for AI consumption'
+            ) -join "`n"
+            $settingsItem = Get-Item -Path "$sitePath/Settings" -Language $Site.Language
+            $settingsItem.Editing.BeginEdit()
+            $settingsItem["LLMs.txt"] = $llmsTxt
+            $settingsItem.Editing.EndEdit() | Out-Null
     
             # Add sample media
             Add-SampleImages -Site $Site -TemplatePath "/sitecore/templates/Branches/Project/click-click-launch/Solterra and Co/Add Sample Images" -SiteCollection $siteCollection

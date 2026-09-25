@@ -60,9 +60,38 @@ SharedFields:
             $llmsTxt += '- [Summary (JSON)](/ai/summary.json)' + $colon + ' Site summary for AI consumption' + $nl
             $llmsTxt += '- [Service (JSON)](/ai/service.json)' + $colon + ' Service information for AI consumption'
             $settingsItem = Get-Item -Path "$sitePath/Settings" -Language $Site.Language
-            $settingsItem.Editing.BeginEdit()
-            $settingsItem["LLMs.txt"] = $llmsTxt
-            $settingsItem.Editing.EndEdit() | Out-Null
+            $llmsTargets = @($settingsItem)
+            $siteDefinitionPath = "$sitePath/Settings/Site Grouping/$($Site.Name)"
+            if (Test-Path -Path $siteDefinitionPath) {
+                $llmsTargets += Get-Item -Path $siteDefinitionPath -Language $Site.Language
+            }
+            foreach ($llmsTarget in $llmsTargets) {
+                if ($null -eq $llmsTarget) { continue }
+                if ($llmsTarget.Versions.Count -eq 0) {
+                    $llmsTarget = Add-ItemVersion -Item $llmsTarget -Language $Site.Language
+                }
+                $llmsTarget.Fields.ReadAll()
+                $llmsField = $null
+                foreach ($field in $llmsTarget.Fields) {
+                    $fieldName = [string]$field.Name
+                    $fieldTitle = [string]$field.Title
+                    $fieldSection = [string]$field.Section
+                    $nameMatch = ($fieldName -eq 'LLMs.txt') -or ($fieldTitle -eq 'LLMs.txt') -or ($fieldName -eq 'LlmsTxt') -or ($fieldName -eq 'llmsTxt') -or ($fieldName -eq 'LLMs content') -or ($fieldTitle -eq 'LLMs content')
+                    $sectionMatch = ($fieldSection -eq 'Crawlers') -and (($fieldName -like '*llm*') -or ($fieldTitle -like '*llm*'))
+                    if ($nameMatch -or $sectionMatch) {
+                        $llmsField = $field
+                        break
+                    }
+                }
+                if ($null -eq $llmsField) {
+                    Write-Verbose "No LLMs.txt field on $($llmsTarget.Paths.Path)"
+                    continue
+                }
+                $llmsTarget.Editing.BeginEdit()
+                $llmsField.Value = $llmsTxt
+                $llmsTarget.Editing.EndEdit() | Out-Null
+                Write-Verbose "Wrote field $($llmsField.Name) on $($llmsTarget.Paths.Path)"
+            }
     
             # Add sample media
             Add-SampleImages -Site $Site -TemplatePath "/sitecore/templates/Branches/Project/click-click-launch/Solterra and Co/Add Sample Images" -SiteCollection $siteCollection

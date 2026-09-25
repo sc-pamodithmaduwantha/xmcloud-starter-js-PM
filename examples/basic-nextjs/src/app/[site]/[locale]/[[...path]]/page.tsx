@@ -138,14 +138,16 @@ export const generateMetadata = async ({
 
   // The same call as for rendering the page. Should be cached by default react behavior
   const page = await client.getPage(path ?? [], { site, locale });
+  const route = page?.layout.sitecore.route;
 
   return {
     ...getPageMetadata(
-      toSdkMetadataFields(
-        page?.layout.sitecore.route?.fields as
-          | Record<string, AuthoredField | undefined>
-          | undefined
-      )
+      route && {
+        ...route,
+        fields: toSdkMetadataFields(
+          route.fields as Record<string, AuthoredField | undefined> | undefined
+        ) as typeof route.fields,
+      }
     ),
     ...(canonicalUrl && {
       alternates: {

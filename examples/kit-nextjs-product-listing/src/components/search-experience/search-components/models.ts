@@ -34,6 +34,14 @@ export interface SearchFieldsMapping {
 export interface SearchField {
   searchIndex: string;
   fieldsMapping: SearchFieldsMapping;
+  previewEnabled?: boolean;
+  autocompleteEnabled?: boolean;
+  moreLikeThisEnabled?: boolean;
+  /**
+   * PascalCase keys (Tags, Images, Description, Title, Type, Link) mapping to
+   * whether that field slot should be shown in the result preview panel.
+   */
+  fieldPreviewEnabled?: Record<string, boolean>;
 }
 
 export interface SearchExperienceProps {
@@ -42,7 +50,7 @@ export interface SearchExperienceProps {
     /**
      * JSON stringified object of type SearchField
      */
-    search: {
+    'Search local': {
       value: string;
     };
   };

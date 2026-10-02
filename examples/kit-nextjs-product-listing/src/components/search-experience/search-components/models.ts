@@ -38,7 +38,7 @@ export interface SearchField {
   autocompleteEnabled?: boolean;
   moreLikeThisEnabled?: boolean;
   /**
-   * PascalCase keys (Tags, Images, Description, Title, Type, Link) mapping to
+   * camelCase keys (tags, images, description, title, type, link) mapping to
    * whether that field slot should be shown in the result preview panel.
    */
   fieldPreviewEnabled?: Record<string, boolean>;

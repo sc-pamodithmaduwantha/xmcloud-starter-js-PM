@@ -22,7 +22,7 @@ interface SearchPreviewItemProps {
   data: SearchDocument;
   mapping: SearchFieldsMapping;
   /**
-   * PascalCase keys (Tags, Images, Description, Title, Type, Link) that are
+   * camelCase keys (tags, images, description, title, type, link) that are
    * enabled for display in the preview panel.
    */
   fieldPreviewEnabled: Record<string, boolean>;
@@ -44,7 +44,7 @@ const getField = (
 /**
  * A compact preview card used inside the dropdown result preview panel.
  * Renders only the field slots that are both mapped and enabled via
- * `fieldPreviewEnabled` (PascalCase keys: Title, Images, Description, Type, Link, Tags).
+ * `fieldPreviewEnabled` (camelCase keys: title, images, description, type, link, tags).
  */
 export const SearchPreviewItem = ({
   data,
@@ -55,27 +55,27 @@ export const SearchPreviewItem = ({
   const fields = useMemo((): SearchPreviewItemFields => {
     return {
       title:
-        fieldPreviewEnabled['Title'] && mapping.title
+        fieldPreviewEnabled.title && mapping.title
           ? (getField(data, mapping.title) as { value: string })
           : undefined,
       image:
-        fieldPreviewEnabled['Images'] && mapping.images
+        fieldPreviewEnabled.images && mapping.images
           ? (getField(data, mapping.images) as { value: string })
           : undefined,
       tags:
-        fieldPreviewEnabled['Tags'] && mapping.tags
+        fieldPreviewEnabled.tags && mapping.tags
           ? (getField(data, mapping.tags) as { value: string | string[] })
           : undefined,
       summary:
-        fieldPreviewEnabled['Description'] && mapping.description
+        fieldPreviewEnabled.description && mapping.description
           ? (getField(data, mapping.description) as { value: string })
           : undefined,
       category:
-        fieldPreviewEnabled['Type'] && mapping.type
+        fieldPreviewEnabled.type && mapping.type
           ? (getField(data, mapping.type) as { value: string })
           : undefined,
       link:
-        fieldPreviewEnabled['Link'] && mapping.link
+        fieldPreviewEnabled.link && mapping.link
           ? (getField(data, mapping.link) as { value: string })
           : undefined,
     };

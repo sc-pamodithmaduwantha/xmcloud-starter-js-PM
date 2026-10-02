@@ -13,26 +13,75 @@ import client from '@/lib/sitecore-client';
  *
  * Content is authored in Sitecore (Settings → Crawlers → LLMs.txt) as markdown
  * with root-relative links, for example [About](/about). Those links are
- * resolved against the current request origin the same way a browser resolves
- * a relative anchor href.
+ * resolved against the matched site's configured hostname. A wildcard site
+ * uses NEXT_PUBLIC_SITE_URL, then NEXT_PUBLIC_BASE_URL, then the loopback host.
  */
 
 export const dynamic = 'force-dynamic';
 
-function requestHostHeader(req: NextRequest): string {
-  return (
-    req.headers.get('x-forwarded-host')?.split(',')[0].trim() ||
-    req.headers.get('host') ||
-    'localhost:3000'
-  );
+const SITE_HOST_DELIMITERS = /\||,|;/;
+
+function configuredOrigin(): string | undefined {
+  const configured = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL;
+  if (!configured) return undefined;
+
+  try {
+    return new URL(configured).origin;
+  } catch {
+    return undefined;
+  }
 }
 
-function resolveOrigin(req: NextRequest): string {
-  const host = requestHostHeader(req);
-  const proto =
-    req.headers.get('x-forwarded-proto')?.split(',')[0].trim() ||
-    (host.includes('localhost') ? 'http' : 'https');
-  return `${proto}://${host}`;
+/** Hostname used only to select a site. It is never copied into generated links. */
+function requestHostname(req: NextRequest): string {
+  const forwarded = req.headers.get('x-forwarded-host')?.split(',')[0]?.trim();
+  const rawHost = forwarded || req.headers.get('host') || req.nextUrl.host || 'localhost';
+
+  try {
+    return new URL(`http://${rawHost}`).hostname.toLowerCase() || 'localhost';
+  } catch {
+    return 'localhost';
+  }
+}
+
+function concreteSiteHosts(hostName: string | undefined): string[] {
+  if (!hostName) return [];
+
+  return hostName
+    .replace(/\s/g, '')
+    .toLowerCase()
+    .split(SITE_HOST_DELIMITERS)
+    .filter((hostname) => hostname && !hostname.includes('*'));
+}
+
+function isLoopbackHost(host: string): boolean {
+  return host === 'localhost' || host === '127.0.0.1';
+}
+
+/**
+ * Absolute links use the matched site's configured hostname.
+ * The request host is accepted only when it is one of those configured names.
+ */
+function resolveOrigin(req: NextRequest, site: SiteInfo): string {
+  const hosts = concreteSiteHosts(site.hostName);
+  const requestHost = requestHostname(req);
+  const matchedHost = hosts.find((hostname) => hostname === requestHost);
+  const onlyHost = hosts.length === 1 ? hosts[0] : undefined;
+  const siteHost = matchedHost ?? onlyHost;
+
+  if (siteHost) {
+    return `${isLoopbackHost(siteHost) ? 'http' : 'https'}://${siteHost}`;
+  }
+
+  const configured = configuredOrigin();
+  if (configured) return configured;
+
+  const host = req.nextUrl.host;
+  if (/^(localhost|127\.0\.0\.1)(:\d+)?$/.test(host)) {
+    return `http://${host}`;
+  }
+
+  return 'http://localhost:3000';
 }
 
 /** True for path-relative hrefs. Absolute, protocol-relative, and fragment links stay as authored. */
@@ -55,7 +104,7 @@ function resolveRelativeUrls(markdown: string, origin: string): string {
 
 export async function GET(req: NextRequest) {
   try {
-    const hostName = requestHostHeader(req).split(':')[0] || 'localhost';
+    const hostName = requestHostname(req);
     const sitesNormalized: SiteInfo[] = (
       sites as { name: string; hostName?: string; language?: string }[]
     ).map((site) => ({
@@ -73,7 +122,7 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    return new Response(resolveRelativeUrls(content, resolveOrigin(req)), {
+    return new Response(resolveRelativeUrls(content, resolveOrigin(req, site)), {
       status: 200,
       headers: { 'Content-Type': LLMS_TXT_CONTENT_TYPE },
     });

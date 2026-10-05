@@ -142,8 +142,8 @@ Implemented in `src/server.ts`:
 
 - `GET /healthz`
 - `POST /api/revalidate` (optional `x-revalidate-secret` when `SITECORE_REVALIDATE_SECRET` is set)
-- `GET /sitemap.xml` and `GET /robots.txt`
-- `GET /api/editing/config` and `POST /api/editing/render`
+- `GET /sitemap.xml`, `GET /sitemap-{id}.xml`, and `GET /robots.txt`
+- `GET /api/editing/config`, `GET /api/editing/experimental`, and `POST /api/editing/render`
 - `POST /_data` for client navigations
 
 ## Development Workflow

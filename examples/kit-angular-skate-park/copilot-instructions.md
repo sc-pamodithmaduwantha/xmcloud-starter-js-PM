@@ -53,11 +53,9 @@ sitecore.cli.config.ts
 - Resolve route data with `loaderResolver('page')` and `loaderResolver('dictionary')`
 
 ```typescript
-import { SitecoreClient } from '@sitecore-content-sdk/angular';
-import scConfig from '../../../sitecore.config';
+import { getClient } from '../client/sitecore-client';
 
-const client = new SitecoreClient(scConfig);
-const page = await client.getPage(path, { locale, site });
+const page = await getClient().getPage(path, { locale, site });
 ```
 
 ### Angular Component Patterns

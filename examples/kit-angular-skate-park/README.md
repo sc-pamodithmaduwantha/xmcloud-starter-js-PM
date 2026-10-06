@@ -41,9 +41,9 @@ Pages are rendered on the server by Angular SSR and an Express server (`src/serv
    from ```kit-angular-skate-park``` run ```npm install```
 7. Run the site locally:
     ```npm run dev```
-   This generates the development environment file, builds the Sitecore component map, and starts the Angular dev server.
+   This generates the development environment file, builds the Sitecore component map and `.sitecore` metadata, and starts the Angular dev server.
 8. Access the site:
-Visit http://localhost:3000 in your browser.
+Visit http://localhost:4200 in your browser.
 
 **Production build and serve:**
 
@@ -52,7 +52,7 @@ npm run build
 npm run serve:ssr
 ```
 
-`npm run serve:ssr` starts the Express server at `dist/kit-angular-skate-park/server/server.mjs`. That is the command used by `xmcloud.build.json`.
+`npm run serve:ssr` starts the Express server at `dist/kit-angular-skate-park/server/server.mjs`. That is the command used by `xmcloud.build.json`. The server listens on http://localhost:3000, or on the port set in the `PORT` environment variable.
 
 ## Add Editing host to XM Cloud
 

@@ -94,8 +94,9 @@ The layout renders three placeholders from the Sitecore route:
 ## Server and Middleware
 `src/server.ts` wires, in order:
 
+- `GET /healthz`
 - `POST /api/revalidate` for on-demand cache refresh
-- `/sitemap.xml` and `/robots.txt`
+- `/sitemap.xml`, `/sitemap-{id}.xml`, and `/robots.txt`
 - `/api/editing/config`, experimental features, and `/api/editing/render`
 - Multisite, bot tracking, redirects, and personalization middleware
 - `/_data` for client-side route data

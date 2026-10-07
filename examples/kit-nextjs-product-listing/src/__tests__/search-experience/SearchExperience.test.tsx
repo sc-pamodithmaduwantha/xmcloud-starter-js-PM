@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { Default as SearchExperienceDefault } from '../../components/search-experience/SearchExperience';
 import { LoadMore as SearchExperienceLoadMore } from '../../components/search-experience/SearchExperience.LoadMore';
 
@@ -8,6 +8,7 @@ const mockUseSearch = jest.fn();
 const mockUseInfiniteSearch = jest.fn();
 const mockUseSuggest = jest.fn();
 const mockUsePathname = jest.fn(() => '/');
+const mockAppRouterPush = jest.fn();
 
 jest.mock('next-intl', () => ({
   useTranslations: () => (key: string) => {
@@ -24,7 +25,7 @@ jest.mock('next-intl', () => ({
 
 jest.mock('next/navigation', () => ({
   useSearchParams: () => new URLSearchParams(),
-  useRouter: () => ({ replace: jest.fn() }),
+  useRouter: () => ({ push: mockAppRouterPush, replace: jest.fn() }),
   usePathname: () => mockUsePathname(),
 }));
 
@@ -46,6 +47,13 @@ jest.mock('../../components/search-experience/search-components/SearchItem', () 
     <div data-testid="search-item">{data.sc_item_id}</div>
   ),
 }));
+
+jest.mock(
+  '../../components/search-experience/search-components/SearchItem/SearchItemTitle',
+  () => ({
+    SearchItemTitle: ({ text }: { text: { value: string } }) => <span>{text.value}</span>,
+  })
+);
 
 jest.mock('../../components/search-experience/search-components/useEvent', () => ({
   useEvent: () => jest.fn(),
@@ -111,6 +119,106 @@ describe('SearchExperience', () => {
       querySuggestions: [],
       previewResults: [],
     });
+    mockAppRouterPush.mockReset();
+  });
+
+  it('navigates to the mapped link when a preview item is selected', () => {
+    mockUseSuggest.mockReturnValue({
+      querySuggestions: [],
+      previewResults: [
+        {
+          sc_item_id: 'preview-item',
+          Description: '',
+          Price: '',
+          ProductName: 'Preview Product',
+          AmpPower: '',
+          Link: '/products/preview-item',
+        },
+      ],
+    });
+
+    render(
+      <SearchExperienceDefault
+        {...createProps({
+          previewEnabled: true,
+          fieldsMapping: { title: 'ProductName', link: 'Link' },
+          fieldPreviewEnabled: { title: true },
+        })}
+      />
+    );
+
+    fireEvent.change(screen.getByPlaceholderText('Search items...'), {
+      target: { value: 'preview' },
+    });
+    fireEvent.mouseDown(screen.getByText('Preview Product'));
+
+    expect(mockAppRouterPush).toHaveBeenCalledWith('/products/preview-item');
+  });
+
+  it('does not navigate when a preview item has no mapped link', () => {
+    mockUseSuggest.mockReturnValue({
+      querySuggestions: [],
+      previewResults: [
+        {
+          sc_item_id: 'preview-item',
+          Description: '',
+          Price: '',
+          ProductName: 'Preview Product',
+          AmpPower: '',
+          Link: '/products/preview-item',
+        },
+      ],
+    });
+
+    render(
+      <SearchExperienceDefault
+        {...createProps({
+          previewEnabled: true,
+          fieldsMapping: { title: 'ProductName' },
+          fieldPreviewEnabled: { title: true },
+        })}
+      />
+    );
+
+    fireEvent.change(screen.getByPlaceholderText('Search items...'), {
+      target: { value: 'preview' },
+    });
+    fireEvent.mouseDown(screen.getByText('Preview Product'));
+
+    expect(mockAppRouterPush).not.toHaveBeenCalled();
+  });
+
+  it('does not navigate when the preview item has no usable mapped link', () => {
+    mockUseSuggest.mockReturnValue({
+      querySuggestions: [],
+      previewResults: [
+        {
+          sc_item_id: 'preview-item',
+          Description: '',
+          Price: '',
+          ProductName: 'Preview Product',
+          AmpPower: '',
+          Link: 'javascript:alert(1)',
+        },
+      ],
+    });
+
+    render(
+      <SearchExperienceDefault
+        {...createProps({
+          previewEnabled: true,
+          fieldsMapping: { title: 'ProductName', link: 'Link' },
+          fieldPreviewEnabled: { title: true },
+        })}
+      />
+    );
+
+    fireEvent.change(screen.getByPlaceholderText('Search items...'), {
+      target: { value: 'preview' },
+    });
+    fireEvent.mouseDown(screen.getByText('Preview Product'));
+
+    expect(mockAppRouterPush).not.toHaveBeenCalled();
   });
 
   it('shows the search bar, pagination, and all results in Suggest mode', () => {

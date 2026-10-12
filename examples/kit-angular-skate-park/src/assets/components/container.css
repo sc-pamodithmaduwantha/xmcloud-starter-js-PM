@@ -102,7 +102,7 @@ main {
     @apply mt-[55px] mb-[30px] max-mobile-large:mb-0 max-mobile-large:mt-[10px];
 
     h4 {
-      @apply text-[50px] font-medium leading-[70px] max-mobile-large:text-[24px] max-mobile-large:leading-[32px];
+      @apply text-[50px] font-medium leading-[70px] text-blue-600 max-mobile-large:text-[24px] max-mobile-large:leading-[32px];
     }
   }
 

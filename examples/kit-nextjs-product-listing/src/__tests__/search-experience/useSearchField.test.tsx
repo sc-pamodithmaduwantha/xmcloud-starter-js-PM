@@ -37,4 +37,18 @@ describe('useSearchField', () => {
 
     expect(result.current.moreLikeThisEnabled).toBe(false);
   });
+
+  it('keeps camelCase fieldPreviewEnabled keys saved by the search controls app', () => {
+    const { result } = renderHook(() =>
+      useSearchField(
+        JSON.stringify({
+          searchIndex: 'index-1',
+          fieldsMapping: { title: 'ProductName' },
+          fieldPreviewEnabled: { title: true, images: false },
+        })
+      )
+    );
+
+    expect(result.current.fieldPreviewEnabled).toEqual({ title: true, images: false });
+  });
 });

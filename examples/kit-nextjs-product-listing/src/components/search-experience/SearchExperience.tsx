@@ -1,7 +1,7 @@
 'use client';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { useSearchParams, usePathname } from 'next/navigation';
+import { useSearchParams, usePathname, useRouter as useAppRouter } from 'next/navigation';
 import { useSitecore } from '@sitecore-content-sdk/nextjs';
 import { useSearch, useSuggest } from '@sitecore-content-sdk/nextjs/search';
 import { cn } from 'lib/utils';
@@ -43,6 +43,7 @@ export const Default = (props: SearchExperienceProps) => {
   const pageSize = getEffectivePageSize(moreLikeThisEnabled, configuredPageSize);
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const appRouter = useAppRouter();
   const seedItemUrl =
     typeof window === 'undefined' ? pathname : new URL(pathname, window.location.origin).toString();
 
@@ -134,6 +135,35 @@ export const Default = (props: SearchExperienceProps) => {
       setRouterQuery(value, debounced);
     },
     [setRouterQuery, isEditing, isPreview, dropdownEnabled]
+  );
+
+  const onDropdownTermSelect = useCallback(
+    (term: string) => {
+      setDropdownVisible(false);
+      onSearchChange(term, false);
+    },
+    [onSearchChange]
+  );
+
+  const onDropdownPreviewSelect = useCallback(
+    (item: SearchDocument) => {
+      setDropdownVisible(false);
+
+      const linkField = fieldsMapping.link;
+      const link = linkField ? item[linkField] : undefined;
+      if (typeof link !== 'string' || !link.trim()) return;
+
+      const href = link.trim();
+      try {
+        const { protocol } = new URL(href, window.location.origin);
+        if (protocol === 'http:' || protocol === 'https:') {
+          appRouter.push(href);
+        }
+      } catch (error) {
+        console.error('Failed to parse search result link.', error);
+      }
+    },
+    [appRouter, fieldsMapping.link]
   );
 
   const onDropdownTermSelect = useCallback(

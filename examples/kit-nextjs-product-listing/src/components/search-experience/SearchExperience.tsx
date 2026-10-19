@@ -166,18 +166,6 @@ export const Default = (props: SearchExperienceProps) => {
     [appRouter, fieldsMapping.link]
   );
 
-  const onDropdownTermSelect = useCallback(
-    (term: string) => {
-      setDropdownVisible(false);
-      onSearchChange(term, false);
-    },
-    [onSearchChange]
-  );
-
-  const onDropdownPreviewSelect = useCallback((_item: SearchDocument) => {
-    setDropdownVisible(false);
-  }, []);
-
   return (
     <div className={`component search-experience ${styles}`} id={id ? id : undefined}>
       <div className="component-content">

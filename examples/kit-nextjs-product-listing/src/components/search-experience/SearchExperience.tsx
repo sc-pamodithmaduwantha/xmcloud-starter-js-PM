@@ -37,7 +37,7 @@ export const Default = (props: SearchExperienceProps) => {
     autocompleteEnabled,
     fieldPreviewEnabled,
     moreLikeThisEnabled,
-  } = useSearchField(props.fields['Search local'].value);
+  } = useSearchField(props.fields.search.value);
 
   const { styles, id, pageSize: configuredPageSize, columns } = useParams(params);
   const pageSize = getEffectivePageSize(moreLikeThisEnabled, configuredPageSize);
@@ -165,6 +165,18 @@ export const Default = (props: SearchExperienceProps) => {
     },
     [appRouter, fieldsMapping.link]
   );
+
+  const onDropdownTermSelect = useCallback(
+    (term: string) => {
+      setDropdownVisible(false);
+      onSearchChange(term, false);
+    },
+    [onSearchChange]
+  );
+
+  const onDropdownPreviewSelect = useCallback((_item: SearchDocument) => {
+    setDropdownVisible(false);
+  }, []);
 
   return (
     <div className={`component search-experience ${styles}`} id={id ? id : undefined}>

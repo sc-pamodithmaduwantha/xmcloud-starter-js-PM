@@ -77,7 +77,7 @@ const createProps = (config: Record<string, unknown> = {}) =>
   ({
     params: { columns: '3', pageSize: 6 },
     fields: {
-      'Search local': {
+      search: {
         value: JSON.stringify({
           searchIndex: 'index-1',
           fieldsMapping: {},

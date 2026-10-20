@@ -27,7 +27,7 @@ export const LoadMore = (props: SearchExperienceProps) => {
   const { params } = props;
   const t = useTranslations();
   const { searchIndex, fieldsMapping, moreLikeThisEnabled } = useSearchField(
-    props.fields['Search local'].value
+    props.fields.search.value
   );
 
   const { styles, id, pageSize: configuredPageSize, columns } = useParams(params);

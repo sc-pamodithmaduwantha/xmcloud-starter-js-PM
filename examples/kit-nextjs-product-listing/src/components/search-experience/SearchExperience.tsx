@@ -37,7 +37,7 @@ export const Default = (props: SearchExperienceProps) => {
     autocompleteEnabled,
     fieldPreviewEnabled,
     moreLikeThisEnabled,
-  } = useSearchField(props.fields['Search local'].value);
+  } = useSearchField(props.fields.search.value);
 
   const { styles, id, pageSize: configuredPageSize, columns } = useParams(params);
   const pageSize = getEffectivePageSize(moreLikeThisEnabled, configuredPageSize);

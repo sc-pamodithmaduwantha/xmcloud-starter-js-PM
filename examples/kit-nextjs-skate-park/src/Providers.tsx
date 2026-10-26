@@ -8,6 +8,7 @@ import {
 } from "@sitecore-content-sdk/nextjs";
 import scConfig from "sitecore.config";
 import components from ".sitecore/component-map.client";
+import { catalog, registry } from "@/atoms";
 
 export default function Providers({
   children,
@@ -24,6 +25,10 @@ export default function Providers({
       componentMap={components}
       page={page}
       loadImportMap={() => import(".sitecore/import-map.client")}
+      atomsConfig={{
+        catalog,
+        registry,
+      }}
     >
       <ComponentPropsContext value={componentProps}>
         {children}

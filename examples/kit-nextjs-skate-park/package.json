@@ -63,7 +63,10 @@
     "micromatch": {
       "picomatch": "2.3.2"
     },
-    "brace-expansion@^5.0.0": "5.0.9",
+    "brace-expansion@^5.0.0": "5.0.12",
+    "tailwind-bootstrap-grid": {
+      "zod": "4.6.7"
+    },
     "lodash-es": "4.18.1",
     "flatted": "3.4.2",
     "form-data": ">=4.0.6",
@@ -91,5 +94,11 @@
     "test:coverage:unit": "jest --coverage --testPathIgnorePatterns=geo",
     "test:geo:watch": "jest --watch --testPathPatterns=geo --coverage=false",
     "test:coverage": "jest --coverage"
+  },
+  "allowScripts": {
+    "@parcel/watcher@2.6.0": true,
+    "@swc/core@1.16.20": true,
+    "esbuild@0.28.2": true,
+    "unrs-resolver@1.12.2": true
   }
 }

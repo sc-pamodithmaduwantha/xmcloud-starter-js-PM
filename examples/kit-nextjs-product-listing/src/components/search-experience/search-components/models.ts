@@ -50,7 +50,7 @@ export interface SearchExperienceProps {
     /**
      * JSON stringified object of type SearchField
      */
-    'Search local': {
+    search: {
       value: string;
     };
   };

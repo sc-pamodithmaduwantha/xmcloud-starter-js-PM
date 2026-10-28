@@ -72,11 +72,5 @@
     "sitecore-tools:build": "sitecore-tools project build",
     "dev": "cross-env NODE_ENV=development npm-run-all --serial sitecore-tools:generate-map sitecore-tools:build --parallel next:dev sitecore-tools:generate-map:watch",
     "start": "cross-env-shell NODE_ENV=production npm-run-all --serial build next:start"
-  },
-  "allowScripts": {
-    "@parcel/watcher@2.6.0": true,
-    "@swc/core@1.16.20": true,
-    "esbuild@0.28.2": true,
-    "unrs-resolver@1.12.2": true
   }
 }

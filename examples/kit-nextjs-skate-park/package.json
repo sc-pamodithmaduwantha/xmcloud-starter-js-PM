@@ -63,7 +63,10 @@
     "micromatch": {
       "picomatch": "2.3.2"
     },
-    "brace-expansion@^5.0.0": "5.0.9",
+    "brace-expansion@^5.0.0": "5.0.12",
+    "tailwind-bootstrap-grid": {
+      "zod": "4.6.7"
+    },
     "lodash-es": "4.18.1",
     "flatted": "3.4.2",
     "form-data": ">=4.0.6",
